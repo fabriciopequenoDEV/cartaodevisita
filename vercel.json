@@ -1,0 +1,30 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/cartao_fabricio",
+      "destination": "/cartao_fabricio.html"
+    },
+    {
+      "source": "/cartao_ricardo",
+      "destination": "/cartao_ricardo.html"
+    },
+    {
+      "source": "/metodo_de_ia_smd",
+      "destination": "/metodo_de_ia_smd.html"
+    },
+
+    {
+      "source": "/cartão_fabricio",
+      "destination": "/cartao_fabricio.html"
+    },
+    {
+      "source": "/cartão_ricardo",
+      "destination": "/cartao_ricardo.html"
+    },
+    {
+      "source": "/MétodoDeIA_SMD",
+      "destination": "/metodo_de_ia_smd.html"
+    }
+  ]
+}
