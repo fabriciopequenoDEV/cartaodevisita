@@ -1,14 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="280" height="100" viewBox="0 0 280 100" role="img" aria-labelledby="logoTitle">
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="120" viewBox="0 0 320 120" role="img" aria-labelledby="logoTitle">
   <title id="logoTitle">Ser Mais Digital</title>
   <defs>
-    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#E8650A"/>
       <stop offset="100%" stop-color="#FF7A20"/>
     </linearGradient>
   </defs>
-  <rect x="0" y="0" width="280" height="100" rx="24" fill="#0a0d14"/>
-  <rect x="12" y="12" width="76" height="76" rx="18" fill="url(#gradient)"/>
-  <path d="M42 22c-10 0-18 8-18 18s8 18 18 18 18-8 18-18-8-18-18-18zm0 8c5 0 8 3 8 8s-3 8-8 8-8-3-8-8 3-8 8-8z" fill="#fff"/>
-  <text x="104" y="61" font-family="Syne, sans-serif" font-size="36" font-weight="700" fill="#fff">Ser Mais</text>
-  <text x="104" y="86" font-family="DM Sans, sans-serif" font-size="16" fill="#98a2b3">Digital</text>
+  <rect x="0" y="0" width="320" height="120" rx="30" fill="#0d1020"/>
+  <rect x="16" y="22" width="64" height="64" rx="16" fill="url(#orangeGrad)"/>
+  <path d="M36 40h12v8H36v24h-8V48H12v-8h16V28h8v12Zm20 22c0 8.8-7.2 16-16 16s-16-7.2-16-16 7.2-16 16-16 16 7.2 16 16Zm-8 0c0-4.4-3.6-8-8-8s-8 3.6-8 8 3.6 8 8 8 8-3.6 8-8Z" fill="#fff"/>
+  <text x="100" y="62" font-family="Syne, sans-serif" font-size="34" font-weight="800" fill="#ffffff">Ser Mais</text>
+  <text x="100" y="86" font-family="DM Sans, sans-serif" font-size="16" fill="#b8c3d4">Digital</text>
 </svg>
