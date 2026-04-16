@@ -2,6 +2,10 @@
   "cleanUrls": true,
   "rewrites": [
     {
+      "source": "/",
+      "destination": "/index_sermaisdigital"
+    },
+    {
       "source": "/cartao_fabricio",
       "destination": "/cartao_fabricio.html"
     },
