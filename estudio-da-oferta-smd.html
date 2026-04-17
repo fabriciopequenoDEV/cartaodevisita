@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estúdio da Oferta · Implementação de IA Aplicada · SMD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#080b10;--s0:#0c111a;--s1:#111827;--s2:#1a2236;
+  --border:rgba(255,255,255,0.065);--border2:rgba(255,255,255,0.12);
+  --gold:#FF8C00;--gold2:#FFB84D;--gold-dim:rgba(201,168,76,0.12);
+  --blue:#0F1E3F;--blue-dim:rgba(61,106,255,0.12);
+  --text:#e2e8f4;--muted:#6b7a99;--muted2:#8a96b0;
+  --sidebar:240px;--header:52px;
+  --green:#22c55e;--green-dim:rgba(34,197,94,0.1);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--text);line-height:1.6;overflow:hidden;height:100vh;display:flex;flex-direction:column}
+
+/* HEADER */
+header{
+  height:var(--header);min-height:var(--header);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 1.5rem 0 0;
+  border-bottom:1px solid var(--border);
+  background:rgba(8,11,16,0.95);
+  backdrop-filter:blur(20px);
+  z-index:200;position:relative;
+}
+.header-left{
+  display:flex;align-items:center;gap:0;
+  height:100%;
+}
+.logo-block{
+  height:100%;display:flex;align-items:center;
+  padding:0 1.5rem;
+  border-right:1px solid var(--border);
+  width:var(--sidebar);
+}
+.logo-block img{
+  height:32px;
+  width:auto;
+}
+.logo{
+  font-family:'Playfair Display',sans-serif;font-weight:800;
+  font-size:0.9rem;letter-spacing:0.1em;color:var(--gold);
+  text-transform:uppercase;
+}
+.logo span{color:var(--muted)}
+.header-title{
+  padding:0 1.5rem;
+  font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);font-weight:400;
+}
+.header-right{display:flex;align-items:center;gap:1rem}
+.header-badge{
+  font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);background:var(--gold-dim);
+  border:1px solid rgba(201,168,76,0.25);
+  padding:0.3rem 0.7rem;
+}
+.header-cta{
+  font-size:0.72rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--ink);background:var(--gold);
+  padding:0.45rem 1rem;border:none;cursor:pointer;transition:background 0.2s;
+  text-decoration:none;
+}
+.header-cta:hover{background:var(--gold2)}
+
+/* LAYOUT */
+.app-body{display:flex;flex:1;overflow:hidden}
+
+/* SIDEBAR */
+aside{
+  width:var(--sidebar);min-width:var(--sidebar);
+  border-right:1px solid var(--border);
+  overflow-y:auto;background:var(--s0);
+  display:flex;flex-direction:column;
+}
+.nav-section-label{
+  font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--muted);padding:1.2rem 1.2rem 0.5rem;
+  border-top:1px solid var(--border);margin-top:0.5rem;
+}
+.nav-section-label:first-child{border-top:none;margin-top:0}
+nav ul{list-style:none}
+nav ul li{display:block}
+.nav-btn{
+  display:flex;align-items:center;gap:0.7rem;
+  width:100%;padding:0.6rem 1.2rem;
+  background:none;border:none;cursor:pointer;
+  font-family:'DM Sans',sans-serif;font-size:0.78rem;color:var(--muted);
+  text-align:left;transition:all 0.15s;position:relative;
+  border-left:2px solid transparent;
+}
+.nav-btn:hover{color:var(--text);background:rgba(255,255,255,0.04)}
+.nav-btn.active{color:var(--gold);background:var(--gold-dim);border-left-color:var(--gold)}
+.nav-num{
+  font-family:'Playfair Display',sans-serif;font-size:0.65rem;font-weight:700;
+  color:var(--muted);letter-spacing:0.08em;min-width:16px;
+}
+.nav-btn.active .nav-num{color:var(--gold)}
+
+/* MAIN */
+main{flex:1;overflow-y:auto;padding:2.5rem 3rem;background:var(--ink)}
+.section{display:none}
+.section.active{display:block;animation:fadeIn 0.3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* SECTION HEADER */
+.sec-label{
+  font-size:0.65rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:0.75rem;
+}
+.sec-title{
+  font-family:'Playfair Display',sans-serif;font-weight:700;
+  font-size:clamp(1.6rem,2.5vw,2.2rem);letter-spacing:-0.02em;
+  margin-bottom:0.6rem;line-height:1.15;
+}
+.sec-desc{font-size:0.92rem;color:var(--muted2);max-width:600px;line-height:1.75;font-weight:300;margin-bottom:2.5rem}
+.sec-divider{height:1px;background:var(--border);margin-bottom:2.5rem}
+
+/* CARDS */
+.card{background:var(--s1);border:1px solid var(--border);padding:1.5rem}
+.card-sm{background:var(--s1);border:1px solid var(--border);padding:1rem 1.2rem}
+
+/* GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+
+/* ── 1. VISÃO GERAL ── */
+.overview-hero{
+  background:var(--s1);border:1px solid var(--border);
+  padding:2.5rem;margin-bottom:2rem;position:relative;overflow:hidden;
+}
+.overview-hero::before{
+  content:'';position:absolute;right:-100px;top:-100px;
+  width:400px;height:400px;
+  background:radial-gradient(circle,rgba(201,168,76,0.06) 0%,transparent 70%);
+}
+.ov-headline{
+  font-family:'Playfair Display',sans-serif;font-size:clamp(1.4rem,2.5vw,2rem);
+  font-weight:700;letter-spacing:-0.02em;margin-bottom:0.8rem;
+  max-width:600px;line-height:1.2;
+}
+.ov-sub{font-size:0.9rem;color:var(--muted2);max-width:520px;line-height:1.7;font-weight:300;margin-bottom:1.5rem}
+.pill-row{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:2rem}
+.pill{
+  font-size:0.7rem;letter-spacing:0.06em;padding:0.3rem 0.8rem;
+  background:var(--s2);border:1px solid var(--border);color:var(--muted2);
+}
+.pill.gold{background:var(--gold-dim);border-color:rgba(201,168,76,0.25);color:var(--gold)}
+.fears-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem}
+.fear-card{
+  border:1px solid var(--border);padding:1.2rem;background:var(--s2);
+  position:relative;
+}
+.fear-icon{font-size:1.2rem;margin-bottom:0.6rem}
+.fear-title{font-family:'Playfair Display',sans-serif;font-size:0.78rem;font-weight:700;margin-bottom:0.4rem;color:var(--text)}
+.fear-resp{font-size:0.75rem;color:var(--muted);line-height:1.55}
+.fear-card::after{
+  content:'→';position:absolute;bottom:0.8rem;right:0.8rem;
+  color:var(--gold);font-size:0.7rem;
+}
+.thesis-block{
+  background:var(--gold-dim);border:1px solid rgba(201,168,76,0.2);
+  padding:1.5rem 2rem;margin:2rem 0;
+}
+.thesis-text{
+  font-family:'Playfair Display',sans-serif;font-size:1.1rem;font-weight:600;
+  line-height:1.4;color:var(--text);
+}
+.thesis-text em{font-style:normal;color:var(--gold)}
+
+/* ── 2. MÉTODO ── */
+.phases-nav{
+  display:flex;gap:0;border-bottom:1px solid var(--border);
+  margin-bottom:2rem;overflow-x:auto;
+}
+.phase-tab{
+  font-size:0.72rem;font-weight:500;letter-spacing:0.06em;
+  padding:0.7rem 1.1rem;cursor:pointer;white-space:nowrap;
+  border-bottom:2px solid transparent;color:var(--muted);
+  background:none;border-top:none;border-left:none;border-right:none;
+  font-family:'DM Sans',sans-serif;transition:all 0.2s;
+}
+.phase-tab:hover{color:var(--text)}
+.phase-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.phase-detail{display:none}
+.phase-detail.active{display:grid;grid-template-columns:1fr 1fr;gap:2rem;animation:fadeIn 0.25s ease}
+.pd-left{}
+.pd-num{
+  font-family:'Playfair Display',sans-serif;font-size:3.5rem;font-weight:800;
+  color:rgba(201,168,76,0.15);line-height:1;margin-bottom:0.5rem;
+}
+.pd-tag{font-size:0.65rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem}
+.pd-title{font-family:'Playfair Display',sans-serif;font-size:1.4rem;font-weight:700;letter-spacing:-0.01em;margin-bottom:0.8rem}
+.pd-question{
+  font-size:0.88rem;color:var(--gold);font-style:italic;
+  border-left:2px solid var(--gold);padding-left:0.8rem;margin-bottom:1.2rem;
+  line-height:1.5;
+}
+.pd-objective{font-size:0.88rem;color:var(--muted2);line-height:1.7;margin-bottom:1.5rem;font-weight:300}
+.pd-right{}
+.pd-section{margin-bottom:1.5rem}
+.pd-section-title{
+  font-size:0.65rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:0.7rem;padding-bottom:0.4rem;
+  border-bottom:1px solid var(--border);
+}
+.pd-list{list-style:none;display:flex;flex-direction:column;gap:0.5rem}
+.pd-list li{
+  font-size:0.82rem;color:var(--muted2);display:flex;gap:0.6rem;
+  align-items:flex-start;line-height:1.5;
+}
+.pd-list li::before{content:'→';color:var(--gold);font-size:0.72rem;flex-shrink:0;margin-top:0.15rem}
+.pd-effort{
+  background:var(--s2);border:1px solid var(--border);padding:0.9rem 1rem;
+  font-size:0.8rem;color:var(--muted2);line-height:1.6;
+}
+.pd-effort strong{color:var(--text);font-weight:500}
+.pd-transform{
+  background:var(--gold-dim);border:1px solid rgba(201,168,76,0.2);
+  padding:0.8rem 1rem;font-size:0.8rem;color:var(--text);line-height:1.6;
+  font-style:italic;
+}
+.phase-dots{display:flex;gap:0.4rem;margin-bottom:1.5rem}
+.phase-dot{
+  width:8px;height:8px;background:var(--s2);border:1px solid var(--border);
+  cursor:pointer;transition:all 0.2s;
+}
+.phase-dot.active{background:var(--gold);border-color:var(--gold)}
+
+/* ── 3. SIMULADOR ── */
+.sim-layout{display:grid;grid-template-columns:1fr 1.1fr;gap:2rem;align-items:start}
+.sim-inputs{}
+.sim-inputs-title{
+  font-family:'Playfair Display',sans-serif;font-size:0.85rem;font-weight:700;
+  letter-spacing:0.05em;margin-bottom:1.5rem;color:var(--text);
+}
+.sim-field{margin-bottom:1.5rem}
+.sim-field-label{
+  font-size:0.65rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:0.6rem;display:block;
+}
+.sim-options{display:flex;flex-wrap:wrap;gap:0.4rem}
+.sim-opt{
+  font-size:0.75rem;padding:0.4rem 0.9rem;cursor:pointer;
+  background:var(--s2);border:1px solid var(--border);color:var(--muted);
+  transition:all 0.15s;font-family:'DM Sans',sans-serif;
+}
+.sim-opt:hover{border-color:rgba(201,168,76,0.3);color:var(--text)}
+.sim-opt.sel{background:var(--gold-dim);border-color:rgba(201,168,76,0.4);color:var(--gold)}
+.sim-output{position:sticky;top:0}
+.sim-out-header{
+  background:var(--s1);border:1px solid var(--border);
+  padding:1.5rem;margin-bottom:1rem;
+}
+.sim-profile-name{
+  font-family:'Playfair Display',sans-serif;font-size:1.3rem;font-weight:700;
+  color:var(--gold);margin-bottom:0.3rem;
+}
+.sim-profile-desc{font-size:0.82rem;color:var(--muted2);line-height:1.6;font-weight:300}
+.sim-metrics{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:1rem}
+.sim-metric{background:var(--s1);border:1px solid var(--border);padding:1rem}
+.sm-label{font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:0.3rem}
+.sm-value{font-family:'Playfair Display',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.2rem}
+.sm-sub{font-size:0.72rem;color:var(--muted);line-height:1.4}
+.bar-wrap{height:3px;background:var(--s2);margin-top:0.5rem;overflow:hidden}
+.bar-fill{height:100%;background:var(--gold);transition:width 0.5s ease}
+.sim-deliverables{}
+.sd-title{font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:0.6rem}
+.sd-list{display:flex;flex-direction:column;gap:0.4rem}
+.sd-item{
+  font-size:0.78rem;color:var(--muted2);display:flex;gap:0.6rem;
+  align-items:flex-start;line-height:1.5;
+}
+.sd-item::before{content:'·';color:var(--gold);font-size:1rem;flex-shrink:0;line-height:1.2}
+.sim-narrative{
+  background:var(--gold-dim);border:1px solid rgba(201,168,76,0.2);
+  padding:1rem 1.2rem;margin-top:1rem;
+  font-size:0.8rem;color:var(--text);line-height:1.65;font-style:italic;
+}
+
+/* ── 4. LINHA DO TEMPO ── */
+.timeline-controls{
+  display:flex;align-items:center;gap:1rem;margin-bottom:2rem;
+}
+.tl-btn{
+  background:var(--s2);border:1px solid var(--border);color:var(--muted);
+  width:30px;height:30px;cursor:pointer;font-size:0.9rem;
+  display:flex;align-items:center;justify-content:center;transition:all 0.15s;
+}
+.tl-btn:hover{border-color:var(--gold);color:var(--gold)}
+.tl-month-label{
+  font-family:'Playfair Display',sans-serif;font-size:1rem;font-weight:700;
+  min-width:120px;color:var(--text);
+}
+.tl-phase-pill{
+  font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;
+  background:var(--gold-dim);border:1px solid rgba(201,168,76,0.25);
+  color:var(--gold);padding:0.25rem 0.7rem;
+}
+.tl-track{
+  display:flex;gap:0;margin-bottom:2rem;
+  border:1px solid var(--border);overflow:hidden;
+}
+.tl-seg{
+  flex:1;height:48px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--s1);border-right:1px solid var(--border);
+  transition:all 0.2s;position:relative;
+}
+.tl-seg:last-child{border-right:none}
+.tl-seg.active{background:var(--gold-dim)}
+.tl-seg.passed{background:var(--s2)}
+.tl-seg-num{
+  font-family:'Playfair Display',sans-serif;font-size:0.7rem;font-weight:700;
+  color:var(--muted);
+}
+.tl-seg.active .tl-seg-num{color:var(--gold)}
+.tl-seg.passed .tl-seg-num{color:var(--muted2)}
+.tl-marker{
+  position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:4px;height:4px;background:var(--gold);border-radius:50%;
+  opacity:0;transition:opacity 0.2s;
+}
+.tl-seg.active .tl-marker{opacity:1}
+.tl-content{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.tl-left{}
+.tl-phase-info{}
+.tl-pi-tag{font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem}
+.tl-pi-title{font-family:'Playfair Display',sans-serif;font-size:1.2rem;font-weight:700;letter-spacing:-0.01em;margin-bottom:0.6rem}
+.tl-pi-desc{font-size:0.85rem;color:var(--muted2);line-height:1.7;margin-bottom:1.2rem;font-weight:300}
+.tl-deliverables-active{margin-bottom:1rem}
+.tl-del-label{font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem}
+.tl-del-list{display:flex;flex-wrap:wrap;gap:0.4rem}
+.tl-del-tag{
+  font-size:0.7rem;padding:0.25rem 0.65rem;
+  background:var(--s2);border:1px solid var(--border);color:var(--muted2);
+}
+.tl-del-tag.highlight{
+  background:var(--gold-dim);border-color:rgba(201,168,76,0.25);color:var(--gold);
+}
+.tl-right{}
+.tl-kpi-mini{display:flex;flex-direction:column;gap:0.6rem}
+.kpi-row{
+  display:flex;align-items:center;gap:1rem;
+  font-size:0.75rem;
+}
+.kpi-name{color:var(--muted);min-width:140px;font-size:0.72rem}
+.kpi-bar-track{flex:1;height:4px;background:var(--s2);overflow:hidden}
+.kpi-bar-fill{height:100%;transition:width 0.6s ease}
+.kpi-val{color:var(--text);min-width:35px;text-align:right;font-family:'Playfair Display',sans-serif;font-weight:700;font-size:0.72rem}
+.kpi-narrative{
+  margin-top:1.5rem;background:var(--s2);border:1px solid var(--border);
+  padding:1rem;font-size:0.8rem;color:var(--muted2);line-height:1.65;
+  font-style:italic;
+}
+.tl-scrubber{
+  display:flex;gap:2px;margin-bottom:1.5rem;
+}
+.tl-scrub-seg{
+  height:3px;flex:1;background:var(--s2);cursor:pointer;transition:background 0.15s;
+}
+.tl-scrub-seg.active,.tl-scrub-seg.passed{background:var(--gold)}
+
+/* ── 5. ENTREGÁVEIS ── */
+.del-totalizador{
+  display:flex;flex-wrap:wrap;gap:0.6rem;
+  margin-bottom:2rem;
+  padding:1rem 1.2rem;
+  background:var(--s1);border:1px solid var(--border);
+  align-items:center;
+}
+.del-tot-label{
+  font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--muted);margin-right:0.4rem;flex-shrink:0;
+}
+.del-tot-item{
+  display:flex;align-items:center;gap:0.4rem;
+  font-size:0.72rem;padding:0.3rem 0.75rem;
+  border:1px solid var(--border);background:var(--s2);cursor:default;
+}
+.del-tot-count{
+  font-family:'Playfair Display',sans-serif;font-weight:800;font-size:0.85rem;
+}
+.del-tot-item.doc .del-tot-count{color:#6b9fff}
+.del-tot-item.artifact .del-tot-count{color:var(--green)}
+.del-tot-item.kit .del-tot-count{color:var(--gold)}
+.del-tot-item.mvp .del-tot-count{color:#f87171}
+.del-tot-sep{width:1px;height:14px;background:var(--border);margin:0 0.2rem}
+.del-tot-total{
+  font-size:0.72rem;color:var(--muted2);margin-left:auto;
+  font-style:italic;
+}
+.del-phase-title{
+  font-family:'Playfair Display',sans-serif;font-size:0.85rem;font-weight:700;
+  color:var(--gold);margin-bottom:1rem;letter-spacing:0.05em;
+  display:flex;align-items:center;gap:0.6rem;
+}
+.del-phase-title::before{
+  content:attr(data-num);font-size:0.65rem;font-weight:700;
+  background:var(--gold-dim);border:1px solid rgba(201,168,76,0.25);
+  color:var(--gold);padding:0.15rem 0.4rem;
+  font-family:'Playfair Display',sans-serif;letter-spacing:0.1em;
+}
+.del-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.7rem;margin-bottom:2rem}
+.del-card{
+  background:var(--s1);border:1px solid var(--border);padding:1rem;
+  transition:all 0.2s;cursor:pointer;position:relative;
+}
+.del-card:hover{border-color:rgba(201,168,76,0.35);background:var(--s2);transform:translateY(-2px)}
+.del-card::after{
+  content:'Ver modelo →';
+  position:absolute;bottom:0.7rem;right:0.8rem;
+  font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--gold);opacity:0;transition:opacity 0.2s;
+}
+.del-card:hover::after{opacity:1}
+.del-icon{font-size:1.1rem;margin-bottom:0.5rem}
+.del-name{font-size:0.8rem;font-weight:500;color:var(--text);margin-bottom:0.3rem}
+.del-desc{font-size:0.72rem;color:var(--muted);line-height:1.55}
+.del-type{
+  display:inline-block;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;
+  padding:0.15rem 0.45rem;margin-top:0.5rem;
+}
+.del-type.doc{background:rgba(61,106,255,0.1);color:#6b9fff}
+.del-type.artifact{background:var(--green-dim);color:var(--green)}
+.del-type.kit{background:var(--gold-dim);color:var(--gold)}
+.del-type.mvp{background:rgba(239,68,68,0.1);color:#f87171}
+
+/* ── MODAL ── */
+.del-modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(8,11,16,0.88);backdrop-filter:blur(8px);
+  z-index:1000;align-items:center;justify-content:center;
+  padding:2rem;
+}
+.del-modal-overlay.open{display:flex;animation:fadeIn 0.2s ease}
+.del-modal{
+  background:var(--s1);border:1px solid var(--border2);
+  width:100%;max-width:680px;max-height:85vh;
+  display:flex;flex-direction:column;
+  position:relative;
+  box-shadow:0 32px 80px rgba(0,0,0,0.6);
+}
+.del-modal-header{
+  padding:1.4rem 1.6rem;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:flex-start;
+  flex-shrink:0;
+}
+.del-modal-htype{
+  font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;
+  margin-bottom:0.4rem;
+}
+.del-modal-htitle{
+  font-family:'Playfair Display',sans-serif;font-weight:700;font-size:1.15rem;
+  letter-spacing:-0.01em;color:var(--text);
+  display:flex;align-items:center;gap:0.5rem;
+}
+.del-modal-close{
+  background:none;border:1px solid var(--border);color:var(--muted);
+  width:28px;height:28px;cursor:pointer;font-size:0.9rem;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-left:1rem;transition:all 0.15s;
+}
+.del-modal-close:hover{border-color:var(--gold);color:var(--gold)}
+.del-modal-body{
+  overflow-y:auto;padding:1.6rem;
+  flex:1;
+}
+.del-modal-body::-webkit-scrollbar{width:3px}
+.del-modal-body::-webkit-scrollbar-track{background:var(--s2)}
+.del-modal-body::-webkit-scrollbar-thumb{background:var(--gold-dim)}
+.dm-section{margin-bottom:1.5rem}
+.dm-section:last-child{margin-bottom:0}
+.dm-sec-title{
+  font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:0.6rem;padding-bottom:0.4rem;
+  border-bottom:1px solid var(--border);
+}
+.dm-text{font-size:0.85rem;color:var(--muted2);line-height:1.75;font-weight:300}
+.dm-list{list-style:none;display:flex;flex-direction:column;gap:0.45rem}
+.dm-list li{
+  font-size:0.82rem;color:var(--muted2);display:flex;
+  gap:0.55rem;align-items:flex-start;line-height:1.55;
+}
+.dm-list li::before{content:'→';color:var(--gold);font-size:0.7rem;flex-shrink:0;margin-top:0.15rem}
+.dm-callout{
+  background:var(--gold-dim);border:1px solid rgba(201,168,76,0.2);
+  padding:0.9rem 1rem;font-size:0.82rem;color:var(--text);
+  line-height:1.65;font-style:italic;margin-top:0.8rem;
+}
+.dm-format-row{
+  display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem;
+}
+.dm-fmt-tag{
+  font-size:0.68rem;padding:0.25rem 0.65rem;
+  background:var(--s2);border:1px solid var(--border);color:var(--muted2);
+}
+.del-modal-footer{
+  padding:1rem 1.6rem;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-shrink:0;
+}
+.del-modal-nav{display:flex;gap:0.5rem}
+.dm-nav-btn{
+  background:var(--s2);border:1px solid var(--border);color:var(--muted);
+  padding:0.4rem 0.9rem;font-size:0.72rem;cursor:pointer;
+  font-family:'DM Sans',sans-serif;letter-spacing:0.06em;transition:all 0.15s;
+}
+.dm-nav-btn:hover{border-color:var(--gold);color:var(--gold)}
+.dm-footer-phase{
+  font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted);
+}
+
+/* ── 6. INDICADORES ── */
+.kpi-selector{display:flex;gap:0.5rem;margin-bottom:2rem;flex-wrap:wrap}
+.kpi-tab{
+  font-size:0.72rem;padding:0.4rem 0.9rem;cursor:pointer;
+  background:var(--s2);border:1px solid var(--border);color:var(--muted);
+  transition:all 0.15s;font-family:'DM Sans',sans-serif;
+}
+.kpi-tab:hover{color:var(--text)}
+.kpi-tab.active{background:var(--gold-dim);border-color:rgba(201,168,76,0.3);color:var(--gold)}
+.kpi-chart-area{
+  background:var(--s1);border:1px solid var(--border);padding:1.5rem;
+  margin-bottom:1.5rem;
+}
+.kca-header{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:1.5rem;
+}
+.kca-title{font-family:'Playfair Display',sans-serif;font-size:1rem;font-weight:700;color:var(--text)}
+.kca-val{
+  font-family:'Playfair Display',sans-serif;font-size:1.8rem;font-weight:800;
+  color:var(--gold);text-align:right;
+}
+.kca-val-label{font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)}
+#kpiChart{width:100%;height:160px;display:block}
+.kpi-context{font-size:0.8rem;color:var(--muted2);line-height:1.7;font-weight:300;margin-top:1rem}
+.kpi-grid-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.kpi-mini-card{
+  background:var(--s1);border:1px solid var(--border);padding:1rem;
+  cursor:pointer;transition:all 0.2s;
+}
+.kpi-mini-card:hover{border-color:rgba(201,168,76,0.25)}
+.kpi-mini-card.active{border-color:rgba(201,168,76,0.4);background:var(--gold-dim)}
+.kmi-label{font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem}
+.kmi-val{font-family:'Playfair Display',sans-serif;font-size:1.4rem;font-weight:800;color:var(--text);margin-bottom:0.3rem}
+.kmi-trend{font-size:0.72rem;color:var(--muted)}
+.kmi-trend.up{color:var(--green)}
+
+/* ── 7. RESULTADOS ── */
+.results-stages{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:2rem}
+.rs-card{
+  background:var(--s1);border:1px solid var(--border);padding:1.5rem;
+  position:relative;overflow:hidden;
+}
+.rs-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--border);
+}
+.rs-card.s1::before{background:rgba(61,106,255,0.6)}
+.rs-card.s2::before{background:var(--gold)}
+.rs-card.s3::before{background:var(--green)}
+.rs-period{font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem}
+.rs-title{font-family:'Playfair Display',sans-serif;font-size:1rem;font-weight:700;margin-bottom:0.8rem}
+.rs-items{list-style:none;display:flex;flex-direction:column;gap:0.5rem}
+.rs-items li{font-size:0.8rem;color:var(--muted2);display:flex;gap:0.5rem;align-items:flex-start;line-height:1.5}
+.rs-items li::before{content:'→';color:var(--gold);font-size:0.7rem;flex-shrink:0;margin-top:0.1rem}
+.perception-block{
+  background:var(--s2);border:1px solid var(--border);padding:1.5rem;
+  margin-bottom:1.5rem;
+}
+.pb-title{font-family:'Playfair Display',sans-serif;font-size:0.88rem;font-weight:700;margin-bottom:1rem}
+.pb-matrix{display:grid;grid-template-columns:repeat(2,1fr);gap:0.8rem}
+.pm-item{
+  padding:0.8rem 1rem;background:var(--s1);border:1px solid var(--border);
+}
+.pm-from{font-size:0.72rem;color:var(--muted);text-decoration:line-through;margin-bottom:0.2rem}
+.pm-arrow{font-size:0.7rem;color:var(--gold);margin-bottom:0.2rem}
+.pm-to{font-size:0.8rem;color:var(--text);font-weight:500}
+
+/* ── 8. MODELO RECOMENDADO ── */
+.mr-top{
+  background:var(--s1);border:1px solid var(--border);padding:2rem;
+  margin-bottom:1.5rem;
+}
+.mr-profile-label{font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem}
+.mr-profile-name{font-family:'Playfair Display',sans-serif;font-size:1.5rem;font-weight:700;margin-bottom:0.5rem;letter-spacing:-0.01em}
+.mr-profile-desc{font-size:0.88rem;color:var(--muted2);line-height:1.7;font-weight:300;max-width:550px}
+.mr-specs{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:1.5rem}
+.mr-spec{background:var(--s1);padding:1.2rem;text-align:center}
+.mr-spec-val{font-family:'Playfair Display',sans-serif;font-size:1.2rem;font-weight:700;color:var(--gold);margin-bottom:0.2rem}
+.mr-spec-label{font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)}
+.mr-modules{margin-bottom:1.5rem}
+.mr-mod-title{font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:0.7rem}
+.mr-mod-list{display:flex;flex-direction:column;gap:0.4rem}
+.mr-mod-item{
+  background:var(--s2);border:1px solid var(--border);padding:0.7rem 1rem;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:0.8rem;color:var(--text);
+}
+.mr-mod-status{
+  font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.15rem 0.5rem;
+}
+.mr-mod-status.included{background:var(--green-dim);color:var(--green)}
+.mr-mod-status.optional{background:var(--gold-dim);color:var(--gold)}
+.config-reminder{
+  font-size:0.78rem;color:var(--muted);text-align:center;padding:1rem;
+  border:1px dashed var(--border);font-style:italic;
+}
+
+/* ── 9. PRÓXIMOS PASSOS ── */
+.ns-hero{
+  background:var(--gold-dim);border:1px solid rgba(201,168,76,0.2);
+  padding:2.5rem;text-align:center;margin-bottom:2rem;
+}
+.ns-title{font-family:'Playfair Display',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:0.6rem;letter-spacing:-0.01em}
+.ns-sub{font-size:0.9rem;color:var(--muted2);line-height:1.7;max-width:500px;margin:0 auto 1.5rem;font-weight:300}
+.ns-options{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:2rem}
+.ns-opt{
+  background:var(--s1);border:1px solid var(--border);padding:1.5rem;
+  cursor:pointer;transition:all 0.2s;text-align:left;
+}
+.ns-opt:hover{border-color:rgba(201,168,76,0.3);transform:translateY(-2px)}
+.ns-opt-icon{font-size:1.5rem;margin-bottom:0.7rem}
+.ns-opt-title{font-family:'Playfair Display',sans-serif;font-size:0.95rem;font-weight:700;margin-bottom:0.3rem}
+.ns-opt-desc{font-size:0.78rem;color:var(--muted);line-height:1.55}
+.ns-opt-timeline{
+  font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);margin-top:0.7rem;
+}
+.contact-block{
+  background:var(--s2);border:1px solid var(--border);padding:1.5rem 2rem;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+}
+.cb-info{}
+.cb-name{font-family:'Playfair Display',sans-serif;font-size:0.95rem;font-weight:700;margin-bottom:0.2rem}
+.cb-role{font-size:0.78rem;color:var(--muted)}
+.cb-contact{font-size:0.8rem;color:var(--muted2);margin-top:0.3rem}
+.cb-cta{
+  font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--ink);background:var(--gold);padding:0.75rem 1.75rem;
+  border:none;cursor:pointer;text-decoration:none;transition:background 0.2s;
+  display:inline-block;
+}
+.cb-cta:hover{background:var(--gold2)}
+.page-footer{
+  padding:1.2rem 1.5rem;
+  background:rgba(8,11,16,0.95);
+  border-top:1px solid var(--border);
+  text-align:center;
+  color:var(--muted);
+  font-size:0.82rem;
+}
+.page-footer a{color:var(--gold);text-decoration:none}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:var(--s0)}
+::-webkit-scrollbar-thumb{background:var(--s2)}
+::-webkit-scrollbar-thumb:hover{background:var(--muted)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  :root{--sidebar:200px}
+  main{padding:1.5rem}
+  .grid-2,.fears-grid,.tl-content,.sim-layout,.del-grid,.results-stages,.mr-specs,.pb-matrix,.ns-options{grid-template-columns:1fr}
+  .kpi-grid-mini{grid-template-columns:1fr 1fr}
+  .phase-detail.active{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="logo-block">
+      <img src="logo_smd.png" alt="Ser Mais Digital">
+    </div>
+    <div class="header-title" id="sectionTitle">Estúdio da Oferta · Implementação de IA Aplicada</div>
+  </div>
+  <div class="header-right">
+    <div class="header-badge">Preview Consultivo</div>
+    <a href="mailto:fabricio.pequeno@sermaisdigital.com.br" class="header-cta">Iniciar diagnóstico</a>
+  </div>
+</header>
+
+<div class="app-body">
+<aside>
+  <nav>
+    <div class="nav-section-label">A Oferta</div>
+    <ul>
+      <li><button class="nav-btn active" data-section="overview"><span class="nav-num">01</span>Visão Geral</button></li>
+      <li><button class="nav-btn" data-section="method"><span class="nav-num">02</span>O Método</button></li>
+    </ul>
+    <div class="nav-section-label">Explorar</div>
+    <ul>
+      <li><button class="nav-btn" data-section="simulator"><span class="nav-num">03</span>Simulador</button></li>
+      <li><button class="nav-btn" data-section="timeline"><span class="nav-num">04</span>Linha do Tempo</button></li>
+      <li><button class="nav-btn" data-section="deliverables"><span class="nav-num">05</span>Entregáveis</button></li>
+    </ul>
+    <div class="nav-section-label">Resultados</div>
+    <ul>
+      <li><button class="nav-btn" data-section="indicators"><span class="nav-num">06</span>Indicadores</button></li>
+      <li><button class="nav-btn" data-section="results"><span class="nav-num">07</span>Resultados Esperados</button></li>
+    </ul>
+    <div class="nav-section-label">Decisão</div>
+    <ul>
+      <li><button class="nav-btn" data-section="model"><span class="nav-num">08</span>Modelo Recomendado</button></li>
+      <li><button class="nav-btn" data-section="nextsteps"><span class="nav-num">09</span>Próximos Passos</button></li>
+    </ul>
+  </nav>
+</aside>
+
+<main>
+
+<!-- 01 VISÃO GERAL -->
+<div class="section active" id="overview">
+  <div class="sec-label">Oferta · Ser Mais Digital</div>
+  <h1 class="sec-title">Implementação de IA Aplicada</h1>
+  <p class="sec-desc">Um método executivo de adoção de IA com ganho operacional mensurável. Não vendemos ferramenta. Vendemos estrutura.</p>
+  <div class="sec-divider"></div>
+
+  <div class="thesis-block">
+    <div class="thesis-text">O cliente não compra IA. Ele compra <em>segurança para adotar IA</em> com método, previsibilidade e impacto operacional.</div>
+  </div>
+
+  <div class="overview-hero">
+    <div class="ov-headline">Da curiosidade ao uso real, com governança, capacitação e resultado.</div>
+    <p class="ov-sub">Ajudamos áreas de tecnologia de 10 a 500 pessoas a sair do uso desorganizado e chegar em adoção orientada por metas, segura, mensurável e escalável.</p>
+    <div class="pill-row">
+      <span class="pill gold">Método em 6 fases</span>
+      <span class="pill">Diagnóstico</span>
+      <span class="pill">Governança</span>
+      <span class="pill">Capacitação</span>
+      <span class="pill">Automação</span>
+      <span class="pill">Monitoramento</span>
+      <span class="pill">Escala</span>
+    </div>
+  </div>
+
+  <div class="sec-label" style="margin-top:2rem">Os três medos que precisamos resolver</div>
+  <div class="fears-grid">
+    <div class="fear-card">
+      <div class="fear-icon">🌀</div>
+      <div class="fear-title">"Isso vai virar projeto confuso."</div>
+      <div class="fear-resp">O estúdio mostra fases claras, sequência lógica e o que entra e sai em cada etapa — eliminando ambiguidade antes da contratação.</div>
+    </div>
+    <div class="fear-card">
+      <div class="fear-icon">⚡</div>
+      <div class="fear-title">"Vai dar muito trabalho pro meu time."</div>
+      <div class="fear-resp">A consultoria conduz ativamente. Cada fase documenta a participação esperada do cliente — prevista, moderada e distribuída no tempo.</div>
+    </div>
+    <div class="fear-card">
+      <div class="fear-icon">📊</div>
+      <div class="fear-title">"Não vou saber se deu resultado."</div>
+      <div class="fear-resp">Seis indicadores evoluem ao longo do programa. Adoção, governança, produtividade e escala são medidos, não apenas prometidos.</div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-top:2rem">
+    <div class="card">
+      <div class="sec-label">Para quem serve</div>
+      <div style="font-size:0.85rem;color:var(--muted2);line-height:1.7;font-weight:300">Gestores de tecnologia, CIOs e líderes de operação em empresas de <strong style="color:var(--text)">10 a 500 pessoas</strong> que querem adoção real de IA, não apenas licença liberada.</div>
+    </div>
+    <div class="card">
+      <div class="sec-label">O diferencial</div>
+      <div style="font-size:0.85rem;color:var(--muted2);line-height:1.7;font-weight:300">Combinação única de <strong style="color:var(--text)">estratégia + mudança + operação + tecnologia</strong> em um programa único, com foco em adoção sustentada, não em entusiasmo inicial.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 02 MÉTODO -->
+<div class="section" id="method">
+  <div class="sec-label">Método SMD · A.I.M.</div>
+  <h2 class="sec-title">As 6 fases do programa</h2>
+  <p class="sec-desc">Cada fase tem objetivo claro, entregáveis definidos, participação esperada do cliente e uma pergunta executiva que responde.</p>
+  <div class="sec-divider"></div>
+
+  <div class="phases-nav" id="phasesNav">
+    <button class="phase-tab active" data-phase="0">01 · Diagnóstico</button>
+    <button class="phase-tab" data-phase="1">02 · Governança</button>
+    <button class="phase-tab" data-phase="2">03 · Capacitação</button>
+    <button class="phase-tab" data-phase="3">04 · Automação</button>
+    <button class="phase-tab" data-phase="4">05 · Monitoramento</button>
+    <button class="phase-tab" data-phase="5">06 · Escala</button>
+  </div>
+
+  <div id="phaseDetails"></div>
+</div>
+
+<!-- 03 SIMULADOR -->
+<div class="section" id="simulator">
+  <div class="sec-label">Simulador · Configure seu cenário</div>
+  <h2 class="sec-title">Como o método se adapta ao seu contexto</h2>
+  <p class="sec-desc">Selecione as variáveis do seu contexto e veja o perfil de programa recomendado, com intensidade, cadência e entregáveis.</p>
+  <div class="sec-divider"></div>
+
+  <div class="sim-layout">
+    <div class="sim-inputs">
+      <div class="sim-inputs-title">Parâmetros do seu programa</div>
+
+      <div class="sim-field">
+        <span class="sim-field-label">Tamanho do time</span>
+        <div class="sim-options" data-key="teamSize">
+          <button class="sim-opt sel" data-val="S">10–49 pessoas</button>
+          <button class="sim-opt" data-val="M">50–149 pessoas</button>
+          <button class="sim-opt" data-val="L">150–500 pessoas</button>
+        </div>
+      </div>
+
+      <div class="sim-field">
+        <span class="sim-field-label">Duração do programa</span>
+        <div class="sim-options" data-key="duration">
+          <button class="sim-opt" data-val="3">3 meses</button>
+          <button class="sim-opt sel" data-val="6">6 meses</button>
+          <button class="sim-opt" data-val="9">9 meses</button>
+          <button class="sim-opt" data-val="12">12 meses</button>
+        </div>
+      </div>
+
+      <div class="sim-field">
+        <span class="sim-field-label">Objetivo principal</span>
+        <div class="sim-options" data-key="objective">
+          <button class="sim-opt sel" data-val="produtividade">Produtividade</button>
+          <button class="sim-opt" data-val="cultura">Cultura de IA</button>
+          <button class="sim-opt" data-val="padronizacao">Padronização</button>
+          <button class="sim-opt" data-val="automacao">Automação</button>
+          <button class="sim-opt" data-val="chatbot">Chatbot/Copilot</button>
+          <button class="sim-opt" data-val="governanca">Governança</button>
+        </div>
+      </div>
+
+      <div class="sim-field">
+        <span class="sim-field-label">Maturidade atual de IA</span>
+        <div class="sim-options" data-key="maturity">
+          <button class="sim-opt" data-val="iniciante">Iniciante</button>
+          <button class="sim-opt sel" data-val="emergente">Emergente</button>
+          <button class="sim-opt" data-val="intermediario">Intermediário</button>
+          <button class="sim-opt" data-val="avancado">Avançado</button>
+        </div>
+      </div>
+
+      <div class="sim-field">
+        <span class="sim-field-label">Sensibilidade a risco</span>
+        <div class="sim-options" data-key="risk">
+          <button class="sim-opt" data-val="baixa">Baixa</button>
+          <button class="sim-opt sel" data-val="media">Média</button>
+          <button class="sim-opt" data-val="alta">Alta</button>
+        </div>
+      </div>
+
+      <div class="sim-field">
+        <span class="sim-field-label">Tipo de aplicação prioritária</span>
+        <div class="sim-options" data-key="appType">
+          <button class="sim-opt sel" data-val="individual">Produtividade individual</button>
+          <button class="sim-opt" data-val="gestao">Gestão e liderança</button>
+          <button class="sim-opt" data-val="automacao">Automação interna</button>
+          <button class="sim-opt" data-val="chatbot">Chatbot interno</button>
+          <button class="sim-opt" data-val="copiloto">Copiloto operacional</button>
+          <button class="sim-opt" data-val="documentacao">Documentação</button>
+          <button class="sim-opt" data-val="produto">Produto com IA</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sim-output" id="simOutput">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- 04 LINHA DO TEMPO -->
+<div class="section" id="timeline">
+  <div class="sec-label">Linha do Tempo · Navegue mês a mês</div>
+  <h2 class="sec-title">O que acontece em cada momento</h2>
+  <p class="sec-desc">Veja como as fases, entregáveis e indicadores evoluem ao longo do programa. Use os controles para navegar.</p>
+  <div class="sec-divider"></div>
+
+  <div class="timeline-controls">
+    <button class="tl-btn" id="tlPrev">←</button>
+    <div class="tl-month-label" id="tlMonthLabel">Mês 1</div>
+    <div class="tl-phase-pill" id="tlPhasePill">Diagnóstico</div>
+    <button class="tl-btn" id="tlNext">→</button>
+  </div>
+
+  <div class="tl-scrubber" id="tlScrubber"></div>
+  <div class="tl-track" id="tlTrack"></div>
+
+  <div class="tl-content">
+    <div class="tl-left">
+      <div class="tl-phase-info">
+        <div class="tl-pi-tag" id="tlPhaseTag"></div>
+        <div class="tl-pi-title" id="tlPhaseTitle"></div>
+        <div class="tl-pi-desc" id="tlPhaseDesc"></div>
+      </div>
+      <div class="tl-deliverables-active">
+        <div class="tl-del-label">Entregáveis ativos neste período</div>
+        <div class="tl-del-list" id="tlDeliverables"></div>
+      </div>
+      <div class="kpi-narrative" id="tlNarrative"></div>
+    </div>
+    <div class="tl-right">
+      <div class="tl-del-label" style="margin-bottom:1rem">Indicadores neste momento</div>
+      <div class="tl-kpi-mini" id="tlKpis"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 05 ENTREGÁVEIS -->
+<div class="section" id="deliverables">
+  <div class="sec-label">Entregáveis · Por fase</div>
+  <h2 class="sec-title">O que o cliente recebe</h2>
+  <p class="sec-desc">Em cada fase, um conjunto específico de entregáveis materializa o avanço do programa — documentos, kits, MVPs e frameworks.</p>
+  <div class="sec-divider"></div>
+  <div id="delContent"></div>
+</div>
+
+<!-- 06 INDICADORES -->
+<div class="section" id="indicators">
+  <div class="sec-label">Indicadores · Composição ao longo do tempo</div>
+  <h2 class="sec-title">Como o impacto se forma</h2>
+  <p class="sec-desc">Os indicadores são projetivos e pedagógicos — mostram composição de maturidade, não promessa rígida. Selecione um para ver a evolução detalhada.</p>
+  <div class="sec-divider"></div>
+
+  <div class="kpi-grid-mini" id="kpiCards"></div>
+
+  <div class="kpi-chart-area" style="margin-top:1.5rem">
+    <div class="kca-header">
+      <div>
+        <div class="kca-title" id="chartTitle">Maturidade de IA</div>
+        <div class="kpi-context" id="chartContext" style="margin-top:0.4rem;max-width:500px"></div>
+      </div>
+      <div>
+        <div class="kca-val" id="chartVal">—</div>
+        <div class="kca-val-label">ao final do programa</div>
+      </div>
+    </div>
+    <svg id="kpiChart"></svg>
+  </div>
+</div>
+
+<!-- 07 RESULTADOS -->
+<div class="section" id="results">
+  <div class="sec-label">Resultados Esperados</div>
+  <h2 class="sec-title">O que muda na operação</h2>
+  <p class="sec-desc">Os resultados se compõem em três estágios progressivos. Não se trata de promessa, mas de composição metodológica de valor.</p>
+  <div class="sec-divider"></div>
+
+  <div class="results-stages">
+    <div class="rs-card s1">
+      <div class="rs-period">Estágio 1 · Meses 1–3</div>
+      <div class="rs-title">Clareza e Fundação</div>
+      <ul class="rs-items">
+        <li>Diagnóstico completo e baseline definido</li>
+        <li>Política de uso aprovada</li>
+        <li>Primeiros casos identificados e priorizados</li>
+        <li>Time com referência clara de como usar IA</li>
+        <li>Quick wins visíveis para a liderança</li>
+      </ul>
+    </div>
+    <div class="rs-card s2">
+      <div class="rs-period">Estágio 2 · Meses 4–7</div>
+      <div class="rs-title">Adoção e Operação</div>
+      <ul class="rs-items">
+        <li>Casos de uso em operação real</li>
+        <li>Adoção crescente e mensurável</li>
+        <li>Redução de retrabalho em processos-alvo</li>
+        <li>Governança ativa e revisão humana funcionando</li>
+        <li>Champions internos multiplicando uso</li>
+      </ul>
+    </div>
+    <div class="rs-card s3">
+      <div class="rs-period">Estágio 3 · Meses 8–12</div>
+      <div class="rs-title">Escala e Capacidade</div>
+      <ul class="rs-items">
+        <li>IA como capacidade operacional contínua</li>
+        <li>Backlog de novos casos em gestão</li>
+        <li>Dashboard de adoção no rito de gestão</li>
+        <li>Capacidade adicional de entrega documentada</li>
+        <li>Roadmap de evolução para o próximo ciclo</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="perception-block">
+    <div class="pb-title">Transformação de percepção ao longo do programa</div>
+    <div class="pb-matrix">
+      <div class="pm-item">
+        <div class="pm-from">IA como modismo</div>
+        <div class="pm-arrow">↓</div>
+        <div class="pm-to">IA como método operacional</div>
+      </div>
+      <div class="pm-item">
+        <div class="pm-from">Ferramenta liberada sem critério</div>
+        <div class="pm-arrow">↓</div>
+        <div class="pm-to">Uso governado com política clara</div>
+      </div>
+      <div class="pm-item">
+        <div class="pm-from">Entusiasmo inicial sem sustentação</div>
+        <div class="pm-arrow">↓</div>
+        <div class="pm-to">Adoção crescente com gestão ativa</div>
+      </div>
+      <div class="pm-item">
+        <div class="pm-from">Resultado invisível para a liderança</div>
+        <div class="pm-arrow">↓</div>
+        <div class="pm-to">KPIs de adoção e produtividade no dashboard</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 08 MODELO RECOMENDADO -->
+<div class="section" id="model">
+  <div class="sec-label">Modelo Recomendado</div>
+  <h2 class="sec-title">Formato ideal do seu programa</h2>
+  <p class="sec-desc">Baseado nas suas escolhas no simulador. Configure o cenário na seção Simulador para personalizar este modelo.</p>
+  <div class="sec-divider"></div>
+  <div id="modelContent"></div>
+</div>
+
+<!-- 09 PRÓXIMOS PASSOS -->
+<div class="section" id="nextsteps">
+  <div class="sec-label">Próximos Passos</div>
+  <h2 class="sec-title">Como começamos</h2>
+  <p class="sec-desc">Quatro caminhos de entrada, do mais leve ao mais estruturado. O diagnóstico é a forma mais natural de começar.</p>
+  <div class="sec-divider"></div>
+
+  <div class="ns-hero">
+    <div class="ns-title">Você não força adoção. Você estrutura.</div>
+    <p class="ns-sub">O primeiro passo é entender onde IA faz sentido no seu contexto antes de qualquer comprometimento maior.</p>
+  </div>
+
+  <div class="ns-options">
+    <div class="ns-opt">
+      <div class="ns-opt-icon">🔍</div>
+      <div class="ns-opt-title">Diagnóstico Inicial</div>
+      <div class="ns-opt-desc">Sessão estruturada para mapear maturidade, oportunidades e riscos. Entregável imediato.</div>
+      <div class="ns-opt-timeline">2 semanas · Entrada mais rápida</div>
+    </div>
+    <div class="ns-opt">
+      <div class="ns-opt-icon">🎯</div>
+      <div class="ns-opt-title">Workshop Executivo</div>
+      <div class="ns-opt-desc">Meio dia com liderança para alinhar objetivos, escopo e modelo de governança antes do programa.</div>
+      <div class="ns-opt-timeline">1 dia · Alinhamento executivo</div>
+    </div>
+    <div class="ns-opt">
+      <div class="ns-opt-icon">📋</div>
+      <div class="ns-opt-title">Proposta Consultiva</div>
+      <div class="ns-opt-desc">Proposta detalhada com escopo, fases, entregáveis, cadência e modelo de investimento.</div>
+      <div class="ns-opt-timeline">1 semana · Formalização</div>
+    </div>
+    <div class="ns-opt">
+      <div class="ns-opt-icon">🚀</div>
+      <div class="ns-opt-title">Sprint de Entrada</div>
+      <div class="ns-opt-desc">Diagnóstico + política básica + primeiro caso de uso em 4 semanas. Resultado imediato.</div>
+      <div class="ns-opt-timeline">4 semanas · Alto impacto inicial</div>
+    </div>
+  </div>
+
+  <div class="contact-block">
+    <div class="cb-info">
+      <div class="cb-name">Fabricio Pequeno</div>
+      <div class="cb-role">Fundador · Ser Mais Digital</div>
+      <div class="cb-contact">fabricio.pequeno@sermaisdigital.com.br · sermaisdigital.com.br</div>
+    </div>
+    <a href="mailto:fabricio.pequeno@sermaisdigital.com.br" class="cb-cta">Iniciar diagnóstico agora</a>
+  </div>
+</div>
+
+</main>
+</div>
+<footer class="page-footer">
+  © 2026 · Ser Mais Digital · <a href="mailto:contato@sermaisdigital.com.br">contato@sermaisdigital.com.br</a>
+</footer>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────
+const PHASES = [
+  {
+    num:'01',tag:'Diagnóstico e Direção',
+    title:'Onde a IA faz sentido no seu contexto?',
+    question:'Em quais problemas vale mexer primeiro para gerar ganho real sem criar bagunça?',
+    objective:'Mapear onde IA gera valor, onde há risco e qual o ponto de partida mais eficiente. Antes de qualquer ferramenta, entendemos o terreno.',
+    actions:['Leitura do contexto operacional','Entrevistas com liderança e times-chave','Diagnóstico de maturidade de IA','Mapeamento de dores e gargalos repetitivos','Análise de ferramentas já em uso (incluindo uso informal)','Classificação de riscos: dados, segurança, qualidade, compliance'],
+    effort:'O cliente dedica <strong>4–8h distribuídas</strong> em entrevistas e validação de contexto. A SMD conduz toda a estruturação e síntese.',
+    deliverables:['Mapa de maturidade de IA','Inventário de oportunidades por área','Visão de riscos e restrições','Baseline de produtividade atual','Recomendação do escopo inicial'],
+    transform:'O gestor sai com clareza sobre o ponto de partida ideal — não uma suposição, mas um diagnóstico estruturado.'
+  },
+  {
+    num:'02',tag:'Estratégia e Governança',
+    title:'Como usamos IA com segurança e critério?',
+    question:'Como definimos as regras do jogo antes da escala?',
+    objective:'Criar a base de governança para que o uso de IA seja seguro, previsível e mensurável — antes de qualquer escala.',
+    actions:['Definição de objetivos executivos da adoção','Escolha de indicadores de sucesso','Construção da política de uso de IA','Critérios de revisão humana e validação','Matriz de risco x impacto','Priorização de quick wins e iniciativas estruturantes'],
+    effort:'O cliente valida e aprova a política em <strong>2–3 sessões de 1h</strong>. Inclui gestor responsável e, idealmente, representante de segurança ou jurídico.',
+    deliverables:['Diretriz executiva de IA','Política de uso responsável','Matriz de risco x impacto','Framework de aprovação de casos','Backlog priorizado de iniciativas'],
+    transform:'IA deixa de ser terra sem lei. A organização sabe o que pode, o que não pode e como decidir quando surgir um caso novo.'
+  },
+  {
+    num:'03',tag:'Capacitação Aplicada',
+    title:'Como o time aprende a usar IA no trabalho real?',
+    question:'Como fazer as pessoas saberem usar IA com qualidade — e não apenas em demos?',
+    objective:'Capacitar por papel, com contexto real e casos do dia a dia. Não um treinamento genérico, mas um programa por função.',
+    actions:['Trilha para liderança','Trilha para gestores','Trilha para squads e especialistas','Workshops de prompting aplicado ao contexto real','Laboratórios com tarefas reais do time','Formação de champions e multiplicadores internos','Biblioteca de prompts e playbooks por função'],
+    effort:'O time dedica <strong>4–8h por pessoa</strong> em workshops e laboratórios. Champions dedicam tempo adicional para multiplicação.',
+    deliverables:['Trilhas por perfil','Kits de uso por função','Playbooks de prompting e revisão','Comunidade interna de multiplicadores','Biblioteca de casos e padrões'],
+    transform:'O time deixa de ter medo ou usar IA de forma aleatória. Cada função sabe qual é o seu jeito de usar bem.'
+  },
+  {
+    num:'04',tag:'Casos de Uso e Automação',
+    title:'Onde a IA entra no processo para melhorar resultado?',
+    question:'Quais fluxos ganham velocidade, qualidade ou capacidade com IA dentro?',
+    objective:'Colocar IA para trabalhar em fluxos concretos, com critério de sucesso, piloto controlado e rollout planejado.',
+    actions:['Seleção dos casos de maior impacto x viabilidade','Redesenho do fluxo com IA integrada','Criação de copilots, automações e assistentes','Integração com bases, tickets, FAQs, CRM ou outros sistemas','Piloto controlado com grupo pequeno','Definição de critérios de sucesso por caso'],
+    effort:'O time-alvo do caso participa do <strong>piloto (4–8h)</strong> e do refinamento. A SMD lidera o design e a construção técnica.',
+    deliverables:['Blueprint dos fluxos redesenhados','MVP funcional dos casos priorizados','Integrações iniciais','Plano de rollout','Documentação operacional'],
+    transform:'IA passa a existir dentro do processo, não ao lado dele. O ganho de tempo ou qualidade torna-se visível e mensurável.'
+  },
+  {
+    num:'05',tag:'Adoção Assistida e Monitoramento',
+    title:'Estão usando mesmo? Está melhorando alguma coisa?',
+    question:'Como garantimos uso real e corrigimos rápido quando algo não funciona?',
+    objective:'Monitorar adesão, qualidade e impacto — e agir sobre o que está bloqueando o resultado esperado.',
+    actions:['Implantação acompanhada com suporte ativo','Office hours e apoio contínuo aos usuários','Monitoramento de adesão e frequência por área','Análise de qualidade do uso, não só volume','Acompanhamento de bloqueios e resistências','Ajustes de prompts, fluxos e capacitação'],
+    effort:'Gestores dedicam <strong>1–2h mensais</strong> para alinhamento de resultados. A SMD monitora e gera os relatórios.',
+    deliverables:['Dashboard executivo de adoção','Relatório de barreiras e resistências','Plano de reforço','Recomendações de escala ou correção'],
+    transform:'A oferta não termina na implantação. O gestor tem visibilidade real de quem está usando, com que qualidade e o que está impedindo.'
+  },
+  {
+    num:'06',tag:'Escala e Sustentação',
+    title:'Como isso vira rotina, diferencial e vantagem operacional?',
+    question:'Como transformamos IA em capacidade contínua, não em projeto pontual?',
+    objective:'Expandir os casos bem-sucedidos, revisar a arquitetura e construir o modelo operacional que sustenta o programa daqui pra frente.',
+    actions:['Expansão dos casos com melhor resultado','Revisão de arquitetura e segurança','Modelo de operação contínua de IA','Priorização de novos processos e áreas','Evolução para agentes, copilots e produtos com IA','Transferência de conhecimento para o time interno'],
+    effort:'Liderança dedica <strong>steering mensal</strong>. Time interno assume progressivamente a operação com suporte da SMD.',
+    deliverables:['Roadmap de escala','Modelo operacional de IA','Backlog trimestral','Plano de sustentação','Visão de produto ou plataforma interna'],
+    transform:'IA vira capacidade operacional institucionalizada. O programa muda de projeto para modelo de gestão contínua.'
+  }
+];
+
+const DELIVERABLES_ALL = [
+  {phase:0,icon:'🗺️',name:'Mapa de Maturidade de IA',desc:'Diagnóstico estruturado da capacidade atual do time com IA',type:'doc'},
+  {phase:0,icon:'📋',name:'Inventário de Oportunidades',desc:'Lista priorizada de casos de uso por área e impacto potencial',type:'doc'},
+  {phase:0,icon:'⚠️',name:'Visão de Riscos',desc:'Mapeamento de riscos de dados, segurança, qualidade e compliance',type:'doc'},
+  {phase:0,icon:'📏',name:'Baseline de Produtividade',desc:'Medição inicial de tempo, qualidade e capacidade de entrega',type:'doc'},
+  {phase:1,icon:'📜',name:'Diretriz Executiva de IA',desc:'Documento de posicionamento da liderança sobre uso de IA',type:'doc'},
+  {phase:1,icon:'🛡️',name:'Política de Uso Responsável',desc:'Regras claras do que pode, não pode e como decidir',type:'doc'},
+  {phase:1,icon:'⚖️',name:'Matriz Risco x Impacto',desc:'Framework visual de classificação de casos e decisões',type:'artifact'},
+  {phase:1,icon:'📌',name:'Backlog Priorizado',desc:'Lista ordenada de iniciativas por valor, viabilidade e risco',type:'doc'},
+  {phase:2,icon:'🎓',name:'Trilhas por Perfil',desc:'Programas de capacitação específicos para liderança, gestores e squads',type:'kit'},
+  {phase:2,icon:'🧰',name:'Kits de Uso por Função',desc:'Guias práticos com casos, prompts e padrões por papel',type:'kit'},
+  {phase:2,icon:'📗',name:'Playbooks de Prompting',desc:'Biblioteca de prompts testados e aprovados para contextos reais',type:'kit'},
+  {phase:2,icon:'🏅',name:'Programa de Champions',desc:'Formação de multiplicadores internos com papel e ritmo definidos',type:'artifact'},
+  {phase:3,icon:'🔵',name:'Blueprint de Fluxos',desc:'Mapa dos processos redesenhados com IA integrada',type:'artifact'},
+  {phase:3,icon:'🤖',name:'MVP dos Casos Priorizados',desc:'Versão funcional do chatbot, copilot ou automação implantada',type:'mvp'},
+  {phase:3,icon:'🔗',name:'Integrações Iniciais',desc:'Conexões com sistemas existentes (bases, tickets, documentos)',type:'mvp'},
+  {phase:3,icon:'📦',name:'Documentação Operacional',desc:'Manual e critérios de uso e validação por caso',type:'doc'},
+  {phase:4,icon:'📊',name:'Dashboard Executivo',desc:'Painel de adoção com KPIs por área, gestor e squad',type:'artifact'},
+  {phase:4,icon:'📉',name:'Relatório de Barreiras',desc:'Análise das principais resistências e bloqueios identificados',type:'doc'},
+  {phase:4,icon:'🔄',name:'Plano de Reforço',desc:'Ações corretivas para áreas com baixa adesão',type:'doc'},
+  {phase:5,icon:'🗓️',name:'Roadmap de Escala',desc:'Planejamento de expansão por trimestre e área',type:'doc'},
+  {phase:5,icon:'⚙️',name:'Modelo Operacional de IA',desc:'Estrutura de papéis, ritos e processos para sustentação contínua',type:'artifact'},
+  {phase:5,icon:'📂',name:'Backlog Trimestral',desc:'Pipeline de novos casos com critérios de priorização',type:'doc'},
+];
+
+const KPI_DEFS = [
+  {key:'maturidade',label:'Maturidade de IA',unit:'%',color:'#FF8C00',
+   desc:'Evolução do nível de maturidade organizacional com IA — de uso informal a operação estruturada e escalável.'},
+  {key:'adocao',label:'Adoção do Time',unit:'%',color:'#0F1E3F',
+   desc:'Percentual do time usando IA de forma ativa e regular, por área e função.'},
+  {key:'ganho',label:'Ganho Operacional',unit:'%',color:'#22c55e',
+   desc:'Redução de tempo, retrabalho ou aumento de capacidade percebida nos processos-alvo.'},
+  {key:'governanca',label:'Cobertura de Governança',unit:'%',color:'#a855f7',
+   desc:'Percentual de casos de uso operando sob política, critérios de validação e monitoramento ativo.'},
+  {key:'casos',label:'Casos em Operação',unit:'',color:'#f97316',
+   desc:'Número de automações, copilots ou fluxos com IA em uso real e monitorado.'},
+  {key:'capacidade',label:'Capacidade Adicional',unit:'%',color:'#06b6d4',
+   desc:'Ganho de capacidade de entrega estimado com base no tempo economizado pelos casos ativos.'},
+];
+
+// ─── STATE ─────────────────────────────────────────────
+const state = {
+  activeSection: 'overview',
+  activePhase: 0,
+  simParams: { teamSize:'S', duration:'6', objective:'produtividade', maturity:'emergente', risk:'media', appType:'individual' },
+  tlMonth: 1,
+  tlMaxMonths: 9,
+  activeKpi: 'maturidade'
+};
+
+// ─── NAVIGATION ────────────────────────────────────────
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const s = btn.dataset.section;
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(s).classList.add('active');
+    state.activeSection = s;
+    document.getElementById('sectionTitle').textContent = btn.textContent.trim();
+    if(s === 'indicators') renderKpiSection();
+    if(s === 'model') renderModel();
+    if(s === 'deliverables') renderDeliverables();
+  });
+});
+
+// ─── METHOD ─────────────────────────────────────────────
+function renderPhaseDetail(idx) {
+  const p = PHASES[idx];
+  return `
+    <div class="phase-detail active">
+      <div class="pd-left">
+        <div class="pd-num">${p.num}</div>
+        <div class="pd-tag">${p.tag}</div>
+        <div class="pd-title">${p.title}</div>
+        <div class="pd-question">${p.question}</div>
+        <div class="pd-objective">${p.objective}</div>
+        <div class="pd-effort">${p.effort}</div>
+        <div style="margin-top:1rem" class="pd-transform">"${p.transform}"</div>
+      </div>
+      <div class="pd-right">
+        <div class="pd-section">
+          <div class="pd-section-title">O que acontece na prática</div>
+          <ul class="pd-list">${p.actions.map(a=>`<li>${a}</li>`).join('')}</ul>
+        </div>
+        <div class="pd-section">
+          <div class="pd-section-title">Entregáveis desta fase</div>
+          <ul class="pd-list">${p.deliverables.map(d=>`<li>${d}</li>`).join('')}</ul>
+        </div>
+      </div>
+    </div>`;
+}
+
+function initMethod() {
+  document.getElementById('phaseDetails').innerHTML = renderPhaseDetail(0);
+  document.querySelectorAll('.phase-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const idx = parseInt(tab.dataset.phase);
+      document.querySelectorAll('.phase-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('phaseDetails').innerHTML = renderPhaseDetail(idx);
+      state.activePhase = idx;
+    });
+  });
+}
+
+// ─── SIMULATOR ──────────────────────────────────────────
+function computeProfile(p) {
+  const sizeMap = {S:1,M:2,L:3};
+  const matMap = {iniciante:1,emergente:2,intermediario:3,avancado:4};
+  const riskMap = {baixa:1,media:2,alta:3};
+  const durNum = parseInt(p.duration);
+
+  const sz = sizeMap[p.teamSize];
+  const mat = matMap[p.maturity];
+  const rk = riskMap[p.risk];
+
+  // Governance intensity 1-3
+  const gov = Math.min(3, Math.max(1, Math.round((sz + rk + (5 - mat)) / 3)));
+  const govLabels = ['Simplificada','Moderada','Formal com Comitê'];
+
+  // Training: more if low maturity or large team
+  const train = Math.min(3, Math.max(1, Math.round((sz + (5 - mat)) / 2)));
+  const trainLabels = ['Básica (1 trilha)','Estruturada (2–3 trilhas)','Completa (trilhas por perfil)'];
+
+  // Cases count
+  const cases = Math.min(6, Math.max(1, Math.round((durNum/3) * (mat/2) + (sz/2))));
+  const casesLabel = cases <= 2 ? '1–2 casos' : cases <= 4 ? '2–4 casos' : '4–6 casos';
+
+  // Cadence
+  const cad = sz >= 2 ? 'Quinzenal + steering mensal' : 'Quinzenal';
+  if(durNum >= 9) state.cad = 'Operação mensal com backlog contínuo';
+
+  // Profile name
+  let profileName, profileDesc;
+  if(durNum <= 3 && sz === 1) { profileName = 'Implantação Leve'; profileDesc = 'Foco em clareza, fundação rápida e primeiros ganhos mensuráveis.'; }
+  else if(durNum <= 6 && sz <= 2) { profileName = 'Implantação Estruturada'; profileDesc = 'Governança, capacitação e casos prioritários em operação real.'; }
+  else if(durNum <= 9) { profileName = 'Programa de Adoção e Escala'; profileDesc = 'Adoção consistente, múltiplos casos e monitoramento ativo por área.'; }
+  else { profileName = 'Operação Contínua de IA'; profileDesc = 'IA como capacidade operacional com backlog contínuo e expansão planejada.'; }
+
+  // Narrative
+  const objNarr = {
+    produtividade:'A ênfase recai sobre capacitação prática e ganho individual de tempo — cada pessoa aprende a usar IA no seu fluxo de trabalho.',
+    cultura:'O programa prioriza formação de champions, comunidade interna e construção de cultura de experimentação responsável.',
+    padronizacao:'Foco em playbooks, política e padrões de uso — garantindo coerência e qualidade nas saídas de IA em toda a organização.',
+    automacao:'A fase 4 ganha protagonismo: blueprint de fluxos, MVPs e integrações com sistemas existentes para ganho operacional real.',
+    chatbot:'O caso central é o assistente interno — seja de RH, TI ou operações — com design, integração e rollout estruturado.',
+    governanca:'Governança é o eixo principal: política robusta, matriz de risco, critérios de validação humana e comitê de decisão.'
+  };
+
+  const matNarr = {
+    iniciante:'Com maturidade iniciante, o programa começa pela alfabetização — garantindo que o time tenha referência antes de qualquer automação.',
+    emergente:'Com maturidade emergente, há base para ir direto à política e capacitação aplicada, acelerando os primeiros casos.',
+    intermediario:'Com maturidade intermediária, o foco pode ir para casos mais sofisticados e governança mais formal mais rapidamente.',
+    avancado:'Com time avançado, o programa pode ir direto para casos complexos, copilots e produto com IA desde o início.'
+  };
+
+  const narrative = `${objNarr[p.objective]} ${matNarr[p.maturity]}`;
+
+  // Key deliverables
+  const delsByObj = {
+    produtividade:['Kits de uso por função','Playbooks de prompting','Dashboard de adoção','Baseline de produtividade'],
+    cultura:['Programa de Champions','Biblioteca de casos','Trilhas por perfil','Comunidade interna de multiplicadores'],
+    padronizacao:['Política de uso','Playbooks','Matriz de risco','Framework de aprovação'],
+    automacao:['Blueprint de fluxos','MVPs funcionais','Integrações com sistemas','Documentação operacional'],
+    chatbot:['MVP do chatbot interno','Blueprint de fluxo','Integrações','Plano de rollout'],
+    governanca:['Diretriz executiva','Política de uso','Matriz risco x impacto','Framework de aprovação']
+  };
+
+  return { profileName, profileDesc, gov, govLabel: govLabels[gov-1], train, trainLabel: trainLabels[train-1],
+    cases, casesLabel, cad, narrative, deliverables: delsByObj[p.objective] };
+}
+
+function renderSimulator() {
+  const prof = computeProfile(state.simParams);
+  const govPct = [33,66,100][prof.gov-1];
+  const trainPct = [33,66,100][prof.train-1];
+  const casesPct = Math.round((prof.cases/6)*100);
+
+  document.getElementById('simOutput').innerHTML = `
+    <div class="sim-out-header">
+      <div class="sim-profile-name">${prof.profileName}</div>
+      <div class="sim-profile-desc">${prof.profileDesc}</div>
+    </div>
+    <div class="sim-metrics">
+      <div class="sim-metric">
+        <div class="sm-label">Governança</div>
+        <div class="sm-value">${prof.govLabel}</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:${govPct}%"></div></div>
+      </div>
+      <div class="sim-metric">
+        <div class="sm-label">Capacitação</div>
+        <div class="sm-value">${prof.trainLabel}</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:${trainPct}%"></div></div>
+      </div>
+      <div class="sim-metric">
+        <div class="sm-label">Casos de uso</div>
+        <div class="sm-value">${prof.casesLabel}</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:${casesPct}%"></div></div>
+      </div>
+      <div class="sim-metric">
+        <div class="sm-label">Cadência</div>
+        <div class="sm-value" style="font-size:0.85rem">${prof.cad}</div>
+        <div class="sm-sub">acompanhamento ativo</div>
+      </div>
+    </div>
+    <div class="sim-deliverables">
+      <div class="sd-title">Entregáveis mais relevantes para este perfil</div>
+      <div class="sd-list">${prof.deliverables.map(d=>`<div class="sd-item">${d}</div>`).join('')}</div>
+    </div>
+    <div class="sim-narrative">${prof.narrative}</div>
+  `;
+}
+
+function initSimulator() {
+  renderSimulator();
+  document.querySelectorAll('.sim-options').forEach(group => {
+    group.querySelectorAll('.sim-opt').forEach(opt => {
+      opt.addEventListener('click', () => {
+        group.querySelectorAll('.sim-opt').forEach(o => o.classList.remove('sel'));
+        opt.classList.add('sel');
+        state.simParams[group.dataset.key] = opt.dataset.val;
+        renderSimulator();
+      });
+    });
+  });
+}
+
+// ─── TIMELINE ────────────────────────────────────────────
+function getPhaseForMonth(month, total) {
+  const pct = month / total;
+  if(pct <= 0.18) return 0;
+  if(pct <= 0.33) return 1;
+  if(pct <= 0.5)  return 2;
+  if(pct <= 0.67) return 3;
+  if(pct <= 0.83) return 4;
+  return 5;
+}
+
+function getKpisForMonth(month, total) {
+  const pct = month / total;
+  const matStart = {iniciante:10, emergente:25, intermediario:45, avancado:65}[state.simParams.maturity] || 25;
+  const matEnd = Math.min(95, matStart + 50);
+  return {
+    maturidade: Math.round(matStart + (matEnd - matStart) * Math.min(1, pct * 1.1)),
+    adocao: Math.round(Math.max(0, (pct - 0.25) / 0.75) * 75),
+    ganho: Math.round(Math.max(0, (pct - 0.4) / 0.6) * 60),
+    governanca: Math.round(Math.min(90, pct * 2 * 70)),
+    casos: Math.round(Math.max(0, (pct - 0.35) / 0.65) * parseInt(state.simParams.duration) * 0.5),
+    capacidade: Math.round(Math.max(0, (pct - 0.5) / 0.5) * 45),
+  };
+}
+
+const KPI_COLORS = {maturidade:'#FF8C00',adocao:'#0F1E3F',ganho:'#22c55e',governanca:'#a855f7',casos:'#f97316',capacidade:'#06b6d4'};
+const KPI_NAMES = {maturidade:'Maturidade',adocao:'Adoção',ganho:'Ganho Oper.',governanca:'Governança',casos:'Casos Ativos',capacidade:'Capacidade'};
+
+function renderTimeline() {
+  const total = parseInt(state.simParams.duration);
+  state.tlMaxMonths = total;
+  if(state.tlMonth > total) state.tlMonth = total;
+
+  // Scrubber
+  const scrub = document.getElementById('tlScrubber');
+  scrub.innerHTML = Array.from({length:total},(_,i)=>{
+    const cls = i+1 < state.tlMonth ? 'passed' : i+1 === state.tlMonth ? 'active' : '';
+    return `<div class="tl-scrub-seg ${cls}" data-m="${i+1}"></div>`;
+  }).join('');
+  scrub.querySelectorAll('.tl-scrub-seg').forEach(s => s.addEventListener('click',()=>{state.tlMonth=parseInt(s.dataset.m);renderTimeline();}));
+
+  // Track
+  const track = document.getElementById('tlTrack');
+  track.innerHTML = Array.from({length:total},(_,i)=>{
+    const m = i+1;
+    const ph = getPhaseForMonth(m, total);
+    const cls = m < state.tlMonth ? 'passed' : m === state.tlMonth ? 'active' : '';
+    return `<div class="tl-seg ${cls}" data-m="${m}" title="Mês ${m}"><span class="tl-seg-num">${m}</span><div class="tl-marker"></div></div>`;
+  }).join('');
+  track.querySelectorAll('.tl-seg').forEach(s => s.addEventListener('click',()=>{state.tlMonth=parseInt(s.dataset.m);renderTimeline();}));
+
+  const curMonth = state.tlMonth;
+  const phIdx = getPhaseForMonth(curMonth, total);
+  const ph = PHASES[phIdx];
+  const kpis = getKpisForMonth(curMonth, total);
+
+  document.getElementById('tlMonthLabel').textContent = `Mês ${curMonth}`;
+  document.getElementById('tlPhasePill').textContent = ph.tag;
+  document.getElementById('tlPhaseTag').textContent = `Fase ${phIdx+1} de 6`;
+  document.getElementById('tlPhaseTitle').textContent = ph.tag;
+  document.getElementById('tlPhaseDesc').textContent = ph.objective;
+
+  // Deliverables
+  const delForPhase = DELIVERABLES_ALL.filter(d => d.phase === phIdx);
+  const allPrevDels = DELIVERABLES_ALL.filter(d => d.phase < phIdx);
+  const delHtml = [...delForPhase.map(d=>`<span class="tl-del-tag highlight">${d.name}</span>`),
+    ...allPrevDels.slice(-3).map(d=>`<span class="tl-del-tag">${d.name}</span>`)].join('');
+  document.getElementById('tlDeliverables').innerHTML = delHtml;
+
+  // KPIs
+  const kpiRows = Object.entries(KPI_NAMES).map(([key,name])=>`
+    <div class="kpi-row">
+      <span class="kpi-name">${name}</span>
+      <div class="kpi-bar-track"><div class="kpi-bar-fill" style="width:${Math.min(100,key==='casos'?kpis[key]*10:kpis[key])}%;background:${KPI_COLORS[key]}"></div></div>
+      <span class="kpi-val">${key==='casos'?kpis[key]:kpis[key]+'%'}</span>
+    </div>`).join('');
+  document.getElementById('tlKpis').innerHTML = kpiRows;
+
+  // Narrative
+  const narratives = [
+    'A organização está no início da jornada. O diagnóstico revela onde há potencial e onde há risco — esta clareza é o entregável mais valioso desta fase.',
+    'As regras do jogo estão sendo definidas. Política de uso, matriz de risco e critérios de validação criam a base segura para a escala que vem a seguir.',
+    'O time está aprendendo a usar IA no trabalho real. Champions surgem e a biblioteca de prompts começa a ser construída coletivamente.',
+    'Os primeiros casos de uso entram em operação. O ganho de tempo começa a aparecer nos processos-alvo e a adoção acelera.',
+    'O foco é garantir que o uso está acontecendo com qualidade. O dashboard de adoção revela padrões — e o que precisa ser ajustado.',
+    'IA está se tornando capacidade operacional contínua. O backlog cresce, novos casos são priorizados e o modelo de sustentação é consolidado.'
+  ];
+  document.getElementById('tlNarrative').textContent = narratives[phIdx];
+}
+
+function initTimeline() {
+  renderTimeline();
+  document.getElementById('tlPrev').addEventListener('click',()=>{if(state.tlMonth>1){state.tlMonth--;renderTimeline();}});
+  document.getElementById('tlNext').addEventListener('click',()=>{if(state.tlMonth<state.tlMaxMonths){state.tlMonth++;renderTimeline();}});
+}
+
+// ─── DELIVERABLES ────────────────────────────────────────
+function renderDeliverables() {
+  const typeLabels = {doc:'Documento',artifact:'Framework',kit:'Kit de Uso',mvp:'MVP / Produto'};
+  let html = '';
+  PHASES.forEach((ph,i) => {
+    const dels = DELIVERABLES_ALL.filter(d => d.phase === i);
+    html += `<div class="del-phase-title" data-num="0${i+1}">${ph.tag}</div>`;
+    html += `<div class="del-grid">`;
+    dels.forEach(d => {
+      html += `<div class="del-card">
+        <div class="del-icon">${d.icon}</div>
+        <div class="del-name">${d.name}</div>
+        <div class="del-desc">${d.desc}</div>
+        <span class="del-type ${d.type}">${typeLabels[d.type]}</span>
+      </div>`;
+    });
+    html += `</div>`;
+  });
+  document.getElementById('delContent').innerHTML = html;
+}
+
+// ─── INDICATORS ──────────────────────────────────────────
+function getKpiSeries(key, months) {
+  const data = [];
+  for(let m = 0; m <= months; m++) {
+    const k = getKpisForMonth(m, months);
+    data.push(key === 'casos' ? k[key] * 10 : k[key]);
+  }
+  return data;
+}
+
+function renderKpiChart(key) {
+  const months = parseInt(state.simParams.duration);
+  const series = getKpiSeries(key, months);
+  const maxVal = Math.max(...series, 10);
+  const def = KPI_DEFS.find(k => k.key === key);
+  const svg = document.getElementById('kpiChart');
+  const W = svg.parentElement.clientWidth - 48;
+  const H = 160;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('width', W);
+  svg.setAttribute('height', H);
+
+  const padL = 10, padR = 10, padT = 10, padB = 20;
+  const w = W - padL - padR;
+  const h = H - padT - padB;
+  const pts = series.map((v,i) => [padL + (i/(series.length-1))*w, padT + h - (v/maxVal)*h]);
+
+  // Grid lines
+  let gridHtml = '';
+  [0,25,50,75,100].forEach(pct => {
+    const y = padT + h - (pct/100)*h;
+    gridHtml += `<line x1="${padL}" y1="${y}" x2="${padL+w}" y2="${y}" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>`;
+    gridHtml += `<text x="${padL-2}" y="${y+3}" font-size="8" fill="rgba(255,255,255,0.2)" text-anchor="end">${pct}%</text>`;
+  });
+
+  // Area path
+  let pathD = `M ${pts[0][0]} ${pts[0][1]}`;
+  for(let i=1;i<pts.length;i++) {
+    const cp1x = (pts[i-1][0]+pts[i][0])/2;
+    pathD += ` C ${cp1x} ${pts[i-1][1]} ${cp1x} ${pts[i][1]} ${pts[i][0]} ${pts[i][1]}`;
+  }
+  const areaD = pathD + ` L ${pts[pts.length-1][0]} ${padT+h} L ${pts[0][0]} ${padT+h} Z`;
+
+  // Month labels
+  let monthLabels = '';
+  const step = Math.ceil(series.length / 6);
+  pts.forEach((pt,i) => {
+    if(i % step === 0) {
+      monthLabels += `<text x="${pt[0]}" y="${H-4}" font-size="8" fill="rgba(255,255,255,0.25)" text-anchor="middle">M${i}</text>`;
+    }
+  });
+
+  svg.innerHTML = `
+    <defs>
+      <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="${def.color}" stop-opacity="0.25"/>
+        <stop offset="100%" stop-color="${def.color}" stop-opacity="0.02"/>
+      </linearGradient>
+    </defs>
+    ${gridHtml}
+    <path d="${areaD}" fill="url(#areaGrad)"/>
+    <path d="${pathD}" fill="none" stroke="${def.color}" stroke-width="2"/>
+    ${pts.map((pt,i)=> i===pts.length-1 ? `<circle cx="${pt[0]}" cy="${pt[1]}" r="4" fill="${def.color}"/>` : '').join('')}
+    ${monthLabels}
+  `;
+
+  const finalVal = series[series.length-1];
+  document.getElementById('chartTitle').textContent = def.label;
+  document.getElementById('chartContext').textContent = def.desc;
+  document.getElementById('chartVal').textContent = key === 'casos' ? Math.round(finalVal/10) + ' casos' : finalVal + '%';
+}
+
+function renderKpiSection() {
+  const months = parseInt(state.simParams.duration);
+  const finalKpis = getKpisForMonth(months, months);
+
+  const cards = KPI_DEFS.map(kpi => {
+    const val = kpi.key === 'casos' ? finalKpis[kpi.key] : finalKpis[kpi.key];
+    const display = kpi.key === 'casos' ? val + ' casos' : val + '%';
+    const prev = kpi.key === 'casos' ? 0 : {iniciante:10,emergente:25,intermediario:45,avancado:65}[state.simParams.maturity]||25;
+    const up = val > prev;
+    return `<div class="kpi-mini-card ${state.activeKpi===kpi.key?'active':''}" data-kpi="${kpi.key}">
+      <div class="kmi-label">${kpi.label}</div>
+      <div class="kmi-val" style="color:${kpi.color}">${display}</div>
+      <div class="kmi-trend ${up?'up':''}">↑ ao longo do programa</div>
+    </div>`;
+  }).join('');
+  document.getElementById('kpiCards').innerHTML = cards;
+
+  document.querySelectorAll('.kpi-mini-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.kpi-mini-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      state.activeKpi = card.dataset.kpi;
+      renderKpiChart(state.activeKpi);
+    });
+  });
+
+  setTimeout(() => renderKpiChart(state.activeKpi), 50);
+}
+
+// ─── MODEL ───────────────────────────────────────────────
+function renderModel() {
+  const prof = computeProfile(state.simParams);
+  const modules = [
+    {name:'M·01 Diagnóstico e Direção',status:'included'},
+    {name:'M·02 Cultura e Capacitação',status: prof.train >= 2 ? 'included' : 'optional'},
+    {name:'M·03 Governança e Uso Responsável',status:'included'},
+    {name:'M·04 Automação e Casos Aplicados',status: parseInt(state.simParams.duration) >= 6 ? 'included' : 'optional'},
+    {name:'M·05 Operação e Escala',status: parseInt(state.simParams.duration) >= 9 ? 'included' : 'optional'},
+  ];
+  const statusLabels = {included:'Incluído',optional:'Opcional'};
+
+  document.getElementById('modelContent').innerHTML = `
+    <div class="mr-top">
+      <div class="mr-profile-label">Perfil recomendado</div>
+      <div class="mr-profile-name">${prof.profileName}</div>
+      <div class="mr-profile-desc">${prof.profileDesc} ${prof.narrative}</div>
+    </div>
+    <div class="mr-specs">
+      <div class="mr-spec"><div class="mr-spec-val">${state.simParams.duration}m</div><div class="mr-spec-label">Duração</div></div>
+      <div class="mr-spec"><div class="mr-spec-val">${prof.casesLabel}</div><div class="mr-spec-label">Casos de uso</div></div>
+      <div class="mr-spec"><div class="mr-spec-val">${prof.govLabel}</div><div class="mr-spec-label">Governança</div></div>
+      <div class="mr-spec"><div class="mr-spec-val">${prof.cad}</div><div class="mr-spec-label">Cadência</div></div>
+    </div>
+    <div class="mr-modules">
+      <div class="mr-mod-title">Módulos do programa</div>
+      <div class="mr-mod-list">
+        ${modules.map(m=>`<div class="mr-mod-item"><span>${m.name}</span><span class="mr-mod-status ${m.status}">${statusLabels[m.status]}</span></div>`).join('')}
+      </div>
+    </div>
+    <div class="config-reminder">Configure o Simulador (seção 03) para ver o modelo adaptado ao seu contexto.</div>
+  `;
+}
+
+// ─── INIT ────────────────────────────────────────────────
+initMethod();
+initSimulator();
+initTimeline();
+renderDeliverables();
+
+// Update timeline when simulator changes
+const origRenderSim = renderSimulator;
+window.renderSimulator = function() {
+  origRenderSim();
+  if(state.activeSection === 'timeline') renderTimeline();
+  if(state.activeSection === 'indicators') renderKpiSection();
+  if(state.activeSection === 'model') renderModel();
+};
+</script>
+<footer class="page-footer">
+  © 2026 · Ser Mais Digital · <a href="mailto:contato@sermaisdigital.com.br">contato@sermaisdigital.com.br</a>
+</footer>
+</body>
+</html>
