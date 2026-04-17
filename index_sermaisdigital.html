@@ -84,6 +84,31 @@
       color: var(--text);
       margin: 28px 0 12px;
     }
+    .exclusive-block {
+      margin-top: 28px;
+      padding: 22px;
+      border: 1px solid rgba(232,101,10,0.18);
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at top right, rgba(232,101,10,0.10), transparent 28%),
+        linear-gradient(180deg, rgba(20,28,40,0.96), rgba(11,17,27,0.94));
+    }
+    .exclusive-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary-2);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .exclusive-sub {
+      color: var(--muted);
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
     .card {
       background: linear-gradient(180deg, rgba(22,32,46,0.92), rgba(13,20,32,0.95));
       border: 1px solid var(--border);
@@ -163,6 +188,7 @@
           Acesse rapidamente nossos cartões digitais e o bloco completo de Oferta, Dinâmica e Método da Ser Mais Digital.
         </p>
 
+        <div class="group-title">Cartões Digitais</div>
         <div class="grid">
           <a class="card" href="/cartao_fabricio">
             <div>
@@ -193,49 +219,53 @@
           </a>
         </div>
 
-        <div class="group-title">Oferta de IA</div>
-        <div class="grid">
-          <a class="card" href="/oferta-ia-smd">
-            <div>
-              <div class="icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M12 3v3M12 18v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M3 12h3M18 12h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                  <rect x="8" y="8" width="8" height="8" rx="1.6" stroke="currentColor" stroke-width="1.8"/>
-                </svg>
+        <div class="exclusive-block">
+          <div class="exclusive-label">Bloco exclusivo de IA</div>
+          <div class="group-title" style="margin-top: 0;">Oferta de IA</div>
+          <p class="exclusive-sub">Siga a jornada completa na ordem recomendada para apresentação e execução: Oferta, depois Dinâmica e por fim Método.</p>
+          <div class="grid">
+            <a class="card" href="/oferta-ia-smd">
+              <div>
+                <div class="icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 3v3M12 18v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M3 12h3M18 12h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <rect x="8" y="8" width="8" height="8" rx="1.6" stroke="currentColor" stroke-width="1.8"/>
+                  </svg>
+                </div>
+                <div class="title">1. Oferta de IA Aplicada</div>
+                <div class="desc">Resumo comercial estruturado da oferta com posicionamento, entrega, escopo e indicadores.</div>
               </div>
-              <div class="title">Oferta de IA Aplicada</div>
-              <div class="desc">Resumo comercial estruturado da oferta com posicionamento, entrega, escopo e indicadores.</div>
-            </div>
-            <div class="linkline">Abrir página</div>
-          </a>
+              <div class="linkline">Abrir página</div>
+            </a>
 
-          <a class="card" href="/metodo_de_ia_smd">
-            <div>
-              <div class="icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <rect x="3" y="5" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
-                  <rect x="14" y="12" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
-                  <path d="M10 8.5h2c1.1 0 2 .9 2 2v1.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                </svg>
+            <a class="card" href="/estudio-da-oferta-smd">
+              <div>
+                <div class="icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="title">2. Dinâmica de Oferta de IA</div>
+                <div class="desc">Estúdio de oferta da Ser Mais Digital para adoção prática de IA com artefatos e estrutura consultiva.</div>
               </div>
-              <div class="title">Método de IA SMD</div>
-              <div class="desc">Landing page institucional do método de adoção e escala de IA.</div>
-            </div>
-            <div class="linkline">Abrir página</div>
-          </a>
+              <div class="linkline">Abrir página</div>
+            </a>
 
-          <a class="card" href="/estudio-da-oferta-smd">
-            <div>
-              <div class="icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                </svg>
+            <a class="card" href="/metodo_de_ia_smd">
+              <div>
+                <div class="icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <rect x="3" y="5" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+                    <rect x="14" y="12" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+                    <path d="M10 8.5h2c1.1 0 2 .9 2 2v1.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="title">3. Método de IA SMD</div>
+                <div class="desc">Landing page institucional do método de adoção, governança, capacitação e escala de IA.</div>
               </div>
-              <div class="title">Dinâmica de Oferta de IA</div>
-              <div class="desc">Estúdio de oferta da Ser Mais Digital para adoção prática de IA.</div>
-            </div>
-            <div class="linkline">Abrir página</div>
-          </a>
+              <div class="linkline">Abrir página</div>
+            </a>
+          </div>
         </div>
       </section>
     </main>
