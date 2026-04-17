@@ -10,11 +10,11 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --ink:#080b10;--s0:#0c111a;--s1:#111827;--s2:#1a2236;
-  --border:rgba(255,255,255,0.065);--border2:rgba(255,255,255,0.12);
-  --gold:#FF8C00;--gold2:#FFB84D;--gold-dim:rgba(201,168,76,0.12);
+  --ink:#0a0d14;--s0:#0f1420;--s1:#161c2d;--s2:#1a2236;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+  --gold:#E8650A;--gold2:#FF7A20;--gold-dim:rgba(232,101,10,0.15);
   --blue:#0F1E3F;--blue-dim:rgba(61,106,255,0.12);
-  --text:#e2e8f4;--muted:#6b7a99;--muted2:#8a96b0;
+  --text:#e8ecf4;--muted:#7a8499;--muted2:#8a96b0;
   --sidebar:240px;--header:52px;
   --green:#22c55e;--green-dim:rgba(34,197,94,0.1);
 }
@@ -23,20 +23,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--text);li
 
 /* HEADER */
 header{
-  height:var(--header);min-height:var(--header);
+  min-height:var(--header);
   display:flex;align-items:center;justify-content:center;
-  padding:0 1.5rem;
+  padding:0.9rem 1.5rem;
   border-bottom:1px solid var(--border);
   background:rgba(8,11,16,0.95);
   backdrop-filter:blur(20px);
   z-index:200;position:relative;
-}
-.header-left{
-  position:absolute;
-  left:1.5rem;
-  top:50%;
-  transform:translateY(-50%);
-  display:flex;align-items:center;gap:0.7rem;
 }
 .logo-block{
   display:flex;align-items:center;justify-content:center;
@@ -46,51 +39,28 @@ header{
   width:auto;
   display:block;
 }
-.header-title{
-  font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;
-  color:var(--muted);font-weight:400;
+.header-top{
+  width:100%;
+  display:flex;flex-direction:column;align-items:center;gap:0.8rem;
 }
-.header-right{
-  position:absolute;
-  right:1.5rem;
-  top:50%;
-  transform:translateY(-50%);
-  display:flex;align-items:center;gap:1rem
+.ia-nav{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:0.65rem;
 }
-.header-badge{
-  font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;
-  color:var(--gold);background:var(--gold-dim);
-  border:1px solid rgba(201,168,76,0.25);
-  padding:0.3rem 0.7rem;
-}
-.header-home{
-  display:inline-flex;align-items:center;gap:0.55rem;
+.ia-link{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:120px;
   font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
   color:var(--text);text-decoration:none;
   padding:0.45rem 0.85rem;border:1px solid var(--border);
+  border-radius:999px;
   background:rgba(255,255,255,0.03);transition:all 0.2s;
 }
-.header-home:hover{
+.ia-link:hover{
   border-color:rgba(201,168,76,0.25);
   color:var(--gold);
   background:var(--gold-dim);
 }
-.header-cta{
-  font-size:0.72rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;
-  color:var(--ink);background:var(--gold);
-  padding:0.45rem 1rem;border:none;cursor:pointer;transition:background 0.2s;
-  text-decoration:none;
-}
-.header-cta:hover{background:var(--gold2)}
-.ia-helper{
-  display:flex;align-items:center;justify-content:center;gap:0.85rem;
-  padding:0.9rem 1.5rem;background:rgba(255,255,255,0.04);
-  border-bottom:1px solid var(--border);color:var(--muted);
-}
-.ia-helper a{
-  color:var(--gold);text-decoration:none;font-weight:600;
-}
-.ia-helper span{color:var(--muted2);}
+.ia-link.active{border-color:rgba(201,168,76,0.3);color:var(--text);background:var(--gold-dim)}
 
 /* LAYOUT */
 .app-body{display:flex;flex:1;overflow:hidden}
@@ -162,7 +132,7 @@ main{flex:1;overflow-y:auto;padding:2.5rem 3rem;background:var(--ink)}
 .overview-hero::before{
   content:'';position:absolute;right:-100px;top:-100px;
   width:400px;height:400px;
-  background:radial-gradient(circle,rgba(201,168,76,0.06) 0%,transparent 70%);
+  background:radial-gradient(circle,rgba(232,101,10,0.08) 0%,transparent 70%);
 }
 .ov-headline{
   font-family:'Playfair Display',sans-serif;font-size:clamp(1.4rem,2.5vw,2rem);
@@ -189,7 +159,7 @@ main{flex:1;overflow-y:auto;padding:2.5rem 3rem;background:var(--ink)}
   color:var(--gold);font-size:0.7rem;
 }
 .thesis-block{
-  background:var(--gold-dim);border:1px solid rgba(201,168,76,0.2);
+  background:var(--gold-dim);border:1px solid rgba(232,101,10,0.22);
   padding:1.5rem 2rem;margin:2rem 0;
 }
 .thesis-text{
@@ -217,7 +187,7 @@ main{flex:1;overflow-y:auto;padding:2.5rem 3rem;background:var(--ink)}
 .pd-left{}
 .pd-num{
   font-family:'Playfair Display',sans-serif;font-size:3.5rem;font-weight:800;
-  color:rgba(201,168,76,0.15);line-height:1;margin-bottom:0.5rem;
+  color:rgba(232,101,10,0.15);line-height:1;margin-bottom:0.5rem;
 }
 .pd-tag{font-size:0.65rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem}
 .pd-title{font-family:'Playfair Display',sans-serif;font-size:1.4rem;font-weight:700;letter-spacing:-0.01em;margin-bottom:0.8rem}
@@ -698,42 +668,26 @@ main{flex:1;overflow-y:auto;padding:2.5rem 3rem;background:var(--ink)}
   .grid-2,.fears-grid,.tl-content,.sim-layout,.del-grid,.results-stages,.mr-specs,.pb-matrix,.ns-options{grid-template-columns:1fr}
   .kpi-grid-mini{grid-template-columns:1fr 1fr}
   .phase-detail.active{grid-template-columns:1fr}
-  header{padding:0 1rem}
-  .header-left{left:1rem}
-  .header-right{right:1rem}
-  .header-badge{display:none}
-  .header-home span{display:none}
-  .header-cta{padding:0.45rem 0.75rem;font-size:0.68rem}
+  header{padding:0.9rem 1rem}
+  .ia-link{min-width:0;flex:1 1 140px}
 }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="header-left">
-    <a href="https://sermaisdigital.vercel.app" class="header-home">
-      <span>←</span>
-      <span>Voltar ao Início</span>
-    </a>
+  <div class="header-top">
+    <div class="ia-nav">
+      <a href="https://sermaisdigital.vercel.app" class="ia-link">Home</a>
+      <a href="/oferta-ia-smd" class="ia-link">Oferta</a>
+      <a href="/estudio-da-oferta-smd" class="ia-link active">Dinâmica</a>
+      <a href="/metodo_de_ia_smd" class="ia-link">Método</a>
+    </div>
+    <div class="logo-block">
+      <img src="logo_smd.png" alt="Ser Mais Digital">
+    </div>
   </div>
-  <div class="logo-block">
-    <img src="logo_smd.png" alt="Ser Mais Digital">
-  </div>
-  <div class="header-right">
-    <a href="https://sermaisdigital.vercel.app" class="header-home">Tela Inicial</a>
-    <div class="header-badge">Preview Consultivo</div>
-    <a href="mailto:contato@sermaisdigital.com.br" class="header-cta">Iniciar diagnóstico</a>
-  </div>
-  <div class="header-title" id="sectionTitle" hidden>Dinâmica de Oferta de IA</div>
 </header>
-
-<div class="ia-helper">
-  <a href="/oferta-ia-smd">Oferta</a>
-  <span>›</span>
-  <a href="/estudio-da-oferta-smd">Dinâmica</a>
-  <span>›</span>
-  <a href="/metodo_de_ia_smd">Método</a>
-</div>
 
 <div class="app-body">
 <aside>
@@ -1110,7 +1064,6 @@ main{flex:1;overflow-y:auto;padding:2.5rem 3rem;background:var(--ink)}
       <div class="cb-role">Fundador · Ser Mais Digital</div>
       <div class="cb-contact">fabricio.pequeno@sermaisdigital.com.br · sermaisdigital.com.br</div>
     </div>
-    <a href="mailto:fabricio.pequeno@sermaisdigital.com.br" class="cb-cta">Iniciar diagnóstico agora</a>
   </div>
 </div>
 
