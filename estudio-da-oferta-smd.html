@@ -70,6 +70,15 @@ header{
   text-decoration:none;
 }
 .header-cta:hover{background:var(--gold2)}
+.ia-helper{
+  display:flex;align-items:center;justify-content:center;gap:0.85rem;
+  padding:0.9rem 1.5rem;background:rgba(255,255,255,0.04);
+  border-bottom:1px solid var(--border);color:var(--muted);
+}
+.ia-helper a{
+  color:var(--gold);text-decoration:none;font-weight:600;
+}
+.ia-helper span{color:var(--muted2);}
 
 /* LAYOUT */
 .app-body{display:flex;flex:1;overflow:hidden}
@@ -687,37 +696,47 @@ main{flex:1;overflow-y:auto;padding:2.5rem 3rem;background:var(--ink)}
     <div class="logo-block">
       <img src="logo_smd.png" alt="Ser Mais Digital">
     </div>
-    <div class="header-title" id="sectionTitle">Estúdio da Oferta · Implementação de IA Aplicada</div>
+    <div class="header-title" id="sectionTitle">Dinâmica de Oferta de IA</div>
   </div>
   <div class="header-right">
     <div class="header-badge">Preview Consultivo</div>
-    <a href="mailto:fabricio.pequeno@sermaisdigital.com.br" class="header-cta">Iniciar diagnóstico</a>
+    <a href="mailto:contato@sermaisdigital.com.br" class="header-cta">Iniciar diagnóstico</a>
   </div>
 </header>
+
+<div class="ia-helper">
+  <a href="#overview">Oferta</a>
+  <span>›</span>
+  <a href="#simulator">Dinâmica</a>
+  <span>›</span>
+  <a href="#method">Método</a>
+</div>
 
 <div class="app-body">
 <aside>
   <nav>
-    <div class="nav-section-label">A Oferta</div>
+    <div class="nav-section-label">Oferta</div>
     <ul>
       <li><button class="nav-btn active" data-section="overview"><span class="nav-num">01</span>Visão Geral</button></li>
-      <li><button class="nav-btn" data-section="method"><span class="nav-num">02</span>O Método</button></li>
     </ul>
-    <div class="nav-section-label">Explorar</div>
+    <div class="nav-section-label">Dinâmica</div>
+    <ul>
+      <li><button class="nav-btn" data-section="simulator"><span class="nav-num">02</span>Simulador</button></li>
+      <li><button class="nav-btn" data-section="timeline"><span class="nav-num">03</span>Linha do Tempo</button></li>
+      <li><button class="nav-btn" data-section="deliverables"><span class="nav-num">04</span>Entregáveis</button></li>
+    </ul>
+    <div class="nav-section-label">Método</div>
     <ul>
       <li><button class="nav-btn" data-section="simulator"><span class="nav-num">03</span>Simulador</button></li>
       <li><button class="nav-btn" data-section="timeline"><span class="nav-num">04</span>Linha do Tempo</button></li>
       <li><button class="nav-btn" data-section="deliverables"><span class="nav-num">05</span>Entregáveis</button></li>
     </ul>
-    <div class="nav-section-label">Resultados</div>
+    <div class="nav-section-label">Método</div>
     <ul>
-      <li><button class="nav-btn" data-section="indicators"><span class="nav-num">06</span>Indicadores</button></li>
-      <li><button class="nav-btn" data-section="results"><span class="nav-num">07</span>Resultados Esperados</button></li>
-    </ul>
-    <div class="nav-section-label">Decisão</div>
-    <ul>
-      <li><button class="nav-btn" data-section="model"><span class="nav-num">08</span>Modelo Recomendado</button></li>
-      <li><button class="nav-btn" data-section="nextsteps"><span class="nav-num">09</span>Próximos Passos</button></li>
+      <li><button class="nav-btn" data-section="indicators"><span class="nav-num">05</span>Indicadores</button></li>
+      <li><button class="nav-btn" data-section="results"><span class="nav-num">06</span>Resultados Esperados</button></li>
+      <li><button class="nav-btn" data-section="model"><span class="nav-num">07</span>Modelo Recomendado</button></li>
+      <li><button class="nav-btn" data-section="nextsteps"><span class="nav-num">08</span>Próximos Passos</button></li>
     </ul>
   </nav>
 </aside>

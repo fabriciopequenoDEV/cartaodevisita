@@ -21,6 +21,10 @@
       "source": "/estudio_da_oferta_smd",
       "destination": "/estudio-da-oferta-smd.html"
     },
+    {
+      "source": "/estudio-da-oferta-smd",
+      "destination": "/estudio-da-oferta-smd.html"
+    },
 
     {
       "source": "/cartão_fabricio",
