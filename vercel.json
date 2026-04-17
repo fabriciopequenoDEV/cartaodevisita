@@ -30,6 +30,10 @@
   "rewrites": [
     {
       "source": "/",
+      "destination": "/index_sermaisdigital"
+    },
+    {
+      "source": "/index_sermaisdigital",
       "destination": "/index_sermaisdigital.html"
     },
     {
