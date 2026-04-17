@@ -24,44 +24,56 @@ body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--text);li
 /* HEADER */
 header{
   height:var(--header);min-height:var(--header);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 1.5rem 0 0;
+  display:flex;align-items:center;justify-content:center;
+  padding:0 1.5rem;
   border-bottom:1px solid var(--border);
   background:rgba(8,11,16,0.95);
   backdrop-filter:blur(20px);
   z-index:200;position:relative;
 }
 .header-left{
-  display:flex;align-items:center;gap:0;
-  height:100%;
+  position:absolute;
+  left:1.5rem;
+  top:50%;
+  transform:translateY(-50%);
+  display:flex;align-items:center;gap:0.7rem;
 }
 .logo-block{
-  height:100%;display:flex;align-items:center;
-  padding:0 1.5rem;
-  border-right:1px solid var(--border);
-  width:var(--sidebar);
+  display:flex;align-items:center;justify-content:center;
 }
 .logo-block img{
   height:32px;
   width:auto;
+  display:block;
 }
-.logo{
-  font-family:'Playfair Display',sans-serif;font-weight:800;
-  font-size:0.9rem;letter-spacing:0.1em;color:var(--gold);
-  text-transform:uppercase;
-}
-.logo span{color:var(--muted)}
 .header-title{
-  padding:0 1.5rem;
   font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;
   color:var(--muted);font-weight:400;
 }
-.header-right{display:flex;align-items:center;gap:1rem}
+.header-right{
+  position:absolute;
+  right:1.5rem;
+  top:50%;
+  transform:translateY(-50%);
+  display:flex;align-items:center;gap:1rem
+}
 .header-badge{
   font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;
   color:var(--gold);background:var(--gold-dim);
   border:1px solid rgba(201,168,76,0.25);
   padding:0.3rem 0.7rem;
+}
+.header-home{
+  display:inline-flex;align-items:center;gap:0.55rem;
+  font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--text);text-decoration:none;
+  padding:0.45rem 0.85rem;border:1px solid var(--border);
+  background:rgba(255,255,255,0.03);transition:all 0.2s;
+}
+.header-home:hover{
+  border-color:rgba(201,168,76,0.25);
+  color:var(--gold);
+  background:var(--gold-dim);
 }
 .header-cta{
   font-size:0.72rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;
@@ -686,6 +698,12 @@ main{flex:1;overflow-y:auto;padding:2.5rem 3rem;background:var(--ink)}
   .grid-2,.fears-grid,.tl-content,.sim-layout,.del-grid,.results-stages,.mr-specs,.pb-matrix,.ns-options{grid-template-columns:1fr}
   .kpi-grid-mini{grid-template-columns:1fr 1fr}
   .phase-detail.active{grid-template-columns:1fr}
+  header{padding:0 1rem}
+  .header-left{left:1rem}
+  .header-right{right:1rem}
+  .header-badge{display:none}
+  .header-home span{display:none}
+  .header-cta{padding:0.45rem 0.75rem;font-size:0.68rem}
 }
 </style>
 </head>
@@ -693,23 +711,28 @@ main{flex:1;overflow-y:auto;padding:2.5rem 3rem;background:var(--ink)}
 
 <header>
   <div class="header-left">
-    <div class="logo-block">
-      <img src="logo_smd.png" alt="Ser Mais Digital">
-    </div>
-    <div class="header-title" id="sectionTitle">Dinâmica de Oferta de IA</div>
+    <a href="https://sermaisdigital.vercel.app" class="header-home">
+      <span>←</span>
+      <span>Voltar ao Início</span>
+    </a>
+  </div>
+  <div class="logo-block">
+    <img src="logo_smd.png" alt="Ser Mais Digital">
   </div>
   <div class="header-right">
+    <a href="https://sermaisdigital.vercel.app" class="header-home">Tela Inicial</a>
     <div class="header-badge">Preview Consultivo</div>
     <a href="mailto:contato@sermaisdigital.com.br" class="header-cta">Iniciar diagnóstico</a>
   </div>
+  <div class="header-title" id="sectionTitle" hidden>Dinâmica de Oferta de IA</div>
 </header>
 
 <div class="ia-helper">
-  <a href="#overview">Oferta</a>
+  <a href="/oferta-ia-smd">Oferta</a>
   <span>›</span>
-  <a href="#simulator">Dinâmica</a>
+  <a href="/estudio-da-oferta-smd">Dinâmica</a>
   <span>›</span>
-  <a href="#method">Método</a>
+  <a href="/metodo_de_ia_smd">Método</a>
 </div>
 
 <div class="app-body">
@@ -724,12 +747,6 @@ main{flex:1;overflow-y:auto;padding:2.5rem 3rem;background:var(--ink)}
       <li><button class="nav-btn" data-section="simulator"><span class="nav-num">02</span>Simulador</button></li>
       <li><button class="nav-btn" data-section="timeline"><span class="nav-num">03</span>Linha do Tempo</button></li>
       <li><button class="nav-btn" data-section="deliverables"><span class="nav-num">04</span>Entregáveis</button></li>
-    </ul>
-    <div class="nav-section-label">Método</div>
-    <ul>
-      <li><button class="nav-btn" data-section="simulator"><span class="nav-num">03</span>Simulador</button></li>
-      <li><button class="nav-btn" data-section="timeline"><span class="nav-num">04</span>Linha do Tempo</button></li>
-      <li><button class="nav-btn" data-section="deliverables"><span class="nav-num">05</span>Entregáveis</button></li>
     </ul>
     <div class="nav-section-label">Método</div>
     <ul>
@@ -1099,9 +1116,6 @@ main{flex:1;overflow-y:auto;padding:2.5rem 3rem;background:var(--ink)}
 
 </main>
 </div>
-<footer class="page-footer">
-  © 2026 · Ser Mais Digital · <a href="mailto:contato@sermaisdigital.com.br">contato@sermaisdigital.com.br</a>
-</footer>
 
 <script>
 // ─── DATA ────────────────────────────────────────────────
@@ -1663,8 +1677,5 @@ window.renderSimulator = function() {
   if(state.activeSection === 'model') renderModel();
 };
 </script>
-<footer class="page-footer">
-  © 2026 · Ser Mais Digital · <a href="mailto:contato@sermaisdigital.com.br">contato@sermaisdigital.com.br</a>
-</footer>
 </body>
 </html>

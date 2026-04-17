@@ -1,9 +1,36 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/oferta_ia_smd",
+      "destination": "/oferta-ia-smd",
+      "permanent": true
+    },
+    {
+      "source": "/cartão_fabricio",
+      "destination": "/cartao_fabricio",
+      "permanent": true
+    },
+    {
+      "source": "/cartão_ricardo",
+      "destination": "/cartao_ricardo",
+      "permanent": true
+    },
+    {
+      "source": "/MétodoDeIA_SMD",
+      "destination": "/metodo_de_ia_smd",
+      "permanent": true
+    },
+    {
+      "source": "/estudio_da_oferta_smd",
+      "destination": "/estudio-da-oferta-smd",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/",
-      "destination": "/index_sermaisdigital"
+      "destination": "/index_sermaisdigital.html"
     },
     {
       "source": "/cartao_fabricio",
@@ -14,29 +41,16 @@
       "destination": "/cartao_ricardo.html"
     },
     {
+      "source": "/oferta-ia-smd",
+      "destination": "/oferta-ia-smd.html"
+    },
+    {
       "source": "/metodo_de_ia_smd",
       "destination": "/metodo_de_ia_smd.html"
     },
     {
-      "source": "/estudio_da_oferta_smd",
-      "destination": "/estudio-da-oferta-smd.html"
-    },
-    {
       "source": "/estudio-da-oferta-smd",
       "destination": "/estudio-da-oferta-smd.html"
-    },
-
-    {
-      "source": "/cartão_fabricio",
-      "destination": "/cartao_fabricio.html"
-    },
-    {
-      "source": "/cartão_ricardo",
-      "destination": "/cartao_ricardo.html"
-    },
-    {
-      "source": "/MétodoDeIA_SMD",
-      "destination": "/metodo_de_ia_smd.html"
     }
   ]
 }

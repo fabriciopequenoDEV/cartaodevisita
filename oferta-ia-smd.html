@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oferta SMD · Inteligência Artificial Aplicada</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#08101a;
+      --surface:#101927;
+      --surface-2:#162233;
+      --surface-3:rgba(255,255,255,0.04);
+      --border:rgba(255,255,255,0.09);
+      --text:#eef2f7;
+      --muted:#97a3b6;
+      --primary:#e8650a;
+      --primary-2:#ff8a33;
+      --primary-dim:rgba(232,101,10,0.16);
+      --shadow:0 24px 70px rgba(0,0,0,0.32);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{min-height:100%}
+    body{
+      font-family:'DM Sans',sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(232,101,10,0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(255,138,51,0.10), transparent 25%),
+        linear-gradient(180deg, #07101c 0%, var(--bg) 100%);
+    }
+    a{color:inherit}
+    .wrap{max-width:1240px;margin:0 auto;padding:32px 24px 64px}
+    .topbar{
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      align-items:center;
+      gap:16px;
+      margin-bottom:28px;
+    }
+    .home-link,.action-link{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      width:max-content;
+      padding:12px 16px;
+      border-radius:14px;
+      text-decoration:none;
+      font-size:.82rem;
+      font-weight:600;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,0.03);
+      transition:.18s ease;
+    }
+    .home-link:hover,.action-link:hover{
+      border-color:rgba(232,101,10,0.32);
+      background:var(--primary-dim);
+      color:var(--primary-2);
+    }
+    .brand{
+      display:flex;
+      justify-content:center;
+    }
+    .brand img{
+      width:min(270px,100%);
+      height:auto;
+      display:block;
+      border-radius:10px;
+    }
+    .topbar-actions{
+      display:flex;
+      justify-content:flex-end;
+      gap:12px;
+    }
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--border);
+      border-radius:30px;
+      background:
+        linear-gradient(135deg, rgba(9,18,30,0.94), rgba(24,38,57,0.88)),
+        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      box-shadow:var(--shadow);
+      padding:26px;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 14% 18%, rgba(255,255,255,0.10), transparent 16%),
+        radial-gradient(circle at 82% 26%, rgba(232,101,10,0.18), transparent 18%),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size:auto,auto,44px 44px,44px 44px;
+      opacity:.45;
+      pointer-events:none;
+    }
+    .hero-grid{
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns:minmax(0,1.35fr) minmax(320px,.95fr);
+      gap:22px;
+    }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      padding:6px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.09);
+      background:rgba(255,255,255,0.04);
+      color:var(--text);
+      font-size:.68rem;
+      font-weight:600;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      margin-bottom:16px;
+    }
+    .headline-row{
+      display:flex;
+      align-items:flex-start;
+      gap:18px;
+    }
+    .hero-icon{
+      width:70px;
+      height:70px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border:1px solid rgba(255,255,255,0.10);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    .hero-icon svg{width:30px;height:30px;color:#fff}
+    h1{
+      font-family:'Syne',sans-serif;
+      font-size:clamp(2.2rem,4.8vw,4rem);
+      line-height:1.02;
+      letter-spacing:-0.03em;
+      margin-bottom:10px;
+    }
+    .subhead{
+      font-size:1.12rem;
+      color:#d8e1ed;
+      line-height:1.6;
+      max-width:760px;
+    }
+    .intro{
+      margin-top:14px;
+      font-size:1rem;
+      color:var(--muted);
+      line-height:1.8;
+      max-width:760px;
+    }
+    .hero-cta{
+      margin-top:22px;
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .primary-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:14px 18px;
+      border-radius:14px;
+      text-decoration:none;
+      background:#f7f8fb;
+      color:#12213a;
+      font-size:.92rem;
+      font-weight:700;
+      box-shadow:0 10px 30px rgba(0,0,0,0.16);
+    }
+    .primary-btn:hover{background:#fff}
+    .support-cards{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+      margin-top:24px;
+    }
+    .support-card{
+      border:1px solid var(--border);
+      border-radius:20px;
+      background:rgba(21,33,49,0.72);
+      backdrop-filter:blur(8px);
+      padding:16px 16px 18px;
+      min-height:170px;
+    }
+    .kicker{
+      color:#bcc8d8;
+      font-size:.68rem;
+      font-weight:600;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+    .support-card h2{
+      font-size:1.16rem;
+      margin-bottom:10px;
+      line-height:1.35;
+    }
+    .support-card p{
+      color:#c7d0dd;
+      line-height:1.75;
+    }
+    .side-panel{
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:26px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      backdrop-filter:blur(10px);
+      padding:18px;
+      min-height:100%;
+    }
+    .summary{
+      padding:4px 2px 20px;
+    }
+    .summary p{
+      color:#e4ebf5;
+      font-size:1rem;
+      line-height:1.8;
+    }
+    .points{
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:24px;
+      background:rgba(25,37,57,0.54);
+      padding:16px;
+    }
+    .point{
+      border:1px solid rgba(255,255,255,0.10);
+      border-radius:16px;
+      padding:14px 16px;
+      background:rgba(255,255,255,0.03);
+    }
+    .point + .point{margin-top:12px}
+    .point.highlight{
+      border-color:rgba(232,101,10,0.65);
+      box-shadow:inset 0 0 0 1px rgba(232,101,10,0.22);
+    }
+    .point h3{
+      font-size:.68rem;
+      font-weight:600;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color:#dbe3ef;
+      margin-bottom:10px;
+    }
+    .point p{
+      color:#edf2f8;
+      line-height:1.65;
+    }
+    .metrics{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+      margin-top:14px;
+    }
+    .metric{
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(17,32,50,0.08);
+      border-radius:22px;
+      background:
+        radial-gradient(circle at 85% 20%, rgba(232,101,10,0.16), transparent 24%),
+        linear-gradient(180deg, rgba(255,255,255,0.98), rgba(246,248,252,0.95));
+      color:#18304d;
+      padding:18px 16px 16px;
+      min-height:140px;
+      box-shadow:0 16px 40px rgba(2,10,23,0.12);
+    }
+    .metric .label{
+      color:#7183a1;
+      font-size:.8rem;
+      margin-bottom:10px;
+    }
+    .metric .value{
+      font-family:'Syne',sans-serif;
+      font-size:clamp(2rem,4vw,3.3rem);
+      line-height:1;
+      margin-bottom:10px;
+    }
+    .metric .desc{
+      color:#5d6d88;
+      line-height:1.7;
+    }
+    .flow{
+      margin-top:22px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+    .flow-card{
+      border:1px solid var(--border);
+      border-radius:22px;
+      background:linear-gradient(180deg, rgba(16,25,39,0.92), rgba(12,20,31,0.94));
+      padding:18px;
+    }
+    .flow-card .step{
+      color:var(--primary-2);
+      font-size:.76rem;
+      font-weight:700;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+    .flow-card h4{
+      font-family:'Syne',sans-serif;
+      font-size:1.2rem;
+      margin-bottom:10px;
+    }
+    .flow-card p{
+      color:var(--muted);
+      line-height:1.75;
+    }
+    .footer-nav{
+      margin-top:24px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      border-top:1px solid var(--border);
+      padding-top:22px;
+    }
+    .footer-nav .links{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .footer-pill{
+      display:inline-flex;
+      align-items:center;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      text-decoration:none;
+      color:var(--muted);
+      background:rgba(255,255,255,0.02);
+      transition:.18s ease;
+    }
+    .footer-pill.active{
+      color:var(--text);
+      border-color:rgba(232,101,10,0.35);
+      background:var(--primary-dim);
+    }
+    .footer-pill:hover{
+      color:var(--primary-2);
+      border-color:rgba(232,101,10,0.35);
+    }
+    .footer-copy{
+      color:var(--muted);
+      font-size:.95rem;
+    }
+    @media (max-width: 980px){
+      .hero-grid,.flow,.metrics{grid-template-columns:1fr}
+      .support-cards{grid-template-columns:1fr}
+      .topbar{grid-template-columns:1fr;justify-items:center}
+      .topbar-actions{justify-content:center}
+      .home-link{justify-self:center}
+    }
+    @media (max-width: 640px){
+      .wrap{padding:24px 16px 48px}
+      .hero{padding:18px}
+      .headline-row{flex-direction:column}
+      .hero-icon{width:58px;height:58px}
+      .primary-btn,.home-link,.action-link{width:100%;justify-content:center}
+      .topbar-actions{width:100%;flex-direction:column}
+      .footer-nav{flex-direction:column;align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <a class="home-link" href="https://sermaisdigital.vercel.app">← Voltar ao início</a>
+      <div class="brand">
+        <img src="logo_smd.png" alt="Ser Mais Digital">
+      </div>
+      <div class="topbar-actions">
+        <a class="action-link" href="/estudio-da-oferta-smd">Ver dinâmica</a>
+        <a class="action-link" href="/metodo_de_ia_smd">Ver método</a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="tag">IA aplicada</div>
+          <div class="headline-row">
+            <div class="hero-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 3v3M12 18v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M3 12h3M18 12h3M4.9 19.1 7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                <rect x="8" y="8" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.7"/>
+              </svg>
+            </div>
+            <div>
+              <h1>Inteligência Artificial Aplicada</h1>
+              <p class="subhead">Treinamentos, consultoria e implementação de atendimento humanizado com IA.</p>
+            </div>
+          </div>
+          <p class="intro">Entramos desde a identificação de casos de uso até a implementação assistida, com foco em posicionamento interno, execução coordenada e resultado perceptível para a operação.</p>
+          <div class="hero-cta">
+            <a class="primary-btn" href="/estudio-da-oferta-smd">Ver artefatos da entrega →</a>
+          </div>
+
+          <div class="support-cards">
+            <article class="support-card">
+              <div class="kicker">Posicionamento</div>
+              <h2>IA uso atual</h2>
+              <p>Leitura objetiva do momento de uso de inteligência artificial, com clareza sobre maturidade, oportunidades e próximos movimentos.</p>
+            </article>
+            <article class="support-card">
+              <div class="kicker">Primeira entrega</div>
+              <h2>Jornada de implementação</h2>
+              <p>Plano customizado de aplicação para definir ritmo, escopo, restrições e prioridades de implementação.</p>
+            </article>
+            <article class="support-card">
+              <div class="kicker">Cadência de execução</div>
+              <h2>Etapas coordenadas</h2>
+              <p>Acompanhamento com governança, ajustes iniciais e aconselhamento externo para garantir consistência no uso.</p>
+            </article>
+          </div>
+        </div>
+
+        <aside class="side-panel">
+          <div class="summary">
+            <div class="kicker">Resumo da oferta</div>
+            <p>Estruturamos jornadas de inteligência artificial com foco em resultado real, combinando clareza comercial, implementação assistida e visibilidade do que está sendo entregue.</p>
+          </div>
+
+          <div class="points">
+            <div class="kicker">Pontos-chave da entrega</div>
+            <div class="point highlight">
+              <h3>Posicionamento</h3>
+              <p>Uso de IA reconhecido internamente e externamente, com linguagem clara para liderança, equipe e mercado.</p>
+            </div>
+            <div class="point">
+              <h3>Entrega</h3>
+              <p>Treinamentos, consultoria e implementação de atendimento humanizado com IA em uma jornada objetiva.</p>
+            </div>
+            <div class="point">
+              <h3>Escopo visível</h3>
+              <p>Blueprint, matriz de uso e indicadores de resultado como artefatos concretos para orientar a evolução.</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="metrics" aria-label="Indicadores da oferta">
+      <article class="metric">
+        <div class="label">Tempo para piloto</div>
+        <div class="value">30 dias</div>
+        <p class="desc">Estrutura inicial para colocar o primeiro fluxo assistido em operação com segurança e acompanhamento.</p>
+      </article>
+      <article class="metric">
+        <div class="label">Ajustes iniciais</div>
+        <div class="value">25%</div>
+        <p class="desc">Volume estimado de mudanças absorvidas com uso de IA a partir da implementação e das primeiras iterações.</p>
+      </article>
+      <article class="metric">
+        <div class="label">Uso assistido</div>
+        <div class="value">+60%</div>
+        <p class="desc">Indicador demonstrativo de ampliação do uso na área aplicada, orientado por governança e supervisão.</p>
+      </article>
+    </section>
+
+    <section class="flow" aria-label="Fluxo da solução">
+      <article class="flow-card">
+        <div class="step">Oferta</div>
+        <h4>Clareza comercial</h4>
+        <p>A proposta apresenta posicionamento, entregas e escopo visível em uma estrutura curta, vendável e fácil de explicar.</p>
+      </article>
+      <article class="flow-card">
+        <div class="step">Dinâmica</div>
+        <h4>Artefatos e simulação</h4>
+        <p>A dinâmica detalha fases, cronograma, entregáveis e modelo recomendado para transformar a oferta em operação consultiva.</p>
+      </article>
+      <article class="flow-card">
+        <div class="step">Método</div>
+        <h4>Adoção com governança</h4>
+        <p>O método conecta diagnóstico, governança, capacitação, automação e acompanhamento de indicadores até a escala.</p>
+      </article>
+    </section>
+
+    <div class="footer-nav">
+      <div class="links">
+        <a class="footer-pill active" href="/oferta-ia-smd">Oferta</a>
+        <a class="footer-pill" href="/estudio-da-oferta-smd">Dinâmica</a>
+        <a class="footer-pill" href="/metodo_de_ia_smd">Método</a>
+      </div>
+      <div class="footer-copy">© 2026 · Ser Mais Digital · <a href="mailto:contato@sermaisdigital.com.br">contato@sermaisdigital.com.br</a></div>
+    </div>
+  </div>
+</body>
+</html>
