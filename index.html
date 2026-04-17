@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ser Mais Digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0d14;
+      --surface: #111827;
+      --surface-2: #16202e;
+      --border: rgba(255,255,255,0.08);
+      --text: #eef2f7;
+      --muted: #98a2b3;
+      --primary: #E8650A;
+      --primary-2: #FF7A20;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { min-height: 100%; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(232,101,10,0.10), transparent 35%),
+        linear-gradient(180deg, #07101f 0%, var(--bg) 100%);
+      color: var(--text);
+    }
+    .wrap { min-height: 100vh; display: flex; flex-direction: column; }
+    .hero {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 20px 32px;
+    }
+    .panel {
+      width: 100%;
+      max-width: 860px;
+      background: rgba(17,24,39,0.72);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(14px);
+      border-radius: 24px;
+      padding: 40px 28px 32px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+    .logo-wrap { display: flex; justify-content: center; margin-bottom: 18px; }
+    .logo-wrap img {
+      max-width: 280px;
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      display: block;
+    }
+    .eyebrow {
+      text-align: center;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .sub {
+      text-align: center;
+      color: var(--muted);
+      max-width: 620px;
+      margin: 0 auto 28px;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .group-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      margin: 28px 0 12px;
+    }
+    .exclusive-block {
+      margin-top: 28px;
+      padding: 22px;
+      border: 1px solid rgba(232,101,10,0.18);
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at top right, rgba(232,101,10,0.10), transparent 28%),
+        linear-gradient(180deg, rgba(20,28,40,0.96), rgba(11,17,27,0.94));
+    }
+    .exclusive-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary-2);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .exclusive-sub {
+      color: var(--muted);
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
+    .card {
+      background: linear-gradient(180deg, rgba(22,32,46,0.92), rgba(13,20,32,0.95));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px 18px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+      min-height: 170px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(232,101,10,0.35);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+    }
+    .icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(232,101,10,0.12);
+      border: 1px solid rgba(232,101,10,0.22);
+      color: var(--primary);
+      margin-bottom: 18px;
+    }
+    .title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .desc {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .linkline {
+      margin-top: 18px;
+      color: var(--primary-2);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+    footer a { color: var(--text); text-decoration: none; }
+    footer a:hover { color: var(--primary-2); }
+    @media (max-width: 820px) {
+      .grid { grid-template-columns: 1fr; }
+      .panel { padding: 30px 20px 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <main class="hero">
+      <section class="panel">
+        <div class="logo-wrap">
+          <img src="logo_smd.png" alt="Ser Mais Digital">
+        </div>
+
+        <div class="eyebrow">Hub de links</div>
+        <p class="sub">
+          Acesse rapidamente nossos cartões digitais e o bloco completo de Oferta, Dinâmica e Método da Ser Mais Digital.
+        </p>
+
+        <div class="group-title">Cartões Digitais</div>
+        <div class="grid">
+          <a class="card" href="/cartao_fabricio">
+            <div>
+              <div class="icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M20 21a8 8 0 0 0-16 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/>
+                </svg>
+              </div>
+              <div class="title">Cartão Fabricio</div>
+              <div class="desc">Página de contato e apresentação do Fabricio Pequeno.</div>
+            </div>
+            <div class="linkline">Abrir página</div>
+          </a>
+
+          <a class="card" href="/cartao_ricardo">
+            <div>
+              <div class="icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M20 21a8 8 0 0 0-16 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/>
+                </svg>
+              </div>
+              <div class="title">Cartão Ricardo</div>
+              <div class="desc">Página de contato e apresentação do Ricardo Avigro.</div>
+            </div>
+            <div class="linkline">Abrir página</div>
+          </a>
+        </div>
+
+        <div class="exclusive-block">
+          <div class="exclusive-label">Bloco exclusivo de IA</div>
+          <div class="group-title" style="margin-top: 0;">Oferta de IA</div>
+          <p class="exclusive-sub">Siga a jornada completa na ordem recomendada para apresentação e execução: Oferta, depois Dinâmica e por fim Método.</p>
+          <div class="grid">
+            <a class="card" href="/oferta-ia-smd">
+              <div>
+                <div class="icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 3v3M12 18v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M3 12h3M18 12h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <rect x="8" y="8" width="8" height="8" rx="1.6" stroke="currentColor" stroke-width="1.8"/>
+                  </svg>
+                </div>
+                <div class="title">1. Oferta de IA Aplicada</div>
+                <div class="desc">Resumo comercial estruturado da oferta com posicionamento, entrega, escopo e indicadores.</div>
+              </div>
+              <div class="linkline">Abrir página</div>
+            </a>
+
+            <a class="card" href="/estudio-da-oferta-smd">
+              <div>
+                <div class="icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="title">2. Dinâmica de Oferta de IA</div>
+                <div class="desc">Estúdio de oferta da Ser Mais Digital para adoção prática de IA com artefatos e estrutura consultiva.</div>
+              </div>
+              <div class="linkline">Abrir página</div>
+            </a>
+
+            <a class="card" href="/metodo_de_ia_smd">
+              <div>
+                <div class="icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <rect x="3" y="5" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+                    <rect x="14" y="12" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+                    <path d="M10 8.5h2c1.1 0 2 .9 2 2v1.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="title">3. Método de IA SMD</div>
+                <div class="desc">Landing page institucional do método de adoção, governança, capacitação e escala de IA.</div>
+              </div>
+              <div class="linkline">Abrir página</div>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © 2026 · Ser Mais Digital<br>
+      <a href="mailto:contato@sermaisdigital.com.br">contato@sermaisdigital.com.br</a>
+    </footer>
+  </div>
+</body>
+</html>
