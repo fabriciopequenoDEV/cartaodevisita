@@ -171,15 +171,15 @@
       display:grid;
       grid-template-columns:repeat(3,1fr);
       gap:14px;
-      margin-top:24px;
+      margin-top:20px;
     }
     .support-card{
       border:1px solid var(--border);
       border-radius:20px;
       background:rgba(21,33,49,0.72);
       backdrop-filter:blur(8px);
-      padding:16px 16px 18px;
-      min-height:170px;
+      padding:16px;
+      min-height:148px;
     }
     .kicker{
       color:#bcc8d8;
@@ -206,105 +206,75 @@
       padding:18px;
       min-height:100%;
     }
-    .summary{
-      padding:4px 2px 20px;
-    }
-    .summary p{
-      color:var(--text);
-      font-size:1rem;
-      line-height:1.8;
-    }
-    .points{
+    .numbers-panel{
       border:1px solid rgba(255,255,255,0.08);
       border-radius:24px;
       background:rgba(25,37,57,0.54);
       padding:16px;
     }
-    .point{
+    .number-item{
       border:1px solid rgba(255,255,255,0.10);
       border-radius:16px;
       padding:14px 16px;
       background:rgba(255,255,255,0.03);
     }
-    .point + .point{margin-top:12px}
-    .point.highlight{
+    .number-item + .number-item{margin-top:12px}
+    .number-item.highlight{
       border-color:rgba(232,101,10,0.65);
       box-shadow:inset 0 0 0 1px rgba(232,101,10,0.22);
     }
-    .point h3{
+    .number-label{
       font-size:.68rem;
       font-weight:600;
       letter-spacing:.22em;
       text-transform:uppercase;
       color:var(--text);
-      margin-bottom:10px;
+      margin-bottom:8px;
     }
-    .point p{
-      color:var(--text);
+    .number-value{
+      font-family:'Syne',sans-serif;
+      font-size:clamp(1.8rem,4vw,2.8rem);
+      line-height:1;
+      margin-bottom:8px;
+      color:#fff;
+    }
+    .number-desc{
+      color:#c7d0dd;
       line-height:1.65;
     }
-    .metrics{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:14px;
-      margin-top:14px;
-    }
-    .metric{
-      position:relative;
-      overflow:hidden;
-      border:1px solid rgba(17,32,50,0.08);
-      border-radius:22px;
-      background:
-        radial-gradient(circle at 85% 20%, rgba(232,101,10,0.16), transparent 24%),
-        linear-gradient(180deg, rgba(255,255,255,0.98), rgba(246,248,252,0.95));
-      color:#18304d;
-      padding:18px 16px 16px;
-      min-height:140px;
-      box-shadow:0 16px 40px rgba(2,10,23,0.12);
-    }
-    .metric .label{
-      color:#7183a1;
-      font-size:.8rem;
-      margin-bottom:10px;
-    }
-    .metric .value{
-      font-family:'Syne',sans-serif;
-      font-size:clamp(2rem,4vw,3.3rem);
-      line-height:1;
-      margin-bottom:10px;
-    }
-    .metric .desc{
-      color:#5d6d88;
-      line-height:1.7;
-    }
-    .flow{
-      margin-top:22px;
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:14px;
-    }
-    .flow-card{
+    .market-proof{
+      margin-top:18px;
       border:1px solid var(--border);
-      border-radius:22px;
+      border-radius:24px;
       background:linear-gradient(180deg, rgba(16,25,39,0.92), rgba(12,20,31,0.94));
       padding:18px;
     }
-    .flow-card .step{
-      color:var(--primary-2);
-      font-size:.76rem;
-      font-weight:700;
-      letter-spacing:.16em;
-      text-transform:uppercase;
-      margin-bottom:10px;
-    }
-    .flow-card h4{
-      font-family:'Syne',sans-serif;
-      font-size:1.2rem;
-      margin-bottom:10px;
-    }
-    .flow-card p{
+    .market-proof p{
       color:var(--muted);
-      line-height:1.75;
+      line-height:1.7;
+      margin-bottom:14px;
+    }
+    .proof-grid{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:12px;
+    }
+    .proof-item{
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:18px;
+      background:rgba(255,255,255,0.03);
+      padding:14px;
+    }
+    .proof-item .value{
+      font-family:'Syne',sans-serif;
+      font-size:1.8rem;
+      line-height:1;
+      color:var(--primary-2);
+      margin-bottom:10px;
+    }
+    .proof-item .desc{
+      color:var(--muted);
+      line-height:1.55;
     }
     .footer-copy{
       margin-top:24px;
@@ -315,7 +285,7 @@
       text-align:center;
     }
     @media (max-width: 980px){
-      .hero-grid,.flow,.metrics{grid-template-columns:1fr}
+      .hero-grid,.proof-grid{grid-template-columns:1fr}
       .support-cards{grid-template-columns:1fr}
     }
     @media (max-width: 640px){
@@ -355,88 +325,77 @@
             </div>
             <div>
               <h1>Inteligência Artificial Aplicada</h1>
-              <p class="subhead">Treinamentos, consultoria e implementação de atendimento humanizado com IA.</p>
+              <p class="subhead">Implantação assistida para transformar uso isolado de IA em operação estruturada, governada e mensurável.</p>
             </div>
           </div>
-          <p class="intro">Entramos desde a identificação de casos de uso até a implementação assistida, com foco em posicionamento interno, execução coordenada e resultado perceptível para a operação.</p>
+          <p class="intro">Diagnóstico, desenho da jornada e acompanhamento executivo em uma proposta curta, vendável e preparada para sair do discurso e virar adoção real.</p>
           <div class="support-cards">
             <article class="support-card">
-              <div class="kicker">Posicionamento</div>
-              <h2>IA uso atual</h2>
-              <p>Leitura objetiva do momento de uso de inteligência artificial, com clareza sobre maturidade, oportunidades e próximos movimentos.</p>
+              <div class="kicker">Diagnóstico</div>
+              <h2>Leitura do uso atual</h2>
+              <p>Mapeamos maturidade, riscos e oportunidades para priorizar onde IA gera ganho primeiro.</p>
             </article>
             <article class="support-card">
-              <div class="kicker">Primeira entrega</div>
-              <h2>Jornada de implementação</h2>
-              <p>Plano customizado de aplicação para definir ritmo, escopo, restrições e prioridades de implementação.</p>
+              <div class="kicker">Implementação</div>
+              <h2>Jornada com ritmo claro</h2>
+              <p>Definimos escopo, etapas, restrições e responsáveis para iniciar sem ambiguidade.</p>
             </article>
             <article class="support-card">
-              <div class="kicker">Cadência de execução</div>
-              <h2>Etapas coordenadas</h2>
-              <p>Acompanhamento com governança, ajustes iniciais e aconselhamento externo para garantir consistência no uso.</p>
+              <div class="kicker">Gestão</div>
+              <h2>Governança visível</h2>
+              <p>Acompanhamos adoção, ajustes e evolução com visibilidade executiva para liderança.</p>
             </article>
           </div>
         </div>
 
         <aside class="side-panel">
-          <div class="summary">
-            <div class="kicker">Resumo da oferta</div>
-            <p>Estruturamos jornadas de inteligência artificial com foco em resultado real, combinando clareza comercial, implementação assistida e visibilidade do que está sendo entregue.</p>
-          </div>
-
-          <div class="points">
-            <div class="kicker">Pontos-chave da entrega</div>
-            <div class="point highlight">
-              <h3>Posicionamento</h3>
-              <p>Uso de IA reconhecido internamente e externamente, com linguagem clara para liderança, equipe e mercado.</p>
+          <div class="numbers-panel">
+            <div class="kicker">Números que vendem a proposta</div>
+            <div class="number-item highlight">
+              <div class="number-label">Método completo</div>
+              <div class="number-value">6 fases</div>
+              <div class="number-desc">Método completo de adoção com governança, capacitação, implantação e escala.</div>
             </div>
-            <div class="point">
-              <h3>Entrega</h3>
-              <p>Treinamentos, consultoria e implementação de atendimento humanizado com IA em uma jornada objetiva.</p>
+            <div class="number-item">
+              <div class="number-label">Velocidade de entrada</div>
+              <div class="number-value">30 dias</div>
+              <div class="number-desc">Estrutura inicial para colocar o primeiro fluxo assistido em operação.</div>
             </div>
-            <div class="point">
-              <h3>Escopo visível</h3>
-              <p>Blueprint, matriz de uso e indicadores de resultado como artefatos concretos para orientar a evolução.</p>
+            <div class="number-item">
+              <div class="number-label">Visibilidade executiva</div>
+              <div class="number-value">1 dashboard</div>
+              <div class="number-desc">Adoção, governança e evolução do uso em uma leitura direta para liderança.</div>
             </div>
           </div>
         </aside>
       </div>
     </section>
 
-    <section class="metrics" aria-label="Indicadores da oferta">
-      <article class="metric">
-        <div class="label">Tempo para piloto</div>
-        <div class="value">30 dias</div>
-        <p class="desc">Estrutura inicial para colocar o primeiro fluxo assistido em operação com segurança e acompanhamento.</p>
-      </article>
-      <article class="metric">
-        <div class="label">Ajustes iniciais</div>
-        <div class="value">25%</div>
-        <p class="desc">Volume estimado de mudanças absorvidas com uso de IA a partir da implementação e das primeiras iterações.</p>
-      </article>
-      <article class="metric">
-        <div class="label">Uso assistido</div>
-        <div class="value">+60%</div>
-        <p class="desc">Indicador demonstrativo de ampliação do uso na área aplicada, orientado por governança e supervisão.</p>
-      </article>
-    </section>
-
-    <section class="flow" aria-label="Fluxo da solução">
-      <article class="flow-card">
-        <div class="step">Oferta</div>
-        <h4>Clareza comercial</h4>
-        <p>A proposta apresenta posicionamento, entregas e escopo visível em uma estrutura curta, vendável e fácil de explicar.</p>
-      </article>
-      <article class="flow-card">
-        <div class="step">Dinâmica</div>
-        <h4>Artefatos e simulação</h4>
-        <p>A dinâmica detalha fases, cronograma, entregáveis e modelo recomendado para transformar a oferta em operação consultiva.</p>
-      </article>
-      <article class="flow-card">
-        <div class="step">Método</div>
-        <h4>Adoção com governança</h4>
-        <p>O método conecta diagnóstico, governança, capacitação, automação e acompanhamento de indicadores até a escala.</p>
-      </article>
+    <section class="market-proof" aria-label="Contexto de mercado">
+      <div class="kicker">Por que agir agora</div>
+      <p>O problema não é mais convencer o time a experimentar IA. O problema é evitar adoção desorganizada, sem governança, sem plano e sem métrica de ganho.</p>
+      <div class="proof-grid">
+        <article class="proof-item">
+          <div class="value">75%</div>
+          <div class="desc">dos profissionais do conhecimento ja usam IA no trabalho.</div>
+        </article>
+        <article class="proof-item">
+          <div class="value">79%</div>
+          <div class="desc">dos líderes dizem que adoção de IA é crítica para permanecer competitivo.</div>
+        </article>
+        <article class="proof-item">
+          <div class="value">78%</div>
+          <div class="desc">dos usuários de IA levam suas próprias ferramentas para o trabalho.</div>
+        </article>
+        <article class="proof-item">
+          <div class="value">59%</div>
+          <div class="desc">dos líderes têm dificuldade para quantificar ganhos de produtividade com IA.</div>
+        </article>
+        <article class="proof-item">
+          <div class="value">60%</div>
+          <div class="desc">dizem que a empresa ainda não tem visão e plano claros para implementar IA.</div>
+        </article>
+      </div>
     </section>
 
     <div class="footer-copy">© 2026 · Ser Mais Digital · <a href="mailto:contato@sermaisdigital.com.br">contato@sermaisdigital.com.br</a></div>
