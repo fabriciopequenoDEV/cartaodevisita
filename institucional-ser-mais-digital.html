@@ -44,9 +44,9 @@
 
     .topbar {
       position: fixed;
-      top: 18px;
-      left: 22px;
-      right: 22px;
+      top: 16px;
+      left: 18px;
+      right: 18px;
       z-index: 40;
       display: flex;
       align-items: center;
@@ -58,32 +58,46 @@
       pointer-events: auto;
     }
 
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
     .home-btn,
+    .fullscreen-btn,
     .nav-btn {
       appearance: none;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(10, 14, 24, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(10, 14, 24, 0.46);
       color: var(--text);
       border-radius: 999px;
-      padding: 12px 18px;
-      font-size: 13px;
+      padding: 10px 14px;
+      font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      justify-content: center;
+      gap: 8px;
       transition: border-color var(--ease), background var(--ease), transform var(--ease), opacity var(--ease);
-      backdrop-filter: blur(18px);
-      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.16);
     }
 
     .home-btn:hover,
+    .fullscreen-btn:hover,
     .nav-btn:hover:not(:disabled) {
-      border-color: rgba(232, 101, 10, 0.4);
-      background: rgba(20, 28, 43, 0.88);
+      border-color: rgba(232, 101, 10, 0.24);
+      background: rgba(20, 28, 43, 0.68);
       transform: translateY(-1px);
+    }
+
+    .home-btn,
+    .fullscreen-btn {
+      min-width: 0;
     }
 
     .nav-btn:disabled {
@@ -94,14 +108,14 @@
     .brand-chip {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 10px 14px;
+      gap: 10px;
+      padding: 9px 13px;
       border-radius: 999px;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(10, 14, 24, 0.58);
+      background: rgba(10, 14, 24, 0.5);
       backdrop-filter: blur(16px);
       color: var(--muted);
-      font-size: 12px;
+      font-size: 11px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
     }
@@ -164,20 +178,22 @@
 
     .offer-slide {
       position: relative;
-      padding: clamp(26px, 3vw, 42px);
+      height: 100%;
+      padding: clamp(20px, 2vw, 30px);
       display: grid;
-      grid-template-rows: auto auto 1fr auto;
-      gap: clamp(18px, 2.2vw, 28px);
+      grid-template-rows: auto 1fr auto;
+      gap: clamp(14px, 1.5vw, 20px);
       background:
         radial-gradient(circle at top left, rgba(232, 101, 10, 0.14), transparent 28%),
         radial-gradient(circle at bottom right, rgba(58, 84, 149, 0.2), transparent 30%),
         linear-gradient(135deg, #0b101a 0%, #11182a 100%);
+      overflow: hidden;
     }
 
     .offer-slide::before {
       content: "";
       position: absolute;
-      inset: 18px;
+      inset: 14px;
       border-radius: 24px;
       border: 1px solid rgba(255, 255, 255, 0.06);
       pointer-events: none;
@@ -187,7 +203,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 24px;
+      gap: 20px;
     }
 
     .offer-brand {
@@ -197,7 +213,7 @@
     }
 
     .offer-brand img {
-      width: clamp(180px, 18vw, 320px);
+      width: clamp(150px, 14vw, 248px);
       height: auto;
       display: block;
       filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.28));
@@ -214,35 +230,28 @@
 
     .headline {
       margin: 0;
-      font-size: clamp(34px, 4.2vw, 72px);
-      line-height: 0.96;
+      font-size: clamp(30px, 3.7vw, 58px);
+      line-height: 0.92;
       letter-spacing: -0.04em;
-      max-width: 11ch;
-    }
-
-    .subhead {
-      margin: 0;
-      max-width: 60ch;
-      font-size: clamp(16px, 1.35vw, 22px);
-      line-height: 1.6;
-      color: var(--muted);
+      max-width: 12ch;
     }
 
     .offer-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
+      gap: 14px;
       align-items: stretch;
+      min-height: 0;
     }
 
     .offer-card {
       position: relative;
       display: grid;
       grid-template-rows: auto auto 1fr auto;
-      gap: 14px;
+      gap: 10px;
       min-height: 0;
-      padding: 22px 22px 24px;
-      border-radius: 24px;
+      padding: 18px 18px 20px;
+      border-radius: 22px;
       border: 1px solid rgba(255, 255, 255, 0.08);
       background: linear-gradient(180deg, rgba(28, 38, 58, 0.88), rgba(18, 24, 38, 0.94));
       box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
@@ -278,9 +287,9 @@
     }
 
     .offer-icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 18px;
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
       display: grid;
       place-items: center;
       border: 1px solid rgba(232, 101, 10, 0.28);
@@ -297,16 +306,16 @@
 
     .offer-name {
       margin: 0;
-      font-size: clamp(21px, 1.55vw, 30px);
-      line-height: 1.08;
+      font-size: clamp(18px, 1.35vw, 25px);
+      line-height: 1.02;
       letter-spacing: -0.03em;
     }
 
     .status {
       flex-shrink: 0;
       border-radius: 999px;
-      padding: 7px 12px;
-      font-size: 11px;
+      padding: 6px 11px;
+      font-size: 10px;
       font-weight: 800;
       letter-spacing: 0.16em;
       text-transform: uppercase;
@@ -323,21 +332,21 @@
 
     .offer-desc {
       margin: 0;
-      font-size: clamp(14px, 1vw, 17px);
-      line-height: 1.6;
+      font-size: clamp(12px, 0.9vw, 15px);
+      line-height: 1.42;
       color: var(--muted);
     }
 
     .offer-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
     }
 
     .chip {
       border-radius: 999px;
-      padding: 9px 12px;
-      font-size: 11px;
+      padding: 7px 10px;
+      font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
@@ -351,10 +360,10 @@
       align-items: center;
       justify-content: space-between;
       gap: 20px;
-      padding-top: 8px;
+      padding-top: 6px;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
       color: var(--muted);
-      font-size: 13px;
+      font-size: 11px;
       letter-spacing: 0.04em;
     }
 
@@ -460,10 +469,16 @@
 </head>
 <body>
   <div class="topbar">
-    <a class="home-btn" href="https://sermaisdigital.vercel.app">
-      <span aria-hidden="true">⌂</span>
-      <span>Home</span>
-    </a>
+    <div class="top-actions">
+      <a class="home-btn" href="https://sermaisdigital.vercel.app">
+        <span aria-hidden="true">⌂</span>
+        <span>Home</span>
+      </a>
+      <button class="fullscreen-btn" id="fullscreenBtn" type="button" aria-label="Alternar tela cheia">
+        <span aria-hidden="true">⛶</span>
+        <span>Tela cheia</span>
+      </button>
+    </div>
     <div class="brand-chip">
       <img src="logo_smd.png" alt="Ser Mais Digital">
       <span>Material institucional</span>
@@ -505,11 +520,6 @@
               <img src="logo_smd.png" alt="Ser Mais Digital">
             </div>
           </div>
-
-          <p class="subhead">
-            Ao final da apresentação institucional, estas são as frentes atuais da Ser Mais Digital.
-            A oferta de IA já está detalhada e pronta para navegação direta. As demais ficam visíveis como continuidade do portfólio.
-          </p>
 
           <div class="offer-grid">
             <article class="offer-card is-disabled">
@@ -616,6 +626,7 @@
       const prevBtn = document.getElementById("prevBtn");
       const nextBtn = document.getElementById("nextBtn");
       const progress = document.getElementById("progress");
+      const fullscreenBtn = document.getElementById("fullscreenBtn");
       const zones = Array.from(document.querySelectorAll("[data-nav]"));
       let activeIndex = 0;
 
@@ -686,6 +697,26 @@
         touchStartX = null;
       }, { passive: true });
 
+      const syncFullscreenLabel = () => {
+        const isFullscreen = !!document.fullscreenElement;
+        fullscreenBtn.querySelector("span:last-child").textContent = isFullscreen ? "Sair" : "Tela cheia";
+      };
+
+      fullscreenBtn.addEventListener("click", async () => {
+        try {
+          if (!document.fullscreenElement) {
+            await document.documentElement.requestFullscreen();
+          } else {
+            await document.exitFullscreen();
+          }
+        } catch (error) {
+          console.error("Nao foi possivel alternar a tela cheia.", error);
+        }
+      });
+
+      document.addEventListener("fullscreenchange", syncFullscreenLabel);
+
+      syncFullscreenLabel();
       update();
     })();
   </script>
