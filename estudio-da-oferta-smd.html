@@ -594,6 +594,19 @@ main{flex:1;overflow-y:auto;padding:2.5rem 3rem;background:var(--ink)}
 .kmi-val{font-family:'Playfair Display',sans-serif;font-size:1.4rem;font-weight:800;color:var(--text);margin-bottom:0.3rem}
 .kmi-trend{font-size:0.72rem;color:var(--muted)}
 .kmi-trend.up{color:var(--green)}
+.kpi-story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1rem}
+.kpi-story{
+  background:var(--s1);border:1px solid var(--border);padding:1rem;
+}
+.kpi-story-title{
+  font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);
+  margin-bottom:0.4rem;
+}
+.kpi-story-value{
+  font-family:'Playfair Display',sans-serif;font-size:1.05rem;font-weight:700;color:var(--gold);
+  margin-bottom:0.35rem;
+}
+.kpi-story-text{font-size:0.78rem;color:var(--muted2);line-height:1.65}
 
 /* ── 7. RESULTADOS ── */
 .results-stages{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:2rem}
@@ -651,6 +664,31 @@ main{flex:1;overflow-y:auto;padding:2.5rem 3rem;background:var(--ink)}
 }
 .mr-mod-status.included{background:var(--green-dim);color:var(--green)}
 .mr-mod-status.optional{background:var(--gold-dim);color:var(--gold)}
+.mr-layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr);gap:1.5rem;margin-bottom:1.5rem}
+.mr-card{
+  background:var(--s1);border:1px solid var(--border);padding:1.4rem;
+}
+.mr-card-title{
+  font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);
+  margin-bottom:0.7rem;
+}
+.mr-highlights{display:grid;grid-template-columns:repeat(3,1fr);gap:0.8rem}
+.mr-highlight{
+  background:var(--s2);border:1px solid var(--border);padding:0.9rem;
+}
+.mr-highlight-val{
+  font-family:'Playfair Display',sans-serif;font-size:1.1rem;font-weight:700;color:var(--gold);margin-bottom:0.25rem;
+}
+.mr-highlight-text{font-size:0.76rem;color:var(--muted2);line-height:1.55}
+.mr-flow{display:flex;flex-wrap:wrap;gap:0.5rem}
+.mr-flow-item{
+  font-size:0.72rem;color:var(--text);padding:0.45rem 0.65rem;border:1px solid var(--border);background:var(--s2);
+}
+.mr-fit-list{list-style:none;display:flex;flex-direction:column;gap:0.45rem}
+.mr-fit-list li{
+  font-size:0.8rem;color:var(--muted2);line-height:1.6;display:flex;gap:0.5rem;align-items:flex-start;
+}
+.mr-fit-list li::before{content:'→';color:var(--gold);font-size:0.7rem;flex-shrink:0;margin-top:0.15rem}
 .config-reminder{
   font-size:0.78rem;color:var(--muted);text-align:center;padding:1rem;
   border:1px dashed var(--border);font-style:italic;
@@ -682,15 +720,20 @@ main{flex:1;overflow-y:auto;padding:2.5rem 3rem;background:var(--ink)}
 }
 .cb-info{}
 .cb-name{font-family:'Playfair Display',sans-serif;font-size:0.95rem;font-weight:700;margin-bottom:0.2rem}
-.cb-role{font-size:0.78rem;color:var(--muted)}
 .cb-contact{font-size:0.8rem;color:var(--muted2);margin-top:0.3rem}
+.cb-actions{display:flex;gap:0.8rem;flex-wrap:wrap}
 .cb-cta{
   font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;
   color:var(--ink);background:var(--gold);padding:0.75rem 1.75rem;
   border:none;cursor:pointer;text-decoration:none;transition:background 0.2s;
-  display:inline-block;
+  display:inline-flex;align-items:center;gap:0.55rem;
 }
 .cb-cta:hover{background:var(--gold2)}
+.cb-cta.whatsapp{
+  background:#1f7a45;color:#f4fff8;
+}
+.cb-cta.whatsapp:hover{background:#249653}
+.cb-cta svg{width:16px;height:16px;flex-shrink:0}
 .page-footer{
   padding:1.2rem 1.5rem;
   background:rgba(8,11,16,0.95);
@@ -711,7 +754,7 @@ main{flex:1;overflow-y:auto;padding:2.5rem 3rem;background:var(--ink)}
 @media(max-width:900px){
   :root{--sidebar:200px}
   main{padding:1.5rem}
-  .grid-2,.fears-grid,.tl-content,.sim-layout,.del-grid,.results-stages,.mr-specs,.pb-matrix,.ns-options,.dm-preview-grid{grid-template-columns:1fr}
+  .grid-2,.fears-grid,.tl-content,.sim-layout,.del-grid,.results-stages,.mr-specs,.pb-matrix,.ns-options,.dm-preview-grid,.kpi-story-grid,.mr-layout,.mr-highlights{grid-template-columns:1fr}
   .kpi-grid-mini{grid-template-columns:1fr 1fr}
   .phase-detail.active{grid-template-columns:1fr}
   header{padding:0.9rem 1rem}
@@ -984,6 +1027,8 @@ main{flex:1;overflow-y:auto;padding:2.5rem 3rem;background:var(--ink)}
     </div>
     <svg id="kpiChart"></svg>
   </div>
+
+  <div class="kpi-story-grid" id="kpiStoryGrid"></div>
 </div>
 
 <!-- 07 RESULTADOS -->
@@ -1106,9 +1151,18 @@ main{flex:1;overflow-y:auto;padding:2.5rem 3rem;background:var(--ink)}
 
   <div class="contact-block">
     <div class="cb-info">
-      <div class="cb-name">Fabricio Pequeno</div>
-      <div class="cb-role">Fundador · Ser Mais Digital</div>
-      <div class="cb-contact">fabricio.pequeno@sermaisdigital.com.br · sermaisdigital.com.br</div>
+      <div class="cb-name">Vamos iniciar nossa jornada?</div>
+      <div class="cb-contact">contato@sermaisdigital.com.br</div>
+    </div>
+    <div class="cb-actions">
+      <a class="cb-cta" href="mailto:contato@sermaisdigital.com.br">Enviar e-mail</a>
+      <a class="cb-cta whatsapp" href="https://wa.me/5511971944501?text=Vim%20pela%20oferta%20de%20IA%20da%20Ser%20Mais%20Digital%20e%20quero%20ter%20mais%20informa%C3%A7%C3%B5es" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M20 11.5c0 4.7-3.8 8.5-8.5 8.5-1.5 0-3-.4-4.2-1.1L4 20l1.2-3.2A8.4 8.4 0 0 1 3 11.5C3 6.8 6.8 3 11.5 3S20 6.8 20 11.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+          <path d="M8.5 8.6c.2-.4.4-.4.7-.4h.6c.2 0 .4 0 .5.4l.4 1.2c.1.2.1.5-.1.7l-.5.6c-.1.1-.2.3-.1.5.3.5.8 1 1.2 1.4.5.4 1 .8 1.5 1 .2.1.4 0 .5-.1l.6-.7c.2-.2.4-.2.7-.1l1.1.5c.3.1.4.2.4.5v.6c0 .3 0 .5-.4.7-.5.3-1 .5-1.5.4-1-.2-2-.7-3.1-1.6-1-.8-1.8-1.7-2.3-2.8-.4-.9-.5-1.8-.2-2.4Z" fill="currentColor"/>
+        </svg>
+        WhatsApp
+      </a>
     </div>
   </div>
 </div>
@@ -1654,6 +1708,12 @@ const state = {
   activeDeliverable: 0
 };
 
+function syncDerivedSections() {
+  renderTimeline();
+  renderKpiSection();
+  renderModel();
+}
+
 // ─── NAVIGATION ────────────────────────────────────────
 document.querySelectorAll('.nav-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -1663,10 +1723,10 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
     btn.classList.add('active');
     document.getElementById(s).classList.add('active');
     state.activeSection = s;
-    document.getElementById('sectionTitle').textContent = btn.textContent.trim();
     if(s === 'indicators') renderKpiSection();
     if(s === 'model') renderModel();
     if(s === 'deliverables') renderDeliverables();
+    if(s === 'timeline') renderTimeline();
   });
 });
 
@@ -1827,6 +1887,7 @@ function initSimulator() {
         opt.classList.add('sel');
         state.simParams[group.dataset.key] = opt.dataset.val;
         renderSimulator();
+        syncDerivedSections();
       });
     });
   });
@@ -2051,7 +2112,7 @@ function renderKpiChart(key) {
   const maxVal = Math.max(...series, 10);
   const def = KPI_DEFS.find(k => k.key === key);
   const svg = document.getElementById('kpiChart');
-  const W = svg.parentElement.clientWidth - 48;
+  const W = Math.max((svg.parentElement?.clientWidth || 0) - 48, 320);
   const H = 160;
   svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
   svg.setAttribute('width', W);
@@ -2133,20 +2194,63 @@ function renderKpiSection() {
     });
   });
 
+  const stories = [
+    {
+      title:'Leitura inicial',
+      value:`${{iniciante:'Iniciante',emergente:'Emergente',intermediario:'Intermediária',avancado:'Avançada'}[state.simParams.maturity]}`,
+      text:'A régua parte do nível atual do time e projeta ganho por composição do método, não por promessa arbitrária.'
+    },
+    {
+      title:'Horizonte do programa',
+      value:`${months} meses`,
+      text:`Com ${months} meses, o programa tende a evoluir de clareza inicial para ${months >= 9 ? 'operação e escala contínua' : months >= 6 ? 'casos em operação e monitoramento ativo' : 'fundação e primeiros quick wins'}.`
+    },
+    {
+      title:'Sinal executivo',
+      value:`${Math.max(finalKpis.adocao, finalKpis.governanca)}%`,
+      text:'A combinação entre adoção, governança e ganho operacional mostra se IA virou disciplina de gestão ou segue restrita a esforço isolado.'
+    }
+  ];
+
+  const existingStory = document.getElementById('kpiStoryGrid');
+  if(existingStory) existingStory.innerHTML = stories.map(item => `
+    <div class="kpi-story">
+      <div class="kpi-story-title">${item.title}</div>
+      <div class="kpi-story-value">${item.value}</div>
+      <div class="kpi-story-text">${item.text}</div>
+    </div>
+  `).join('');
+
   setTimeout(() => renderKpiChart(state.activeKpi), 50);
 }
 
 // ─── MODEL ───────────────────────────────────────────────
 function renderModel() {
   const prof = computeProfile(state.simParams);
+  const months = parseInt(state.simParams.duration);
   const modules = [
     {name:'M·01 Diagnóstico e Direção',status:'included'},
     {name:'M·02 Cultura e Capacitação',status: prof.train >= 2 ? 'included' : 'optional'},
     {name:'M·03 Governança e Uso Responsável',status:'included'},
-    {name:'M·04 Automação e Casos Aplicados',status: parseInt(state.simParams.duration) >= 6 ? 'included' : 'optional'},
-    {name:'M·05 Operação e Escala',status: parseInt(state.simParams.duration) >= 9 ? 'included' : 'optional'},
+    {name:'M·04 Automação e Casos Aplicados',status: months >= 6 ? 'included' : 'optional'},
+    {name:'M·05 Operação e Escala',status: months >= 9 ? 'included' : 'optional'},
   ];
   const statusLabels = {included:'Incluído',optional:'Opcional'};
+  const focusByObjective = {
+    produtividade:'Ganhar tempo e qualidade no trabalho real, com casos de uso por função e rápida incorporação na rotina.',
+    cultura:'Criar massa crítica interna, champions e linguagem comum para adoção responsável.',
+    padronizacao:'Estabelecer regras, playbooks e padrões de revisão para reduzir variação no uso.',
+    automacao:'Priorizar fluxos redesenhados com IA integrada e MVPs de impacto operacional.',
+    chatbot:'Desenhar um assistente interno útil, com base confiável, integração inicial e rollout controlado.',
+    governanca:'Fortalecer política, matriz de risco e capacidade de decisão antes da escala.'
+  };
+  const fitList = [
+    `Ideal para times de ${state.simParams.teamSize === 'S' ? '10 a 49' : state.simParams.teamSize === 'M' ? '50 a 149' : '150 a 500'} pessoas com maturidade ${state.simParams.maturity}.`,
+    `A intensidade de governança recomendada é ${prof.govLabel.toLowerCase()} para combinar velocidade com controle.`,
+    `A trilha de capacitação fica em ${prof.trainLabel.toLowerCase()} para suportar adoção sem sobrecarregar o time.`,
+    `O foco principal do modelo é ${focusByObjective[state.simParams.objective]}`
+  ];
+  const flow = ['Diagnóstico', 'Governança', 'Capacitação', months >= 6 ? 'Casos aplicados' : 'Quick wins', months >= 9 ? 'Escala contínua' : 'Monitoramento'];
 
   document.getElementById('modelContent').innerHTML = `
     <div class="mr-top">
@@ -2155,10 +2259,41 @@ function renderModel() {
       <div class="mr-profile-desc">${prof.profileDesc} ${prof.narrative}</div>
     </div>
     <div class="mr-specs">
-      <div class="mr-spec"><div class="mr-spec-val">${state.simParams.duration}m</div><div class="mr-spec-label">Duração</div></div>
+      <div class="mr-spec"><div class="mr-spec-val">${months}m</div><div class="mr-spec-label">Duração</div></div>
       <div class="mr-spec"><div class="mr-spec-val">${prof.casesLabel}</div><div class="mr-spec-label">Casos de uso</div></div>
       <div class="mr-spec"><div class="mr-spec-val">${prof.govLabel}</div><div class="mr-spec-label">Governança</div></div>
       <div class="mr-spec"><div class="mr-spec-val">${prof.cad}</div><div class="mr-spec-label">Cadência</div></div>
+    </div>
+    <div class="mr-layout">
+      <div class="mr-card">
+        <div class="mr-card-title">Como este modelo opera</div>
+        <div class="mr-highlights">
+          <div class="mr-highlight">
+            <div class="mr-highlight-val">${prof.trainLabel}</div>
+            <div class="mr-highlight-text">Nível de capacitação sugerido para o cenário selecionado.</div>
+          </div>
+          <div class="mr-highlight">
+            <div class="mr-highlight-val">${prof.cases}</div>
+            <div class="mr-highlight-text">Quantidade aproximada de casos em foco durante o programa.</div>
+          </div>
+          <div class="mr-highlight">
+            <div class="mr-highlight-val">${months >= 9 ? 'Escala' : months >= 6 ? 'Operação' : 'Fundação'}</div>
+            <div class="mr-highlight-text">Estágio predominante que tende a marcar o encerramento do ciclo.</div>
+          </div>
+        </div>
+      </div>
+      <div class="mr-card">
+        <div class="mr-card-title">Melhor aderência</div>
+        <ul class="mr-fit-list">
+          ${fitList.map(item => `<li>${item}</li>`).join('')}
+        </ul>
+      </div>
+    </div>
+    <div class="mr-card" style="margin-bottom:1.5rem">
+      <div class="mr-card-title">Sequência recomendada do programa</div>
+      <div class="mr-flow">
+        ${flow.map(item => `<span class="mr-flow-item">${item}</span>`).join('')}
+      </div>
     </div>
     <div class="mr-modules">
       <div class="mr-mod-title">Módulos do programa</div>
@@ -2166,7 +2301,7 @@ function renderModel() {
         ${modules.map(m=>`<div class="mr-mod-item"><span>${m.name}</span><span class="mr-mod-status ${m.status}">${statusLabels[m.status]}</span></div>`).join('')}
       </div>
     </div>
-    <div class="config-reminder">Configure o Simulador (seção 03) para ver o modelo adaptado ao seu contexto.</div>
+    <div class="config-reminder">Altere as variáveis no Simulador para ver este formato se reorganizar conforme equipe, maturidade, duração e objetivo principal.</div>
   `;
 }
 
@@ -2175,6 +2310,8 @@ initMethod();
 initSimulator();
 initTimeline();
 renderDeliverables();
+renderKpiSection();
+renderModel();
 
 delModalClose.addEventListener('click', closeDeliverableModal);
 delModalOverlay.addEventListener('click', e => {
@@ -2196,14 +2333,6 @@ document.addEventListener('keydown', e => {
   if(e.key === 'Escape' && delModalOverlay.classList.contains('open')) closeDeliverableModal();
 });
 
-// Update timeline when simulator changes
-const origRenderSim = renderSimulator;
-window.renderSimulator = function() {
-  origRenderSim();
-  if(state.activeSection === 'timeline') renderTimeline();
-  if(state.activeSection === 'indicators') renderKpiSection();
-  if(state.activeSection === 'model') renderModel();
-};
 </script>
 </body>
 </html>
