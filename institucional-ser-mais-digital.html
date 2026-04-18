@@ -201,7 +201,7 @@
 
     .offer-top {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       gap: 20px;
     }
@@ -213,10 +213,12 @@
     }
 
     .offer-brand img {
-      width: clamp(150px, 14vw, 248px);
+      width: clamp(210px, 18vw, 340px);
       height: auto;
       display: block;
-      filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.28));
+      mix-blend-mode: screen;
+      opacity: 0.96;
+      filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.18));
     }
 
     .eyebrow {
@@ -233,7 +235,12 @@
       font-size: clamp(30px, 3.7vw, 58px);
       line-height: 0.92;
       letter-spacing: -0.04em;
-      max-width: 12ch;
+      max-width: none;
+    }
+
+    .headline-line {
+      display: block;
+      white-space: nowrap;
     }
 
     .offer-grid {
@@ -401,6 +408,10 @@
       right: 0;
     }
 
+    .is-fullscreen .click-zone {
+      display: none;
+    }
+
     .sr-only {
       position: absolute;
       width: 1px;
@@ -514,7 +525,10 @@
           <div class="offer-top">
             <div>
               <div class="eyebrow">Oferta atual</div>
-              <h1 class="headline">Onde já estamos prontos para atuar</h1>
+              <h1 class="headline">
+                <span class="headline-line">Onde já estamos</span>
+                <span class="headline-line">prontos para atuar</span>
+              </h1>
             </div>
             <div class="offer-brand">
               <img src="logo_smd.png" alt="Ser Mais Digital">
@@ -699,6 +713,7 @@
 
       const syncFullscreenLabel = () => {
         const isFullscreen = !!document.fullscreenElement;
+        document.documentElement.classList.toggle("is-fullscreen", isFullscreen);
         fullscreenBtn.querySelector("span:last-child").textContent = isFullscreen ? "Sair" : "Tela cheia";
       };
 
