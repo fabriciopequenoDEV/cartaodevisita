@@ -406,6 +406,32 @@
       color:#fff;
       margin-bottom:6px;
     }
+    .proof-info-trigger{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-top:12px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.1);
+      background:rgba(255,255,255,0.04);
+      color:#dbe3ee;
+      font-size:.72rem;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition:border-color .2s ease, background .2s ease, color .2s ease;
+    }
+    .proof-info-trigger:hover{
+      border-color:rgba(232,101,10,0.3);
+      background:rgba(232,101,10,0.12);
+      color:#fff;
+    }
+    .proof-info-trigger svg{
+      width:14px;
+      height:14px;
+      color:var(--primary-2);
+    }
     .proof-grid{
       display:grid;
       grid-template-columns:repeat(3, minmax(0, 1fr));
@@ -532,6 +558,103 @@
       color:var(--primary-2);
       border-bottom-color:rgba(232,101,10,0.35);
     }
+    .proof-detail-overlay{
+      position:fixed;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      background:rgba(5,9,15,0.72);
+      backdrop-filter:blur(8px);
+      z-index:50;
+    }
+    .proof-detail-overlay.open{display:flex}
+    .proof-detail-dialog{
+      width:min(920px, 100%);
+      max-height:min(84vh, 760px);
+      overflow:auto;
+      border:1px solid rgba(255,255,255,0.09);
+      border-radius:26px;
+      background:linear-gradient(180deg, rgba(15,23,36,0.98), rgba(10,16,26,0.98));
+      box-shadow:0 30px 90px rgba(0,0,0,0.45);
+      padding:22px;
+    }
+    .proof-detail-top{
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:16px;
+      align-items:flex-start;
+    }
+    .proof-detail-kicker{
+      font-size:.68rem;
+      font-weight:700;
+      letter-spacing:.24em;
+      text-transform:uppercase;
+      color:var(--primary-2);
+      margin-bottom:8px;
+    }
+    .proof-detail-title{
+      font-family:'Syne',sans-serif;
+      font-size:clamp(1.5rem, 3vw, 2.2rem);
+      line-height:1.05;
+      color:#fff;
+      margin-bottom:8px;
+    }
+    .proof-detail-sub{
+      color:var(--muted);
+      line-height:1.72;
+      max-width:58ch;
+    }
+    .proof-detail-close{
+      flex-shrink:0;
+      width:38px;
+      height:38px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.1);
+      background:rgba(255,255,255,0.03);
+      color:#dbe3ee;
+      cursor:pointer;
+      font-size:1rem;
+    }
+    .proof-detail-grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:14px;
+    }
+    .proof-detail-card{
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:22px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.02));
+      padding:18px;
+    }
+    .proof-detail-card .topline{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+      margin-bottom:12px;
+    }
+    .proof-detail-card .tagline{
+      font-size:.68rem;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:#ffd7bf;
+      font-weight:700;
+    }
+    .proof-detail-card .big{
+      font-family:'Syne',sans-serif;
+      font-size:clamp(2rem, 4vw, 3rem);
+      line-height:.95;
+      color:#fff;
+      margin-bottom:10px;
+    }
+    .proof-detail-card p{
+      color:#d2dae6;
+      line-height:1.75;
+      margin:0;
+    }
     .footer-copy{
       margin-top:24px;
       border-top:1px solid var(--border);
@@ -541,7 +664,7 @@
       text-align:center;
     }
     @media (max-width: 980px){
-      .hero-grid,.proof-grid,.market-proof-head{grid-template-columns:1fr}
+      .hero-grid,.proof-grid,.market-proof-head,.proof-detail-grid{grid-template-columns:1fr}
       .support-cards{grid-template-columns:1fr}
     }
     @media (max-width: 640px){
@@ -656,6 +779,14 @@
           <div class="label">Leitura executiva</div>
           <strong>Urgencia alta, adoção ampla e escala ainda rara.</strong>
           <p>Esse desequilíbrio abre espaço para uma oferta curta, clara e orientada a implantacao real.</p>
+          <button class="proof-info-trigger" id="proofInfoTrigger" type="button">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="8.2" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M12 10.2v5.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <circle cx="12" cy="7.3" r="1" fill="currentColor"/>
+            </svg>
+            Entender os indicadores
+          </button>
         </div>
       </div>
       <div class="proof-grid">
@@ -732,5 +863,69 @@
 
     <div class="footer-copy">© 2026 · Ser Mais Digital · <a href="mailto:contato@sermaisdigital.com.br">contato@sermaisdigital.com.br</a></div>
   </div>
+
+  <div class="proof-detail-overlay" id="proofDetailOverlay" aria-hidden="true">
+    <div class="proof-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="proofDetailTitle">
+      <div class="proof-detail-top">
+        <div>
+          <div class="proof-detail-kicker">Leitura ampliada</div>
+          <div class="proof-detail-title" id="proofDetailTitle">O que esses números realmente indicam</div>
+          <p class="proof-detail-sub">Mais do que estatísticas soltas, os três indicadores mostram um mercado em aceleração, com adoção já disseminada e ainda pouco domínio sobre escala corporativa.</p>
+        </div>
+        <button class="proof-detail-close" id="proofDetailClose" type="button" aria-label="Fechar">✕</button>
+      </div>
+      <div class="proof-detail-grid">
+        <article class="proof-detail-card">
+          <div class="topline">
+            <div class="tagline">Urgencia estrategica</div>
+            <div class="source-chip">Microsoft 2025</div>
+          </div>
+          <div class="big">82%</div>
+          <p>A IA deixou de ser uma pauta lateral. Para a maior parte das lideranças, este é o momento de revisar a forma como a empresa pensa estratégia, operação e capacidade de execução.</p>
+        </article>
+        <article class="proof-detail-card">
+          <div class="topline">
+            <div class="tagline">Adoção operacional</div>
+            <div class="source-chip">McKinsey 2025</div>
+          </div>
+          <div class="big">88%</div>
+          <p>O mercado já avançou da curiosidade para a adoção. Hoje, a discussão menos relevante é “se” a IA será usada; a discussão mais importante passou a ser “como” estruturá-la com consistência, governança e valor real para o negócio.</p>
+        </article>
+        <article class="proof-detail-card">
+          <div class="topline">
+            <div class="tagline">Gap de escala</div>
+            <div class="source-chip">McKinsey 2025</div>
+          </div>
+          <div class="big">1 em 3</div>
+          <p>Embora o uso de IA já esteja disseminado, poucas organizações conseguiram transformá-la em uma capacidade corporativa de fato. A maior parte ainda opera entre testes, pilotos e iniciativas isoladas, sem escala consolidada na empresa.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const proofInfoTrigger = document.getElementById('proofInfoTrigger');
+    const proofDetailOverlay = document.getElementById('proofDetailOverlay');
+    const proofDetailClose = document.getElementById('proofDetailClose');
+
+    function openProofDetail() {
+      proofDetailOverlay.classList.add('open');
+      proofDetailOverlay.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeProofDetail() {
+      proofDetailOverlay.classList.remove('open');
+      proofDetailOverlay.setAttribute('aria-hidden', 'true');
+    }
+
+    proofInfoTrigger.addEventListener('click', openProofDetail);
+    proofDetailClose.addEventListener('click', closeProofDetail);
+    proofDetailOverlay.addEventListener('click', (event) => {
+      if (event.target === proofDetailOverlay) closeProofDetail();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && proofDetailOverlay.classList.contains('open')) closeProofDetail();
+    });
+  </script>
 </body>
 </html>
