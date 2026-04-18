@@ -179,10 +179,10 @@
     .offer-slide {
       position: relative;
       height: 100%;
-      padding: clamp(20px, 2vw, 30px);
+      padding: clamp(24px, 2.3vw, 36px);
       display: grid;
       grid-template-rows: auto 1fr auto;
-      gap: clamp(14px, 1.5vw, 20px);
+      gap: clamp(16px, 1.6vw, 22px);
       background:
         radial-gradient(circle at top left, rgba(232, 101, 10, 0.14), transparent 28%),
         radial-gradient(circle at bottom right, rgba(58, 84, 149, 0.2), transparent 30%),
@@ -193,32 +193,37 @@
     .offer-slide::before {
       content: "";
       position: absolute;
-      inset: 14px;
+      inset: 18px;
       border-radius: 24px;
       border: 1px solid rgba(255, 255, 255, 0.06);
       pointer-events: none;
     }
 
     .offer-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 20px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
+      gap: 28px;
+    }
+
+    .offer-copy {
+      max-width: min(60vw, 760px);
     }
 
     .offer-brand {
       display: flex;
-      align-items: center;
-      gap: 18px;
+      align-items: flex-start;
+      justify-content: flex-end;
+      min-width: 0;
     }
 
     .offer-brand img {
-      width: clamp(210px, 18vw, 340px);
+      width: clamp(200px, 16vw, 320px);
       height: auto;
       display: block;
       mix-blend-mode: screen;
-      opacity: 0.96;
-      filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.18));
+      opacity: 0.94;
+      filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.14));
     }
 
     .eyebrow {
@@ -232,8 +237,8 @@
 
     .headline {
       margin: 0;
-      font-size: clamp(30px, 3.7vw, 58px);
-      line-height: 0.92;
+      font-size: clamp(26px, 3vw, 48px);
+      line-height: 0.96;
       letter-spacing: -0.04em;
       max-width: none;
     }
@@ -246,7 +251,7 @@
     .offer-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
+      gap: 16px;
       align-items: stretch;
       min-height: 0;
     }
@@ -257,7 +262,7 @@
       grid-template-rows: auto auto 1fr auto;
       gap: 10px;
       min-height: 0;
-      padding: 18px 18px 20px;
+      padding: 20px 18px 18px;
       border-radius: 22px;
       border: 1px solid rgba(255, 255, 255, 0.08);
       background: linear-gradient(180deg, rgba(28, 38, 58, 0.88), rgba(18, 24, 38, 0.94));
@@ -372,6 +377,7 @@
       color: var(--muted);
       font-size: 11px;
       letter-spacing: 0.04em;
+      align-self: end;
     }
 
     .controls {
@@ -425,6 +431,18 @@
     }
 
     @media (max-width: 1180px) {
+      .offer-top {
+        grid-template-columns: 1fr;
+      }
+
+      .offer-copy {
+        max-width: none;
+      }
+
+      .offer-brand {
+        justify-content: flex-start;
+      }
+
       .deck {
         padding-inline: 14px;
       }
@@ -523,7 +541,7 @@
       <article class="slide" data-slide>
         <div class="offer-slide">
           <div class="offer-top">
-            <div>
+            <div class="offer-copy">
               <div class="eyebrow">Oferta atual</div>
               <h1 class="headline">
                 <span class="headline-line">Onde já estamos</span>
