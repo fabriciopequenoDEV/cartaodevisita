@@ -44,7 +44,7 @@
       display:flex;
       flex-wrap:wrap;
       justify-content:center;
-      gap:10px;
+      gap:.65rem;
       width:100%;
     }
     .ia-link{
@@ -53,10 +53,10 @@
       justify-content:center;
       width:max-content;
       min-width:120px;
-      padding:10px 14px;
+      padding:0.45rem 0.85rem;
       border-radius:999px;
       text-decoration:none;
-      font-size:.78rem;
+      font-size:0.72rem;
       font-weight:600;
       letter-spacing:.08em;
       text-transform:uppercase;
@@ -260,10 +260,20 @@
       gap:12px;
     }
     .proof-item{
+      position:relative;
+      overflow:hidden;
       border:1px solid rgba(255,255,255,0.08);
       border-radius:18px;
       background:rgba(255,255,255,0.03);
       padding:14px;
+    }
+    .proof-item::before{
+      content:"";
+      position:absolute;
+      inset:0 auto 0 0;
+      width:4px;
+      background:linear-gradient(180deg, var(--primary), var(--primary-2));
+      opacity:.95;
     }
     .proof-item .value{
       font-family:'Syne',sans-serif;
@@ -272,9 +282,39 @@
       color:var(--primary-2);
       margin-bottom:10px;
     }
+    .proof-bar{
+      height:7px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.06);
+      overflow:hidden;
+      margin-bottom:10px;
+    }
+    .proof-bar span{
+      display:block;
+      height:100%;
+      width:var(--fill, 50%);
+      border-radius:999px;
+      background:linear-gradient(90deg, var(--primary), var(--primary-2));
+      box-shadow:0 0 18px rgba(232,101,10,0.3);
+    }
     .proof-item .desc{
       color:var(--muted);
       line-height:1.55;
+    }
+    .source-note{
+      margin-top:14px;
+      color:var(--muted);
+      font-size:.82rem;
+      line-height:1.6;
+    }
+    .source-note a{
+      color:var(--text);
+      text-decoration:none;
+      border-bottom:1px solid rgba(255,255,255,0.18);
+    }
+    .source-note a:hover{
+      color:var(--primary-2);
+      border-bottom-color:rgba(232,101,10,0.35);
     }
     .footer-copy{
       margin-top:24px;
@@ -372,29 +412,37 @@
     </section>
 
     <section class="market-proof" aria-label="Contexto de mercado">
-      <div class="kicker">Por que agir agora</div>
+      <div class="kicker">Pressão real do mercado</div>
       <p>O problema não é mais convencer o time a experimentar IA. O problema é evitar adoção desorganizada, sem governança, sem plano e sem métrica de ganho.</p>
       <div class="proof-grid">
-        <article class="proof-item">
+        <article class="proof-item" style="--fill:75%">
           <div class="value">75%</div>
+          <div class="proof-bar"><span></span></div>
           <div class="desc">dos profissionais do conhecimento ja usam IA no trabalho.</div>
         </article>
-        <article class="proof-item">
+        <article class="proof-item" style="--fill:79%">
           <div class="value">79%</div>
+          <div class="proof-bar"><span></span></div>
           <div class="desc">dos líderes dizem que adoção de IA é crítica para permanecer competitivo.</div>
         </article>
-        <article class="proof-item">
+        <article class="proof-item" style="--fill:78%">
           <div class="value">78%</div>
+          <div class="proof-bar"><span></span></div>
           <div class="desc">dos usuários de IA levam suas próprias ferramentas para o trabalho.</div>
         </article>
-        <article class="proof-item">
+        <article class="proof-item" style="--fill:59%">
           <div class="value">59%</div>
+          <div class="proof-bar"><span></span></div>
           <div class="desc">dos líderes têm dificuldade para quantificar ganhos de produtividade com IA.</div>
         </article>
-        <article class="proof-item">
+        <article class="proof-item" style="--fill:60%">
           <div class="value">60%</div>
+          <div class="proof-bar"><span></span></div>
           <div class="desc">dizem que a empresa ainda não tem visão e plano claros para implementar IA.</div>
         </article>
+      </div>
+      <div class="source-note">
+        Fonte: Microsoft e LinkedIn, <a href="https://blogs.microsoft.com/blog/2024/05/08/microsoft-and-linkedin-release-the-2024-work-trend-index-on-the-state-of-ai-at-work/" target="_blank" rel="noopener">2024 Work Trend Index</a>, publicado em 8 de maio de 2024.
       </div>
     </section>
 
