@@ -51,6 +51,10 @@
     {
       "source": "/estudio-da-oferta-smd",
       "destination": "/estudio-da-oferta-smd.html"
+    },
+    {
+      "source": "/institucional-ser-mais-digital",
+      "destination": "/institucional-ser-mais-digital.html"
     }
   ]
 }
