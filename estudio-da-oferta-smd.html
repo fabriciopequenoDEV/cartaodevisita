@@ -488,6 +488,49 @@ main{flex:1;overflow-y:auto;padding:2.5rem 3rem;background:var(--ink)}
   padding:0.9rem 1rem;font-size:0.82rem;color:var(--text);
   line-height:1.65;font-style:italic;margin-top:0.8rem;
 }
+.dm-preview{
+  border:1px solid var(--border);
+  background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+  padding:1rem;
+}
+.dm-preview-head{
+  display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;
+  margin-bottom:0.9rem;padding-bottom:0.7rem;border-bottom:1px solid var(--border);
+}
+.dm-preview-title{font-size:0.8rem;color:var(--text);font-weight:500}
+.dm-preview-kicker{
+  font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);
+  margin-bottom:0.35rem;
+}
+.dm-preview-badge{
+  font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted2);padding:0.25rem 0.5rem;border:1px solid var(--border);background:var(--s2);
+}
+.dm-preview-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.8rem}
+.dm-preview-card{
+  border:1px solid var(--border);
+  background:var(--s2);
+  padding:0.8rem;
+}
+.dm-preview-card.wide{grid-column:1 / -1}
+.dm-preview-card-title{
+  font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);
+  margin-bottom:0.45rem;
+}
+.dm-preview-card-value{
+  font-family:'Playfair Display',sans-serif;font-size:1rem;font-weight:700;color:var(--text);
+  margin-bottom:0.25rem;
+}
+.dm-preview-card-text{font-size:0.76rem;color:var(--muted2);line-height:1.6}
+.dm-preview-list{list-style:none;display:flex;flex-direction:column;gap:0.35rem}
+.dm-preview-list li{
+  font-size:0.76rem;color:var(--muted2);line-height:1.55;
+  padding-left:0.9rem;position:relative;
+}
+.dm-preview-list li::before{
+  content:'';width:5px;height:5px;border-radius:50%;
+  background:var(--gold);position:absolute;left:0;top:0.42rem;
+}
 .dm-format-row{
   display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem;
 }
@@ -507,6 +550,9 @@ main{flex:1;overflow-y:auto;padding:2.5rem 3rem;background:var(--ink)}
   font-family:'DM Sans',sans-serif;letter-spacing:0.06em;transition:all 0.15s;
 }
 .dm-nav-btn:hover{border-color:var(--gold);color:var(--gold)}
+.dm-nav-btn:disabled{
+  opacity:0.4;cursor:default;border-color:var(--border);color:var(--muted);
+}
 .dm-footer-phase{
   font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;
   color:var(--muted);
@@ -665,7 +711,7 @@ main{flex:1;overflow-y:auto;padding:2.5rem 3rem;background:var(--ink)}
 @media(max-width:900px){
   :root{--sidebar:200px}
   main{padding:1.5rem}
-  .grid-2,.fears-grid,.tl-content,.sim-layout,.del-grid,.results-stages,.mr-specs,.pb-matrix,.ns-options{grid-template-columns:1fr}
+  .grid-2,.fears-grid,.tl-content,.sim-layout,.del-grid,.results-stages,.mr-specs,.pb-matrix,.ns-options,.dm-preview-grid{grid-template-columns:1fr}
   .kpi-grid-mini{grid-template-columns:1fr 1fr}
   .phase-detail.active{grid-template-columns:1fr}
   header{padding:0.9rem 1rem}
@@ -1070,6 +1116,26 @@ main{flex:1;overflow-y:auto;padding:2.5rem 3rem;background:var(--ink)}
 </main>
 </div>
 
+<div class="del-modal-overlay" id="delModalOverlay" aria-hidden="true">
+  <div class="del-modal" role="dialog" aria-modal="true" aria-labelledby="delModalTitle">
+    <div class="del-modal-header">
+      <div>
+        <div class="del-modal-htype" id="delModalType">Documento</div>
+        <div class="del-modal-htitle" id="delModalTitle">Entregável</div>
+      </div>
+      <button class="del-modal-close" id="delModalClose" aria-label="Fechar">×</button>
+    </div>
+    <div class="del-modal-body" id="delModalBody"></div>
+    <div class="del-modal-footer">
+      <div class="del-modal-nav">
+        <button class="dm-nav-btn" id="delPrevBtn">Anterior</button>
+        <button class="dm-nav-btn" id="delNextBtn">Próximo</button>
+      </div>
+      <div class="dm-footer-phase" id="delModalPhase">Fase 1</div>
+    </div>
+  </div>
+</div>
+
 <script>
 // ─── DATA ────────────────────────────────────────────────
 const PHASES = [
@@ -1160,6 +1226,408 @@ const DELIVERABLES_ALL = [
   {phase:5,icon:'📂',name:'Backlog Trimestral',desc:'Pipeline de novos casos com critérios de priorização',type:'doc'},
 ];
 
+const DELIVERABLE_EXAMPLES = {
+  'Mapa de Maturidade de IA': {
+    purpose:'Leitura executiva do estágio atual da organização em uso, governança, dados, segurança e prontidão para implantação.',
+    includes:['Diagnóstico por dimensão','Classificação por área','Sinais de risco e alavancas de avanço'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'Mapa resumido de maturidade por dimensão',
+      badge:'5 dimensões',
+      cards:[
+        {title:'Uso atual',value:'Emergente',text:'Uso frequente em marketing e operações, ainda sem padrão comum.'},
+        {title:'Governança',value:'Inicial',text:'Não existe política formal nem rito de revisão.'},
+        {title:'Dados',value:'Intermediário',text:'Bases organizadas, mas sem critérios consistentes de acesso e validação.'},
+        {title:'Capacitação',value:'Baixa',text:'Poucos champions e conhecimento concentrado em indivíduos.'},
+        {title:'Prioridade executiva',value:'Alta',text:'Liderança quer ganhar velocidade com segurança no trimestre.',wide:true}
+      ]
+    },
+    formats:['PDF executivo','Planilha-base','Resumo para steering'],
+    use:['Alinhar liderança sobre o ponto de partida real','Definir a intensidade da governança e capacitação','Justificar por que não faz sentido escalar tudo de uma vez'],
+    note:'Serve como peça de abertura comercial e técnica: mostra onde a empresa está e o que precisa acontecer antes da escala.'
+  },
+  'Inventário de Oportunidades': {
+    purpose:'Lista priorizada de casos de uso por área, combinando valor potencial, viabilidade e risco.',
+    includes:['Banco de casos por área','Critério de priorização','Leitura rápida do que entra primeiro'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'Top oportunidades para os primeiros 90 dias',
+      badge:'12 casos mapeados',
+      cards:[
+        {title:'Atendimento',value:'Assistente interno',text:'FAQ operacional para reduzir tempo de resposta do time.'},
+        {title:'Comercial',value:'Proposta assistida',text:'Geração inicial de propostas com revisão humana obrigatória.'},
+        {title:'RH',value:'Triagem de dúvidas',text:'Base para onboarding e perguntas repetitivas.'},
+        {title:'Operações',value:'Resumo de chamados',text:'Consolidação automática de tickets e próximos passos.'},
+        {title:'Prioridade recomendada',value:'4 quick wins',text:'2 casos individuais e 2 com integração leve para entrar no piloto.',wide:true}
+      ]
+    },
+    formats:['Planilha priorizada','One-page executivo','Quadro de backlog'],
+    use:['Escolher com clareza o que vai para piloto','Evitar disputa subjetiva entre áreas','Construir pipeline de expansão desde o início'],
+    note:'O valor está em comparar impacto potencial com esforço real, e não só listar ideias.'
+  },
+  'Visão de Riscos': {
+    purpose:'Mapa dos principais riscos de uso de IA em dados, segurança, qualidade, compliance e reputação.',
+    includes:['Riscos críticos por tipo','Controles sugeridos','Pontos que exigem revisão humana'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'Quadro inicial de riscos por severidade',
+      badge:'7 riscos ativos',
+      cards:[
+        {title:'Dados sensíveis',value:'Alto',text:'Necessidade de política para copiar, colar e anonimizar informações.'},
+        {title:'Qualidade da resposta',value:'Médio',text:'Saídas úteis, mas sem critério uniforme de validação.'},
+        {title:'Ferramentas não homologadas',value:'Alto',text:'Uso informal por áreas sem avaliação de segurança.'},
+        {title:'Compliance setorial',value:'Médio',text:'Fluxos com necessidade de revisão especializada antes de publicação.'},
+        {title:'Recomendação',value:'Política + matriz',text:'Formalizar regras mínimas e criar rito de exceção para casos críticos.',wide:true}
+      ]
+    },
+    formats:['Documento de riscos','Tabela de criticidade','Resumo para segurança/jurídico'],
+    use:['Dar segurança à liderança antes do piloto','Definir o que pode ou não pode entrar na primeira onda','Apoiar a política de uso responsável'],
+    note:'A visão de riscos não trava o programa; ela mostra como avançar sem improviso.'
+  },
+  'Baseline de Produtividade': {
+    purpose:'Leitura inicial de tempo, qualidade e capacidade para medir ganho depois da adoção.',
+    includes:['Métricas iniciais por fluxo','Indicadores de retrabalho','Hipóteses de ganho por prioridade'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'Baseline do processo de proposta comercial',
+      badge:'3 métricas',
+      cards:[
+        {title:'Tempo médio',value:'3h20',text:'Da coleta de contexto à primeira versão para o cliente.'},
+        {title:'Retrabalho',value:'28%',text:'Ajustes por desalinhamento de escopo e linguagem.'},
+        {title:'Capacidade',value:'8 propostas/semana',text:'Limite atual do time com o modelo manual.'},
+        {title:'Meta de leitura',value:'-25%',text:'Faixa de redução de tempo esperada após fluxo assistido.',wide:true}
+      ]
+    },
+    formats:['Planilha comparativa','Resumo executivo','Painel inicial'],
+    use:['Criar medida antes/depois que a liderança entende','Evitar promessas sem base','Conectar IA a resultado operacional concreto'],
+    note:'Sem baseline, o ganho vira opinião. Com baseline, vira gestão.'
+  },
+  'Diretriz Executiva de IA': {
+    purpose:'Documento que traduz o posicionamento da liderança sobre por que usar IA, onde focar e quais limites respeitar.',
+    includes:['Tese executiva','Objetivos prioritários','Princípios de decisão'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'Diretriz para o ciclo inicial de adoção',
+      badge:'1 página',
+      cards:[
+        {title:'Objetivo central',value:'Produtividade com segurança',text:'Priorizar fluxos internos antes de expor clientes a automações.'},
+        {title:'Foco do ciclo',value:'3 áreas',text:'Comercial, operações e RH como primeira onda.'},
+        {title:'Princípio',value:'Humano decide',text:'IA apoia produção, mas aprovação final permanece com responsável.'},
+        {title:'Leitura da liderança',value:'Ganhar ritmo',text:'Adoção será tratada como disciplina operacional, não experimento isolado.',wide:true}
+      ]
+    },
+    formats:['One-page executivo','Deck de alinhamento','Memorando interno'],
+    use:['Dar clareza política para o programa','Evitar mensagens conflitantes entre áreas','Abrir a governança com direção clara'],
+    note:'É o documento que responde “por que estamos fazendo isso” antes da política detalhada.'
+  },
+  'Política de Uso Responsável': {
+    purpose:'Conjunto de regras objetivas para uso seguro, validado e rastreável de IA no trabalho.',
+    includes:['Pode / não pode','Critérios de revisão','Escalonamento de exceções'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'Regras mínimas para o uso cotidiano',
+      badge:'9 diretrizes',
+      cards:[
+        {title:'Pode',value:'Rascunhos internos',text:'Resumos, ideias, drafts e apoio operacional com validação humana.'},
+        {title:'Não pode',value:'Dados sensíveis brutos',text:'Informações pessoais ou sigilosas em ferramentas não homologadas.'},
+        {title:'Obrigatório',value:'Revisão final',text:'Toda saída externa ou de alto impacto precisa de conferência humana.'},
+        {title:'Exceção',value:'Canal formal',text:'Casos fora da política sob análise de responsável e segurança.',wide:true}
+      ]
+    },
+    formats:['Documento normativo','Resumo visual','Checklist de aprovação'],
+    use:['Padronizar comportamento entre times','Reduzir risco reputacional e jurídico','Dar segurança para lideranças liberarem o uso'],
+    note:'Quanto mais simples e operacional, maior a chance de adesão real.'
+  },
+  'Matriz Risco x Impacto': {
+    purpose:'Framework visual para classificar casos por benefício esperado e criticidade operacional.',
+    includes:['Quadrantes de decisão','Faixas de risco','Tratamento recomendado por tipo de caso'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'Classificação dos casos da primeira onda',
+      badge:'4 quadrantes',
+      cards:[
+        {title:'Alto impacto / baixo risco',value:'Entrar já',text:'Resumo de chamados e draft de propostas internas.'},
+        {title:'Alto impacto / alto risco',value:'Piloto controlado',text:'Assistente com base de dados sensível e forte revisão humana.'},
+        {title:'Baixo impacto / baixo risco',value:'Treino rápido',text:'Casos para alfabetização e formação de champions.'},
+        {title:'Decisão',value:'Portfólio balanceado',text:'Começar por quick wins e deixar temas críticos com rito formal.',wide:true}
+      ]
+    },
+    formats:['Matriz visual','Slide executivo','Framework de decisão'],
+    use:['Escolher o portfólio inicial com critério','Explicar porque alguns casos entram antes que outros','Apoiar priorização com liderança e segurança'],
+    note:'Ela dá linguagem comum para a conversa entre negócio, tecnologia e risco.'
+  },
+  'Backlog Priorizado': {
+    purpose:'Fila viva de iniciativas de IA ordenadas por valor, viabilidade, dependências e governança.',
+    includes:['Ranking de iniciativas','Próximos passos por item','Dependências e donos'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'Backlog da primeira frente de implantação',
+      badge:'8 iniciativas',
+      cards:[
+        {title:'1º lugar',value:'FAQ interno RH',text:'Risco baixo, alto volume e ganho rápido de resposta.'},
+        {title:'2º lugar',value:'Resumo de propostas',text:'Impacto comercial com esforço técnico moderado.'},
+        {title:'3º lugar',value:'Classificação de tickets',text:'Depende de organização prévia de categorias.'},
+        {title:'Critério',value:'Valor x prontidão',text:'Itens com dependência pesada ficam mapeados, mas não bloqueiam a primeira onda.',wide:true}
+      ]
+    },
+    formats:['Backlog em tabela','Kanban executivo','Leitura trimestral'],
+    use:['Dar sequência ao programa após os primeiros quick wins','Distribuir esforço sem perder foco','Planejar expansão com governança'],
+    note:'É a ponte entre diagnóstico, priorização e execução contínua.'
+  },
+  'Trilhas por Perfil': {
+    purpose:'Programa de capacitação separado por público, nível de decisão e contexto de uso.',
+    includes:['Trilha liderança','Trilha gestores','Trilha squads e especialistas'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'Arquitetura de capacitação por público',
+      badge:'3 trilhas',
+      cards:[
+        {title:'Liderança',value:'90 min',text:'Visão, governança, decisões e indicadores.'},
+        {title:'Gestores',value:'2 encontros',text:'Uso orientado a metas e revisão de qualidade.'},
+        {title:'Squads',value:'Mão na massa',text:'Prompts, tarefas reais e padrões por função.'},
+        {title:'Saída',value:'Aplicação imediata',text:'Cada perfil encerra com um caso de uso definido para o trabalho real.',wide:true}
+      ]
+    },
+    formats:['Plano de aula','Decks','Agenda de encontros'],
+    use:['Evitar treinamento genérico para públicos diferentes','Aumentar adesão por contexto de trabalho','Criar linguagem comum entre liderança e operação'],
+    note:'A separação por perfil aumenta relevância e reduz rejeição.'
+  },
+  'Kits de Uso por Função': {
+    purpose:'Guias práticos por papel, com casos frequentes, prompts e critérios de revisão.',
+    includes:['Casos do papel','Prompts sugeridos','Erros mais comuns e revisão'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'Kit de uso para analista comercial',
+      badge:'6 blocos',
+      cards:[
+        {title:'Caso 1',value:'Resumo de briefing',text:'Estruturar demanda recebida antes de montar proposta.'},
+        {title:'Caso 2',value:'Primeira versão',text:'Gerar draft comercial com base em padrão aprovado.'},
+        {title:'Caso 3',value:'Ajuste final',text:'Checklist para revisar tom, risco e aderência.'},
+        {title:'Regra de ouro',value:'Não publicar sem revisão',text:'Toda saída comercial passa por olhar humano antes do envio.',wide:true}
+      ]
+    },
+    formats:['PDF funcional','Notion ou wiki','Cartões rápidos'],
+    use:['Reduzir insegurança operacional do time','Acelerar casos recorrentes com padrão','Evitar que cada pessoa “reinvente” seu jeito de usar IA'],
+    note:'O kit transforma aprendizado abstrato em rotina concreta.'
+  },
+  'Playbooks de Prompting': {
+    purpose:'Biblioteca de prompts e estruturas testadas para tarefas recorrentes com qualidade previsível.',
+    includes:['Prompt-base','Variações por cenário','Critérios de saída e revisão'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'Playbook para resumo de reunião executiva',
+      badge:'4 variações',
+      cards:[
+        {title:'Prompt base',value:'Resumo + decisões',text:'Organiza decisões, pendências e próximos passos.'},
+        {title:'Variação',value:'Tom executivo',text:'Versão para diretoria, curta e orientada a decisão.'},
+        {title:'Checklist',value:'3 conferências',text:'Conferir nomes, datas e itens críticos antes do envio.'},
+        {title:'Resultado',value:'Consistência',text:'O time produz saídas mais parecidas e mais fáceis de revisar.',wide:true}
+      ]
+    },
+    formats:['Biblioteca em cards','Documento vivo','Base em wiki'],
+    use:['Padronizar qualidade entre usuários','Acelerar tarefas recorrentes','Reduzir curva de aprendizado no dia a dia'],
+    note:'Prompting bom é processo documentado, não inspiração individual.'
+  },
+  'Programa de Champions': {
+    purpose:'Estrutura de multiplicadores internos com papel, agenda e responsabilidade para sustentar a adoção.',
+    includes:['Perfil esperado','Ritmo de encontros','Papel de apoio e coleta de feedback'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'Modelo de rede interna de champions',
+      badge:'1 por área',
+      cards:[
+        {title:'Perfil',value:'Referência local',text:'Pessoa com aderência do time e capacidade de apoiar uso prático.'},
+        {title:'Ritmo',value:'Semanal',text:'Coleta dúvidas, leva barreiras e ajuda na aplicação.'},
+        {title:'Papel',value:'Multiplicar',text:'Disseminar casos, padrões e feedbacks de uso.'},
+        {title:'Ganho esperado',value:'Adoção sustentada',text:'Mais tração interna sem depender só do consultor externo.',wide:true}
+      ]
+    },
+    formats:['Guia do champion','Rito de acompanhamento','Checklist de atuação'],
+    use:['Criar capilaridade no programa','Acelerar aprendizagem entre pares','Sustentar o uso após os workshops'],
+    note:'Champions são o elo entre desenho metodológico e prática cotidiana.'
+  },
+  'Blueprint de Fluxos': {
+    purpose:'Mapa visual do processo redesenhado com IA integrada em pontos específicos de ganho.',
+    includes:['Antes x depois','Entrada e saída do fluxo','Pontos com automação e revisão'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'Fluxo redesenhado de atendimento interno',
+      badge:'5 etapas',
+      cards:[
+        {title:'Entrada',value:'Pergunta do usuário',text:'Portal interno, ticket ou chat corporativo.'},
+        {title:'IA',value:'Classifica e responde',text:'Sugere resposta com base em base validada.'},
+        {title:'Humano',value:'Valida exceções',text:'Casos sensíveis ou fora do padrão sobem para responsável.'},
+        {title:'Saída',value:'Tempo menor',text:'Fluxo claro com quando automatizar e quando revisar.',wide:true}
+      ]
+    },
+    formats:['Fluxograma','Slide operacional','Mapa de processo'],
+    use:['Explicar para o cliente como a IA entra no trabalho real','Alinhar negócio e tecnologia sobre o desenho alvo','Preparar MVPs e integrações'],
+    note:'O blueprint ajuda a sair da conversa abstrata e entrar no processo concreto.'
+  },
+  'MVP dos Casos Priorizados': {
+    purpose:'Primeira versão funcional do caso escolhido, pronta para piloto controlado e aprendizado rápido.',
+    includes:['Escopo mínimo viável','Critérios de sucesso','Ambiente de teste ou operação inicial'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'MVP de assistente interno para RH',
+      badge:'Piloto de 30 dias',
+      cards:[
+        {title:'Entrada',value:'FAQ + políticas',text:'Base inicial com conteúdos homologados.'},
+        {title:'Uso',value:'50 colaboradores',text:'Grupo piloto com monitoramento semanal.'},
+        {title:'Critério',value:'Acurácia e adesão',text:'Acompanhar uso, taxa de resposta útil e exceções.'},
+        {title:'Saída',value:'Decisão de rollout',text:'Manter, ajustar ou expandir a partir dos dados do piloto.',wide:true}
+      ]
+    },
+    formats:['Protótipo funcional','Ambiente piloto','Guia de uso inicial'],
+    use:['Validar valor antes de expandir','Reduzir risco de investimentos maiores','Gerar aprendizado prático rápido'],
+    note:'MVP aqui não é demo: é uso real em escopo controlado.'
+  },
+  'Integrações Iniciais': {
+    purpose:'Primeiras conexões com bases, documentos ou sistemas para que o caso use dados úteis e atualizados.',
+    includes:['Fontes conectadas','Limites do acesso','Critérios de atualização'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'Integrações do primeiro caso operacional',
+      badge:'3 conexões',
+      cards:[
+        {title:'Base documental',value:'Políticas e FAQs',text:'Repositório homologado como fonte principal de consulta.'},
+        {title:'Tickets',value:'Histórico recente',text:'Leitura de chamados para contexto e padrões.'},
+        {title:'CRM interno',value:'Metadados básicos',text:'Campos de apoio sem expor dados sensíveis além do necessário.'},
+        {title:'Regra',value:'Acesso mínimo',text:'Integrar só o suficiente para operar com segurança e rastreabilidade.',wide:true}
+      ]
+    },
+    formats:['Mapa de integrações','Checklist técnico','Escopo do MVP'],
+    use:['Tornar o caso útil de verdade','Evitar IA “solta” sem contexto do negócio','Planejar expansão técnica sem exagero inicial'],
+    note:'A integração inicial é suficiente para provar valor sem criar complexidade desnecessária.'
+  },
+  'Documentação Operacional': {
+    purpose:'Manual objetivo de uso, revisão, suporte e critérios de exceção do caso implantado.',
+    includes:['Como usar','Quem aprova','O que fazer quando falhar'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'Guia operacional do caso em piloto',
+      badge:'1 manual',
+      cards:[
+        {title:'Usuário',value:'Como acionar',text:'Passo a passo simples com exemplos de pergunta.'},
+        {title:'Gestor',value:'Como revisar',text:'Critérios de conferência e quando intervir.'},
+        {title:'Suporte',value:'Como registrar erro',text:'Canal e padrão para reportar falhas ou gaps.'},
+        {title:'Objetivo',value:'Uso consistente',text:'Reduzir improviso e acelerar correção de problemas no piloto.',wide:true}
+      ]
+    },
+    formats:['Manual PDF','Página interna','FAQ operacional'],
+    use:['Sustentar o caso após a entrega técnica','Reduzir ruído na adoção inicial','Dar previsibilidade para operação'],
+    note:'Documentação boa reduz dependência do fornecedor no dia a dia.'
+  },
+  'Dashboard Executivo': {
+    purpose:'Painel de leitura gerencial sobre adoção, uso, qualidade e evolução por área ou squad.',
+    includes:['KPIs principais','Leitura por área','Alertas de baixa adesão'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'Painel mensal de adoção de IA',
+      badge:'4 KPIs',
+      cards:[
+        {title:'Adoção ativa',value:'67%',text:'Percentual de usuários com uso recorrente nas últimas 4 semanas.'},
+        {title:'Áreas com tração',value:'3 de 5',text:'Comercial, operações e RH puxando o uso real.'},
+        {title:'Casos em produção',value:'4',text:'Fluxos ativos com acompanhamento e revisão.'},
+        {title:'Alerta',value:'Baixa adesão em financeiro',text:'Área precisa de reforço e casos mais aderentes ao trabalho.',wide:true}
+      ]
+    },
+    formats:['Dashboard online','Resumo em PDF','Slide de steering'],
+    use:['Levar IA para o rito de gestão','Enxergar onde a adoção travou','Tomar decisão de escala ou correção com dados'],
+    note:'O dashboard é a peça que torna o programa visível para a liderança.'
+  },
+  'Relatório de Barreiras': {
+    purpose:'Síntese das resistências, gargalos e causas de baixa adesão encontradas na implantação.',
+    includes:['Barreiras por área','Causa raiz','Impacto percebido e ação sugerida'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'Barreiras de adoção após 30 dias',
+      badge:'5 causas',
+      cards:[
+        {title:'Tempo',value:'Falta de rotina',text:'Equipe diz que não consegue parar para testar fluxos novos.'},
+        {title:'Confiança',value:'Saída inconsistente',text:'Alguns usuários perderam confiança após respostas fracas.'},
+        {title:'Gestão',value:'Pouca cobrança',text:'Adoção sem reforço explícito da liderança direta.'},
+        {title:'Ação sugerida',value:'Reforço dirigido',text:'Treino curto, ajuste de prompt e ritual de acompanhamento por gestor.',wide:true}
+      ]
+    },
+    formats:['Relatório analítico','Resumo por área','Plano de ação associado'],
+    use:['Entender por que o uso não avançou como esperado','Separar problema de ferramenta, gestão ou capacitação','Definir reforços mais precisos'],
+    note:'Sem esse relatório, a percepção vira “o time não aderiu”; com ele, aparece o porquê.'
+  },
+  'Plano de Reforço': {
+    purpose:'Pacote de ações corretivas para elevar adesão, qualidade e confiança nas áreas com menor tração.',
+    includes:['Prioridades de reforço','Ações por público','Ritmo de acompanhamento'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'Plano de reforço para áreas em queda',
+      badge:'30 dias',
+      cards:[
+        {title:'Semana 1',value:'Revisão de uso',text:'Analisar dados e entrevistas rápidas com gestores.'},
+        {title:'Semana 2',value:'Treino dirigido',text:'Sessões curtas focadas nos casos que realmente importam.'},
+        {title:'Semana 3',value:'Ajuste técnico',text:'Refinar prompts, base e critérios de validação.'},
+        {title:'Semana 4',value:'Nova medição',text:'Checar evolução e decidir se a área volta ao trilho.',wide:true}
+      ]
+    },
+    formats:['Plano 30-60-90','Checklist de execução','Leitura para steering'],
+    use:['Recuperar áreas com baixa adesão','Atuar rápido sem reinventar o programa inteiro','Ajustar rota com foco operacional'],
+    note:'É o mecanismo que evita que o programa morra silenciosamente após o piloto.'
+  },
+  'Roadmap de Escala': {
+    purpose:'Planejamento da expansão por trimestre, com áreas, casos, dependências e ritmo de decisão.',
+    includes:['Ondas de expansão','Critérios de entrada','Dependências e capacidade necessária'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'Roadmap de expansão em 3 ondas',
+      badge:'12 meses',
+      cards:[
+        {title:'Onda 1',value:'Comercial + RH',text:'Casos mais maduros e com menor risco.'},
+        {title:'Onda 2',value:'Operações',text:'Fluxos com integração moderada e alto potencial de ganho.'},
+        {title:'Onda 3',value:'Financeiro + suporte',text:'Entrada após reforço de governança e dados.'},
+        {title:'Critério de avanço',value:'Adoção + qualidade',text:'Só escala quem provar uso, valor e controle no estágio anterior.',wide:true}
+      ]
+    },
+    formats:['Roadmap trimestral','Visão executiva','Backlog de ondas'],
+    use:['Mostrar que a escala tem método','Evitar expansão impulsiva','Alinhar capacidade interna com ambição do programa'],
+    note:'Roadmap bom organiza ambição e protege a operação.'
+  },
+  'Modelo Operacional de IA': {
+    purpose:'Definição de papéis, ritos, indicadores e decisões para sustentar a IA como capacidade contínua.',
+    includes:['Responsáveis','Ritos de gestão','Fluxo de priorização e revisão'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'Modelo operacional mínimo para sustentação',
+      badge:'4 frentes',
+      cards:[
+        {title:'Dono executivo',value:'Patrocínio e prioridade',text:'Garante direção e remoção de bloqueios.'},
+        {title:'Operação',value:'Squad de IA aplicada',text:'Conduz backlog, monitoramento e melhoria contínua.'},
+        {title:'Governança',value:'Rito mensal',text:'Revisão de riscos, indicadores e novos casos.'},
+        {title:'Capacidade',value:'Modelo contínuo',text:'IA deixa de ser projeto e entra na cadência normal de gestão.',wide:true}
+      ]
+    },
+    formats:['Operating model','RACI','Agenda de ritos'],
+    use:['Sustentar o programa após implantação inicial','Distribuir responsabilidade de forma clara','Consolidar IA como disciplina de gestão'],
+    note:'É o entregável que evita voltar ao improviso quando o fornecedor sai de cena.'
+  },
+  'Backlog Trimestral': {
+    purpose:'Pipeline de novos casos e melhorias organizado por trimestre, com critério de entrada e donos.',
+    includes:['Itens por trimestre','Estimativa de esforço','Condição de aprovação'],
+    preview:{
+      kicker:'Exemplo simulado',
+      title:'Pipeline do próximo trimestre',
+      badge:'9 itens',
+      cards:[
+        {title:'Expansão',value:'3 casos atuais',text:'Melhorias e escala dos fluxos já aprovados.'},
+        {title:'Novos testes',value:'4 oportunidades',text:'Casos de médio impacto para piloto curto.'},
+        {title:'Dependências',value:'2 estruturantes',text:'Organização de base e revisão de política.'},
+        {title:'Leitura executiva',value:'Crescimento controlado',text:'O backlog mantém tração sem perder governança e foco.',wide:true}
+      ]
+    },
+    formats:['Backlog trimestral','Quadro de priorização','Relatório para steering'],
+    use:['Dar continuidade ao programa em ciclos claros','Planejar capacidade da equipe','Equilibrar expansão e melhoria contínua'],
+    note:'É a ferramenta de gestão para não deixar a evolução depender só de demanda ad hoc.'
+  }
+};
+
 const KPI_DEFS = [
   {key:'maturidade',label:'Maturidade de IA',unit:'%',color:'#FF8C00',
    desc:'Evolução do nível de maturidade organizacional com IA — de uso informal a operação estruturada e escalável.'},
@@ -1182,7 +1650,8 @@ const state = {
   simParams: { teamSize:'S', duration:'6', objective:'produtividade', maturity:'emergente', risk:'media', appType:'individual' },
   tlMonth: 1,
   tlMaxMonths: 9,
-  activeKpi: 'maturidade'
+  activeKpi: 'maturidade',
+  activeDeliverable: 0
 };
 
 // ─── NAVIGATION ────────────────────────────────────────
@@ -1468,7 +1937,8 @@ function renderDeliverables() {
     html += `<div class="del-phase-title" data-num="0${i+1}">${ph.tag}</div>`;
     html += `<div class="del-grid">`;
     dels.forEach(d => {
-      html += `<div class="del-card">
+      const idx = DELIVERABLES_ALL.findIndex(item => item.name === d.name);
+      html += `<div class="del-card" data-deliverable="${idx}">
         <div class="del-icon">${d.icon}</div>
         <div class="del-name">${d.name}</div>
         <div class="del-desc">${d.desc}</div>
@@ -1478,6 +1948,91 @@ function renderDeliverables() {
     html += `</div>`;
   });
   document.getElementById('delContent').innerHTML = html;
+  document.querySelectorAll('.del-card').forEach(card => {
+    card.addEventListener('click', () => openDeliverableModal(parseInt(card.dataset.deliverable)));
+  });
+}
+
+const delModalOverlay = document.getElementById('delModalOverlay');
+const delModalClose = document.getElementById('delModalClose');
+const delModalBody = document.getElementById('delModalBody');
+const delModalType = document.getElementById('delModalType');
+const delModalTitle = document.getElementById('delModalTitle');
+const delModalPhase = document.getElementById('delModalPhase');
+const delPrevBtn = document.getElementById('delPrevBtn');
+const delNextBtn = document.getElementById('delNextBtn');
+
+function getDeliverableTypeLabel(type) {
+  return {doc:'Documento',artifact:'Framework',kit:'Kit de Uso',mvp:'MVP / Produto'}[type] || 'Entregável';
+}
+
+function renderPreview(preview, type) {
+  return `
+    <div class="dm-preview">
+      <div class="dm-preview-head">
+        <div>
+          <div class="dm-preview-kicker">${preview.kicker}</div>
+          <div class="dm-preview-title">${preview.title}</div>
+        </div>
+        <div class="dm-preview-badge">${preview.badge || getDeliverableTypeLabel(type)}</div>
+      </div>
+      <div class="dm-preview-grid">
+        ${preview.cards.map(card => `
+          <div class="dm-preview-card ${card.wide ? 'wide' : ''}">
+            <div class="dm-preview-card-title">${card.title}</div>
+            <div class="dm-preview-card-value">${card.value}</div>
+            <div class="dm-preview-card-text">${card.text}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderDeliverableModal(idx) {
+  const item = DELIVERABLES_ALL[idx];
+  const example = DELIVERABLE_EXAMPLES[item.name];
+  const phase = PHASES[item.phase];
+  delModalType.textContent = getDeliverableTypeLabel(item.type);
+  delModalTitle.innerHTML = `${item.icon} ${item.name}`;
+  delModalPhase.textContent = `Fase ${phase.num} · ${phase.tag}`;
+  delModalBody.innerHTML = `
+    <div class="dm-section">
+      <div class="dm-sec-title">O que este entregável mostra</div>
+      <div class="dm-text">${example.purpose}</div>
+    </div>
+    <div class="dm-section">
+      <div class="dm-sec-title">O que costuma conter</div>
+      <ul class="dm-list">${example.includes.map(item => `<li>${item}</li>`).join('')}</ul>
+    </div>
+    <div class="dm-section">
+      <div class="dm-sec-title">Modelo simulado</div>
+      ${renderPreview(example.preview, item.type)}
+    </div>
+    <div class="dm-section">
+      <div class="dm-sec-title">Formatos de entrega</div>
+      <div class="dm-format-row">${example.formats.map(fmt => `<span class="dm-fmt-tag">${fmt}</span>`).join('')}</div>
+    </div>
+    <div class="dm-section">
+      <div class="dm-sec-title">Como usar na venda ou implantação</div>
+      <ul class="dm-list">${example.use.map(item => `<li>${item}</li>`).join('')}</ul>
+      <div class="dm-callout">${example.note}</div>
+    </div>
+  `;
+  delPrevBtn.disabled = idx === 0;
+  delNextBtn.disabled = idx === DELIVERABLES_ALL.length - 1;
+}
+
+function openDeliverableModal(idx) {
+  state.activeDeliverable = idx;
+  renderDeliverableModal(idx);
+  delModalOverlay.classList.add('open');
+  delModalOverlay.setAttribute('aria-hidden', 'false');
+}
+
+function closeDeliverableModal() {
+  delModalOverlay.classList.remove('open');
+  delModalOverlay.setAttribute('aria-hidden', 'true');
 }
 
 // ─── INDICATORS ──────────────────────────────────────────
@@ -1620,6 +2175,26 @@ initMethod();
 initSimulator();
 initTimeline();
 renderDeliverables();
+
+delModalClose.addEventListener('click', closeDeliverableModal);
+delModalOverlay.addEventListener('click', e => {
+  if(e.target === delModalOverlay) closeDeliverableModal();
+});
+delPrevBtn.addEventListener('click', () => {
+  if(state.activeDeliverable > 0) {
+    state.activeDeliverable -= 1;
+    renderDeliverableModal(state.activeDeliverable);
+  }
+});
+delNextBtn.addEventListener('click', () => {
+  if(state.activeDeliverable < DELIVERABLES_ALL.length - 1) {
+    state.activeDeliverable += 1;
+    renderDeliverableModal(state.activeDeliverable);
+  }
+});
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape' && delModalOverlay.classList.contains('open')) closeDeliverableModal();
+});
 
 // Update timeline when simulator changes
 const origRenderSim = renderSimulator;
