@@ -85,6 +85,8 @@
       margin: 28px 0 12px;
     }
     .exclusive-block {
+      position: relative;
+      overflow: hidden;
       margin-top: 28px;
       padding: 22px;
       border: 1px solid rgba(232,101,10,0.18);
@@ -93,7 +95,22 @@
         radial-gradient(circle at top right, rgba(232,101,10,0.10), transparent 28%),
         linear-gradient(180deg, rgba(20,28,40,0.96), rgba(11,17,27,0.94));
     }
+    .exclusive-watermark {
+      position: absolute;
+      right: 18px;
+      top: 10px;
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(4.8rem, 11vw, 8.8rem);
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+      color: rgba(255,255,255,0.05);
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
     .exclusive-head {
+      position: relative;
+      z-index: 1;
       display: grid;
       grid-template-columns: 92px minmax(0, 1fr);
       gap: 18px;
@@ -150,6 +167,10 @@
       color: var(--muted);
       margin-bottom: 16px;
       line-height: 1.7;
+    }
+    .exclusive-block .grid {
+      position: relative;
+      z-index: 1;
     }
     .card {
       background: linear-gradient(180deg, rgba(22,32,46,0.92), rgba(13,20,32,0.95));
@@ -234,6 +255,11 @@
         height: 78px;
         border-radius: 24px;
       }
+      .exclusive-watermark {
+        right: 14px;
+        top: 14px;
+        font-size: clamp(4rem, 22vw, 6.2rem);
+      }
     }
   </style>
 </head>
@@ -296,6 +322,7 @@
         </div>
 
         <div class="exclusive-block">
+          <div class="exclusive-watermark" aria-hidden="true">01</div>
           <div class="exclusive-head">
             <div class="exclusive-mark" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
@@ -358,6 +385,7 @@
         </div>
 
         <div class="exclusive-block">
+          <div class="exclusive-watermark" aria-hidden="true">02</div>
           <div class="exclusive-head">
             <div class="exclusive-mark" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
@@ -417,6 +445,7 @@
         </div>
 
         <div class="exclusive-block">
+          <div class="exclusive-watermark" aria-hidden="true">03</div>
           <div class="exclusive-head">
             <div class="exclusive-mark" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
@@ -478,6 +507,7 @@
         </div>
 
         <div class="exclusive-block">
+          <div class="exclusive-watermark" aria-hidden="true">04</div>
           <div class="exclusive-head">
             <div class="exclusive-mark" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
