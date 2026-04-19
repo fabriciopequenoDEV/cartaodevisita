@@ -127,6 +127,18 @@
       border-color: rgba(232,101,10,0.35);
       box-shadow: 0 12px 28px rgba(0,0,0,0.25);
     }
+    .card-disabled {
+      opacity: 0.78;
+      cursor: default;
+    }
+    .card-disabled:hover {
+      transform: none;
+      border-color: var(--border);
+      box-shadow: none;
+    }
+    .card-disabled .linkline {
+      color: var(--muted);
+    }
     .icon {
       width: 44px;
       height: 44px;
@@ -278,6 +290,56 @@
               </div>
               <div class="linkline">Abrir página</div>
             </a>
+          </div>
+        </div>
+
+        <div class="exclusive-block">
+          <div class="group-title" style="margin-top: 0;">Como trabalhamos com Alocação / Bodyshop</div>
+          <p class="exclusive-sub">Siga a jornada completa na ordem recomendada para apresentação e execução: Oferta, depois Dinâmica e por fim Método. Nesta primeira etapa, a Oferta já está disponível.</p>
+          <div class="grid">
+            <a class="card" href="/oferta-alocacao-smd">
+              <div>
+                <div class="icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M17 20v-1.3a3.7 3.7 0 0 0-3.7-3.7H7.7A3.7 3.7 0 0 0 4 18.7V20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <circle cx="10.5" cy="8" r="3.2" stroke="currentColor" stroke-width="1.8"/>
+                    <path d="M20 20v-1.3a3.6 3.6 0 0 0-2.4-3.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M14.9 4.9a3.2 3.2 0 0 1 0 6.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="title">1. Oferta de Alocação / Bodyshop</div>
+                <div class="desc">Resumo comercial estruturado da oferta com posicionamento, shortlist, onboarding e cadência de acompanhamento.</div>
+              </div>
+              <div class="linkline">Abrir página</div>
+            </a>
+
+            <div class="card card-disabled" aria-disabled="true">
+              <div>
+                <div class="icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M5 7h14M5 12h14M5 17h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="title">2. Dinâmica de Alocação / Bodyshop</div>
+                <div class="desc">Estúdio de leitura de capacidade, critérios de encaixe e artefatos da proposta para entrada operacional.</div>
+              </div>
+              <div class="linkline">Em breve</div>
+            </div>
+
+            <div class="card card-disabled" aria-disabled="true">
+              <div>
+                <div class="icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <rect x="4" y="5" width="6.5" height="6.5" rx="1.4" stroke="currentColor" stroke-width="1.8"/>
+                    <rect x="13.5" y="12.5" width="6.5" height="6.5" rx="1.4" stroke="currentColor" stroke-width="1.8"/>
+                    <path d="M10.5 8.2h2a1.8 1.8 0 0 1 1.8 1.8v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="title">3. Método de Alocação / Bodyshop</div>
+                <div class="desc">Página institucional do método de entrada, sustentação e governança da operação alocada.</div>
+              </div>
+              <div class="linkline">Em breve</div>
+            </div>
           </div>
         </div>
       </section>

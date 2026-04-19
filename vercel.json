@@ -7,6 +7,11 @@
       "permanent": true
     },
     {
+      "source": "/oferta_alocacao_smd",
+      "destination": "/oferta-alocacao-smd",
+      "permanent": true
+    },
+    {
       "source": "/cartão_fabricio",
       "destination": "/cartao_fabricio",
       "permanent": true
@@ -43,6 +48,10 @@
     {
       "source": "/oferta-ia-smd",
       "destination": "/oferta-ia-smd.html"
+    },
+    {
+      "source": "/oferta-alocacao-smd",
+      "destination": "/oferta-alocacao-smd.html"
     },
     {
       "source": "/metodo_de_ia_smd",
