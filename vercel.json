@@ -12,6 +12,11 @@
       "permanent": true
     },
     {
+      "source": "/oferta_gerente_de_mudancas_smd",
+      "destination": "/oferta-gerente-de-mudancas-smd",
+      "permanent": true
+    },
+    {
       "source": "/cartão_fabricio",
       "destination": "/cartao_fabricio",
       "permanent": true
@@ -52,6 +57,10 @@
     {
       "source": "/oferta-alocacao-smd",
       "destination": "/oferta-alocacao-smd.html"
+    },
+    {
+      "source": "/oferta-gerente-de-mudancas-smd",
+      "destination": "/oferta-gerente-de-mudancas-smd.html"
     },
     {
       "source": "/metodo_de_ia_smd",
