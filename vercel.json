@@ -17,6 +17,11 @@
       "permanent": true
     },
     {
+      "source": "/oferta_planejamento_estrategico_smd",
+      "destination": "/oferta-planejamento-estrategico-smd",
+      "permanent": true
+    },
+    {
       "source": "/cartão_fabricio",
       "destination": "/cartao_fabricio",
       "permanent": true
@@ -61,6 +66,10 @@
     {
       "source": "/oferta-gerente-de-mudancas-smd",
       "destination": "/oferta-gerente-de-mudancas-smd.html"
+    },
+    {
+      "source": "/oferta-planejamento-estrategico-smd",
+      "destination": "/oferta-planejamento-estrategico-smd.html"
     },
     {
       "source": "/metodo_de_ia_smd",

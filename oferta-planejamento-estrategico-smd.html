@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oferta SMD · Planejamento estratégico</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0a0d14;
+      --surface:#0f1420;
+      --surface-2:#161c2d;
+      --surface-3:rgba(255,255,255,0.04);
+      --panel-light:#f5f7fb;
+      --panel-light-2:#f0f3f9;
+      --border:rgba(255,255,255,0.08);
+      --text:#e8ecf4;
+      --muted:#7a8499;
+      --ink:#203556;
+      --ink-soft:#5f7394;
+      --primary:#E8650A;
+      --primary-2:#FF7A20;
+      --primary-dim:rgba(232,101,10,0.14);
+      --shadow:0 24px 70px rgba(0,0,0,0.32);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{min-height:100%}
+    body{
+      font-family:'DM Sans',sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(232,101,10,0.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(255,138,51,0.10), transparent 22%),
+        linear-gradient(180deg, #0a0d14 0%, var(--bg) 100%);
+    }
+    a{color:inherit}
+    @keyframes floatGlow{
+      0%,100%{transform:translate3d(0,0,0) scale(1);opacity:.55}
+      50%{transform:translate3d(0,-10px,0) scale(1.03);opacity:.76}
+    }
+    @keyframes riseIn{
+      from{opacity:0;transform:translate3d(0,22px,0)}
+      to{opacity:1;transform:translate3d(0,0,0)}
+    }
+    .wrap{max-width:1280px;margin:0 auto;padding:16px 24px 64px}
+    .topbar{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:.8rem;
+      margin-bottom:18px;
+    }
+    .ia-nav{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:.65rem;
+      width:100%;
+    }
+    .ia-link{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:max-content;
+      min-width:120px;
+      padding:.45rem .85rem;
+      border-radius:999px;
+      text-decoration:none;
+      font-size:.72rem;
+      font-weight:600;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,0.03);
+      transition:.18s ease;
+    }
+    .ia-link:hover{
+      border-color:rgba(232,101,10,0.32);
+      background:var(--primary-dim);
+      color:var(--primary-2);
+    }
+    .ia-link.active{
+      border-color:rgba(232,101,10,0.36);
+      background:var(--primary-dim);
+      color:var(--text);
+    }
+    .ia-link.disabled{
+      color:#72809a;
+      border-style:dashed;
+      background:rgba(255,255,255,0.02);
+      pointer-events:none;
+      cursor:default;
+      opacity:.75;
+    }
+    .brand{
+      display:flex;
+      justify-content:center;
+    }
+    .brand img{
+      height:32px;
+      width:auto;
+      display:block;
+      border-radius:10px;
+    }
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--border);
+      border-radius:32px;
+      background:
+        linear-gradient(135deg, rgba(10,19,31,0.94), rgba(22,35,54,0.88)),
+        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      box-shadow:var(--shadow);
+      padding:24px;
+      margin-bottom:18px;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 24% 68%, rgba(255,255,255,0.10), transparent 14%),
+        radial-gradient(circle at 40% 34%, rgba(255,255,255,0.08), transparent 18%),
+        radial-gradient(circle at 58% 20%, rgba(255,255,255,0.08), transparent 16%),
+        radial-gradient(circle at 78% 54%, rgba(255,255,255,0.08), transparent 18%),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(126,149,182,0.18), rgba(255,255,255,0));
+      background-size:auto,auto,auto,auto,46px 46px,46px 46px,auto;
+      opacity:.42;
+      pointer-events:none;
+      animation:floatGlow 14s ease-in-out infinite;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      width:320px;
+      height:320px;
+      right:-90px;
+      top:-70px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(232,101,10,0.20), rgba(232,101,10,0));
+      filter:blur(14px);
+      pointer-events:none;
+      animation:floatGlow 10s ease-in-out infinite reverse;
+    }
+    .hero-grid{
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns:minmax(0,1.28fr) minmax(320px,.92fr);
+      gap:22px;
+      align-items:start;
+      animation:riseIn .8s ease both;
+    }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      padding:6px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.09);
+      background:rgba(255,255,255,0.04);
+      color:var(--text);
+      font-size:.68rem;
+      font-weight:600;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      margin-bottom:16px;
+    }
+    .headline-row{
+      display:flex;
+      align-items:flex-start;
+      gap:18px;
+    }
+    .hero-icon{
+      width:70px;
+      height:70px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border:1px solid rgba(255,255,255,0.10);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    .hero-icon svg{width:32px;height:32px;color:#fff}
+    h1{
+      font-family:'Syne',sans-serif;
+      font-size:clamp(2.3rem,5vw,4.2rem);
+      line-height:1.02;
+      letter-spacing:-0.03em;
+      margin-bottom:10px;
+      max-width:13ch;
+    }
+    .subhead{
+      font-size:1.12rem;
+      color:#d8e1ed;
+      line-height:1.6;
+      max-width:720px;
+    }
+    .intro{
+      margin-top:14px;
+      font-size:1rem;
+      color:var(--text);
+      line-height:1.8;
+      max-width:780px;
+    }
+    .hero-cta{
+      margin-top:18px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 16px;
+      text-decoration:none;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.08);
+      color:#fff;
+      font-weight:600;
+      transition:transform .18s ease,border-color .18s ease,background .18s ease;
+    }
+    .hero-cta:hover{
+      transform:translateY(-2px);
+      border-color:rgba(232,101,10,0.28);
+      background:rgba(255,255,255,0.12);
+    }
+    .hero-cta svg{width:18px;height:18px;color:var(--primary-2)}
+    .support-cards{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:14px;
+      margin-top:20px;
+    }
+    .support-card{
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:22px;
+      background:rgba(22,33,49,0.66);
+      backdrop-filter:blur(6px);
+      padding:16px;
+      min-height:154px;
+      animation:riseIn .85s ease both;
+    }
+    .support-card:nth-child(2){animation-delay:.08s}
+    .support-card:nth-child(3){animation-delay:.16s}
+    .kicker{
+      color:#bcc8d8;
+      font-size:.68rem;
+      font-weight:600;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+    .support-card h2{
+      font-size:1.12rem;
+      line-height:1.35;
+      margin-bottom:10px;
+      color:#fff;
+    }
+    .support-card p{
+      color:#c7d0dd;
+      line-height:1.7;
+    }
+    .summary-panel{
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:28px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.04));
+      backdrop-filter:blur(10px);
+      padding:18px;
+      min-height:100%;
+      animation:riseIn .92s ease .12s both;
+    }
+    .summary-panel p{
+      color:#edf2f9;
+      line-height:1.72;
+    }
+    .summary-panel .summary-lead{
+      margin-bottom:18px;
+    }
+    .summary-block{
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:22px;
+      background:rgba(34,45,67,0.38);
+      padding:16px;
+    }
+    .summary-item{
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:18px;
+      background:rgba(255,255,255,0.035);
+      padding:14px 16px;
+    }
+    .summary-item + .summary-item{margin-top:12px}
+    .summary-item.highlight{
+      border-color:rgba(232,101,10,0.52);
+      box-shadow:inset 0 0 0 1px rgba(232,101,10,0.18);
+    }
+    .summary-label{
+      color:#d9e0eb;
+      font-size:.68rem;
+      font-weight:600;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
+    .metrics-grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:16px;
+      margin-bottom:18px;
+    }
+    .metric-card{
+      position:relative;
+      overflow:hidden;
+      min-height:140px;
+      border-radius:24px;
+      border:1px solid rgba(210,218,231,0.72);
+      background:
+        radial-gradient(circle at top right, rgba(232,101,10,0.10), transparent 26%),
+        linear-gradient(180deg, var(--panel-light) 0%, var(--panel-light-2) 100%);
+      padding:20px 18px;
+      box-shadow:0 18px 36px rgba(0,0,0,0.16);
+      animation:riseIn .9s ease both;
+    }
+    .metric-card:nth-child(2){animation-delay:.06s}
+    .metric-card:nth-child(3){animation-delay:.12s}
+    .metric-label{
+      color:var(--ink-soft);
+      font-size:.84rem;
+      margin-bottom:12px;
+    }
+    .metric-value{
+      font-family:'Syne',sans-serif;
+      font-size:clamp(2.2rem,4.6vw,3.4rem);
+      line-height:1;
+      color:var(--ink);
+      margin-bottom:10px;
+    }
+    .metric-desc{
+      color:#59729b;
+      line-height:1.6;
+      max-width:34ch;
+    }
+    .metric-list{
+      color:#59729b;
+      line-height:1.6;
+    }
+    .content-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1.14fr) minmax(320px,.92fr);
+      gap:18px;
+      align-items:start;
+    }
+    .panel-light{
+      border-radius:28px;
+      border:1px solid rgba(210,218,231,0.78);
+      background:
+        radial-gradient(circle at top center, rgba(232,101,10,0.08), transparent 28%),
+        linear-gradient(180deg, #f9fbff 0%, #f3f6fb 100%);
+      box-shadow:0 18px 40px rgba(0,0,0,0.16);
+      padding:18px;
+      color:var(--ink);
+    }
+    .panel-dark{
+      border-radius:28px;
+      border:1px solid rgba(255,255,255,0.08);
+      background:linear-gradient(135deg, rgba(20,33,52,0.98), rgba(14,24,39,0.96));
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
+    .section-head{
+      display:flex;
+      align-items:flex-start;
+      gap:14px;
+      margin-bottom:16px;
+    }
+    .section-icon{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+      border:1px solid rgba(232,101,10,0.18);
+      background:rgba(232,101,10,0.06);
+      color:var(--primary-2);
+    }
+    .section-icon svg{width:18px;height:18px}
+    .section-head .kicker{
+      color:#7087aa;
+      margin-bottom:4px;
+    }
+    .section-head h2{
+      font-family:'Syne',sans-serif;
+      font-size:1.6rem;
+      line-height:1.15;
+      letter-spacing:-0.02em;
+      color:var(--ink);
+    }
+    .artifacts-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:14px;
+    }
+    .artifact-card{
+      border:1px solid rgba(205,214,229,0.95);
+      border-radius:24px;
+      background:rgba(255,255,255,0.72);
+      padding:18px;
+      min-height:170px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+    .artifact-meta{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .artifact-index{
+      width:38px;
+      height:38px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid rgba(232,101,10,0.18);
+      color:var(--primary);
+      font-weight:700;
+      font-size:.92rem;
+      background:rgba(232,101,10,0.08);
+    }
+    .artifact-chip{
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:.74rem;
+      font-weight:600;
+      color:#314c74;
+      background:rgba(255,255,255,0.78);
+      border:1px solid rgba(182,196,218,0.85);
+    }
+    .artifact-card h3{
+      font-size:1.14rem;
+      line-height:1.35;
+      color:var(--ink);
+    }
+    .artifact-card p{
+      color:#5c7294;
+      line-height:1.7;
+    }
+    .stack{
+      display:grid;
+      gap:16px;
+    }
+    .panel-dark .section-head .kicker,
+    .panel-dark .section-head h2,
+    .panel-dark p,
+    .panel-dark h3{
+      color:#fff;
+    }
+    .panel-dark p{
+      color:#d6deea;
+    }
+    .focus-title{
+      font-family:'Syne',sans-serif;
+      font-size:2rem;
+      line-height:1.1;
+      letter-spacing:-0.03em;
+      margin-bottom:14px;
+    }
+    .focus-cards{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:12px;
+      margin-top:18px;
+    }
+    .focus-card{
+      border:1px solid rgba(255,255,255,0.10);
+      border-radius:18px;
+      background:rgba(255,255,255,0.04);
+      padding:14px;
+    }
+    .focus-card .label{
+      color:#adbcd4;
+      font-size:.68rem;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
+    .focus-card strong{
+      font-size:1.04rem;
+      line-height:1.35;
+    }
+    .result-list{
+      display:grid;
+      gap:12px;
+    }
+    .result-item{
+      border:1px solid rgba(211,220,234,0.95);
+      border-radius:22px;
+      background:rgba(255,255,255,0.76);
+      padding:16px 18px;
+    }
+    .result-item h3{
+      color:var(--ink);
+      font-size:1.1rem;
+      margin-bottom:8px;
+    }
+    .result-item p{
+      color:#5d7293;
+      line-height:1.7;
+    }
+    .footer-copy{
+      margin-top:24px;
+      border-top:1px solid var(--border);
+      padding-top:22px;
+      color:var(--muted);
+      font-size:.95rem;
+      text-align:center;
+    }
+    @media (max-width: 1040px){
+      .hero-grid,
+      .content-grid,
+      .metrics-grid,
+      .artifacts-grid,
+      .focus-cards{
+        grid-template-columns:1fr;
+      }
+      .support-cards{
+        grid-template-columns:1fr;
+      }
+    }
+    @media (max-width: 680px){
+      .wrap{padding:16px 16px 48px}
+      .hero{padding:18px}
+      .headline-row{flex-direction:column}
+      .hero-icon{width:58px;height:58px}
+      .ia-nav{flex-direction:column}
+      .ia-link{width:100%}
+      .section-head{flex-direction:column}
+      .artifact-meta{align-items:flex-start;flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="ia-nav">
+        <a class="ia-link" href="https://sermaisdigital.vercel.app">Home</a>
+        <a class="ia-link active" href="/oferta-planejamento-estrategico-smd">Oferta</a>
+        <span class="ia-link disabled" aria-disabled="true">Dinâmica</span>
+        <span class="ia-link disabled" aria-disabled="true">Método</span>
+      </div>
+      <div class="brand">
+        <img src="logo_smd.png" alt="Ser Mais Digital">
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="tag">Consultoria executiva</div>
+          <div class="headline-row">
+            <div class="hero-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M4 18h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M7 18V9M12 18V5M17 18v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="m5 9 6-4 4 3 4-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <h1>Planejamento estratégico</h1>
+              <p class="subhead">Projetos de escopo fechado ou aberto que transformam ambição em rotina de execução.</p>
+            </div>
+          </div>
+          <p class="intro">Traduzimos estratégia em prioridades, indicadores, ritos e backlog executivo.</p>
+          <a class="hero-cta" href="#artefatos">
+            Ver artefatos da entrega
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="m13 7 5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+
+          <div class="support-cards">
+            <article class="support-card">
+              <div class="kicker">Posicionamento</div>
+              <h2>Consultoria executiva</h2>
+              <p>Leitura objetiva do papel desta oferta no contexto do cliente.</p>
+            </article>
+            <article class="support-card">
+              <div class="kicker">Primeira entrega</div>
+              <h2>Mapa de prioridades</h2>
+              <p>Painel de decisão com impacto, esforço, dependência e patrocínio por frente.</p>
+            </article>
+            <article class="support-card">
+              <div class="kicker">Cadência de execução</div>
+              <h2>3 etapas coordenadas</h2>
+              <p>Da leitura inicial ao acompanhamento com governança e trilha de execução.</p>
+            </article>
+          </div>
+        </div>
+
+        <aside class="summary-panel">
+          <div class="kicker">Resumo da oferta</div>
+          <p class="summary-lead">Soluções personalizadas para atender necessidades específicas.</p>
+          <div class="summary-block">
+            <div class="kicker">Pontos-chave da entrega</div>
+            <div class="summary-item highlight">
+              <div class="summary-label">Posicionamento</div>
+              <p>Consultoria executiva.</p>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Entrega</div>
+              <p>Projetos de escopo fechado ou aberto que transformam ambição em rotina de execução.</p>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Escopo visível</div>
+              <p>Roadmap e matriz de priorização com dados mockados.</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="metrics-grid" aria-label="Indicadores da oferta">
+      <article class="metric-card">
+        <div class="metric-label">Horizontes priorizados</div>
+        <div class="metric-value">3</div>
+        <div class="metric-desc">Curto, médio e longo prazo conectados em uma narrativa executiva única.</div>
+      </article>
+      <article class="metric-card">
+        <div class="metric-label">Tipos de iniciativas</div>
+        <div class="metric-value">4</div>
+        <div class="metric-list">Sustentação<br>Inovação<br>Manutenção de legado<br>Estruturante</div>
+      </article>
+      <article class="metric-card">
+        <div class="metric-label">Ritos estruturados</div>
+        <div class="metric-value">4</div>
+        <div class="metric-desc">Cadências executivas exemplificadas para dar ritmo à estratégia.</div>
+      </article>
+    </section>
+
+    <section class="content-grid">
+      <div class="panel-light" id="artefatos">
+        <div class="section-head">
+          <div class="section-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="m12 4 7 3.5-7 3.5L5 7.5 12 4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="m5 12 7 3.5 7-3.5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="m5 16.5 7 3.5 7-3.5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div>
+            <div class="kicker">Artefatos da entrega</div>
+            <h2>Peças que transformam discurso comercial em materialidade executiva</h2>
+          </div>
+        </div>
+
+        <div class="artifacts-grid">
+          <article class="artifact-card">
+            <div class="artifact-meta">
+              <div class="artifact-index">01</div>
+              <div class="artifact-chip">Painel de decisão</div>
+            </div>
+            <h3>Mapa de prioridades</h3>
+            <p>Visão executiva com impacto, esforço, dependência e patrocínio de cada frente.</p>
+          </article>
+
+          <article class="artifact-card">
+            <div class="artifact-meta">
+              <div class="artifact-index">02</div>
+              <div class="artifact-chip">Trilha trimestral</div>
+            </div>
+            <h3>Roadmap executivo</h3>
+            <p>Desdobramento das iniciativas em ondas de entrega com critério de sucesso.</p>
+          </article>
+
+          <article class="artifact-card">
+            <div class="artifact-meta">
+              <div class="artifact-index">03</div>
+              <div class="artifact-chip">Cadência de acompanhamento</div>
+            </div>
+            <h3>Quadro de governança</h3>
+            <p>Rituais, responsáveis, checkpoints e sinais de escalacão para manter foco e ritmo.</p>
+          </article>
+
+          <article class="artifact-card">
+            <div class="artifact-meta">
+              <div class="artifact-index">04</div>
+              <div class="artifact-chip">Script de liderança</div>
+            </div>
+            <h3>Narrativa de alinhamento</h3>
+            <p>Mensagem única para garantir clareza entre sócios, líderes e times na execução.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="stack">
+        <section class="panel-dark">
+          <div class="section-head">
+            <div class="section-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 3 6 5v6c0 3.8 2.5 7.3 6 8 3.5-.7 6-4.2 6-8V5l-6-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="m9.4 12 1.7 1.7 3.5-3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="kicker">Proposta em foco</div>
+              <p class="focus-title">Como essa oferta entra na operação</p>
+            </div>
+          </div>
+
+          <p>Roadmap e matriz de priorização com dados mockados.</p>
+
+          <div class="focus-cards">
+            <article class="focus-card">
+              <div class="label">Artefato-chave</div>
+              <strong>Mapa de prioridades</strong>
+            </article>
+            <article class="focus-card">
+              <div class="label">Cadência</div>
+              <strong>3 etapas coordenadas</strong>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel-light">
+          <div class="section-head">
+            <div class="section-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8"/>
+              </svg>
+            </div>
+            <div>
+              <div class="kicker">Resultados percebidos</div>
+              <h2>Como a oferta se manifesta na operação</h2>
+            </div>
+          </div>
+
+          <div class="result-list">
+            <article class="result-item">
+              <h3>Estratégia conectada a rotina</h3>
+              <p>Prioridades, ritos e métricas passam a operar dentro de uma mesma cadência executiva.</p>
+            </article>
+            <article class="result-item">
+              <h3>Direção com acompanhamento</h3>
+              <p>Cada artefato mostra como a decisão se desdobra em foco, acompanhamento e consequência executiva.</p>
+            </article>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <div class="footer-copy">© 2026 · Ser Mais Digital · <a href="mailto:contato@sermaisdigital.com.br">contato@sermaisdigital.com.br</a></div>
+  </div>
+</body>
+</html>
