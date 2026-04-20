@@ -98,19 +98,32 @@
     .exclusive-watermark {
       position: absolute;
       inset: 0;
-      display: grid;
-      place-items: center;
       pointer-events: none;
       user-select: none;
       z-index: 0;
-      opacity: 0.12;
+      overflow: hidden;
     }
     .exclusive-watermark svg {
-      width: min(220px, 28vw);
+      position: absolute;
+      left: 50%;
+      top: 54%;
+      transform: translate(-50%, -50%);
+      width: min(240px, 28vw);
       height: auto;
       display: block;
       overflow: visible;
-      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.14));
+      opacity: 0.2;
+      filter: drop-shadow(0 12px 28px rgba(0,0,0,0.18));
+    }
+    .exclusive-watermark-number {
+      position: absolute;
+      right: 18px;
+      top: 10px;
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(4.8rem, 11vw, 8.8rem);
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+      color: rgba(255,255,255,0.05);
     }
     .exclusive-head {
       position: relative;
@@ -260,10 +273,15 @@
         border-radius: 24px;
       }
       .exclusive-watermark {
-        opacity: 0.1;
       }
       .exclusive-watermark svg {
         width: min(170px, 42vw);
+        top: 58%;
+      }
+      .exclusive-watermark-number {
+        right: 14px;
+        top: 14px;
+        font-size: clamp(4rem, 22vw, 6.2rem);
       }
     }
   </style>
@@ -328,6 +346,7 @@
 
         <div class="exclusive-block">
           <div class="exclusive-watermark" aria-hidden="true">
+            <div class="exclusive-watermark-number">01</div>
             <svg viewBox="-70 -70 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="0" cy="0" r="58" stroke="#C17D3C" stroke-width="0.6" stroke-dasharray="3 4"/>
               <circle cx="0" cy="0" r="44" stroke="#C17D3C" stroke-width="0.3" opacity="0.5"/>
@@ -413,6 +432,7 @@
 
         <div class="exclusive-block">
           <div class="exclusive-watermark" aria-hidden="true">
+            <div class="exclusive-watermark-number">02</div>
             <svg viewBox="-70 -70 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="0" cy="0" r="58" stroke="#4A9EBF" stroke-width="0.6" stroke-dasharray="3 4"/>
               <circle cx="0" cy="0" r="6" fill="#4A9EBF" opacity="0.9"/>
@@ -494,6 +514,7 @@
 
         <div class="exclusive-block">
           <div class="exclusive-watermark" aria-hidden="true">
+            <div class="exclusive-watermark-number">03</div>
             <svg viewBox="-70 -70 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="0" cy="0" r="58" stroke="#7B6FAD" stroke-width="0.6" stroke-dasharray="3 4"/>
               <path d="M-38 8Q-19 -6 0 -6Q19 -6 38 8" stroke="#7B6FAD" stroke-width="1" opacity="0.4"/>
@@ -570,6 +591,7 @@
 
         <div class="exclusive-block">
           <div class="exclusive-watermark" aria-hidden="true">
+            <div class="exclusive-watermark-number">04</div>
             <svg viewBox="-70 -70 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="0" cy="0" r="58" stroke="#5BA887" stroke-width="0.6" stroke-dasharray="3 4"/>
               <path d="M0 -44A44 44 0 1 1 -44 0" stroke="#5BA887" stroke-width="1.5" opacity="0.4"/>
