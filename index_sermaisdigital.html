@@ -97,16 +97,20 @@
     }
     .exclusive-watermark {
       position: absolute;
-      right: 18px;
-      top: 10px;
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(4.8rem, 11vw, 8.8rem);
-      line-height: 0.9;
-      letter-spacing: -0.06em;
-      color: rgba(255,255,255,0.05);
+      inset: 0;
+      display: grid;
+      place-items: center;
       pointer-events: none;
       user-select: none;
       z-index: 0;
+      opacity: 0.12;
+    }
+    .exclusive-watermark svg {
+      width: min(220px, 28vw);
+      height: auto;
+      display: block;
+      overflow: visible;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.14));
     }
     .exclusive-head {
       position: relative;
@@ -256,9 +260,10 @@
         border-radius: 24px;
       }
       .exclusive-watermark {
-        right: 14px;
-        top: 14px;
-        font-size: clamp(4rem, 22vw, 6.2rem);
+        opacity: 0.1;
+      }
+      .exclusive-watermark svg {
+        width: min(170px, 42vw);
       }
     }
   </style>
@@ -322,7 +327,29 @@
         </div>
 
         <div class="exclusive-block">
-          <div class="exclusive-watermark" aria-hidden="true">01</div>
+          <div class="exclusive-watermark" aria-hidden="true">
+            <svg viewBox="-70 -70 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="0" cy="0" r="58" stroke="#C17D3C" stroke-width="0.6" stroke-dasharray="3 4"/>
+              <circle cx="0" cy="0" r="44" stroke="#C17D3C" stroke-width="0.3" opacity="0.5"/>
+              <circle cx="0" cy="-14" r="9" stroke="#C17D3C" stroke-width="1.6"/>
+              <path d="M-14 14Q-14 2 0 2Q14 2 14 14" stroke="#C17D3C" stroke-width="1.6" stroke-linecap="round"/>
+              <g transform="rotate(-50) translate(34 0)">
+                <circle cx="0" cy="-5" r="4.5" stroke="#C17D3C" stroke-width="1"/>
+                <path d="M-6 5Q-6 0 0 0Q6 0 6 5" stroke="#C17D3C" stroke-width="1" stroke-linecap="round"/>
+              </g>
+              <g transform="rotate(50) translate(34 0)">
+                <circle cx="0" cy="-5" r="4.5" stroke="#C17D3C" stroke-width="1"/>
+                <path d="M-6 5Q-6 0 0 0Q6 0 6 5" stroke="#C17D3C" stroke-width="1" stroke-linecap="round"/>
+              </g>
+              <g transform="rotate(170) translate(34 0)">
+                <circle cx="0" cy="-5" r="4.5" stroke="#C17D3C" stroke-width="1"/>
+                <path d="M-6 5Q-6 0 0 0Q6 0 6 5" stroke="#C17D3C" stroke-width="1" stroke-linecap="round"/>
+              </g>
+              <line x1="0" y1="16" x2="23.3" y2="-11" stroke="#C17D3C" stroke-width="0.5" opacity="0.6"/>
+              <line x1="0" y1="16" x2="-23.3" y2="-11" stroke="#C17D3C" stroke-width="0.5" opacity="0.6"/>
+              <line x1="0" y1="16" x2="0" y2="-34" stroke="#C17D3C" stroke-width="0.5" opacity="0.6"/>
+            </svg>
+          </div>
           <div class="exclusive-head">
             <div class="exclusive-mark" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
@@ -385,7 +412,28 @@
         </div>
 
         <div class="exclusive-block">
-          <div class="exclusive-watermark" aria-hidden="true">02</div>
+          <div class="exclusive-watermark" aria-hidden="true">
+            <svg viewBox="-70 -70 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="0" cy="0" r="58" stroke="#4A9EBF" stroke-width="0.6" stroke-dasharray="3 4"/>
+              <circle cx="0" cy="0" r="6" fill="#4A9EBF" opacity="0.9"/>
+              <circle cx="0" cy="-24" r="4" stroke="#4A9EBF" stroke-width="1.4"/>
+              <circle cx="24" cy="0" r="4" stroke="#4A9EBF" stroke-width="1.4"/>
+              <circle cx="0" cy="24" r="4" stroke="#4A9EBF" stroke-width="1.4"/>
+              <circle cx="-24" cy="0" r="4" stroke="#4A9EBF" stroke-width="1.4"/>
+              <line x1="0" y1="-6" x2="0" y2="-20" stroke="#4A9EBF" stroke-width="0.8" opacity="0.7"/>
+              <line x1="6" y1="0" x2="20" y2="0" stroke="#4A9EBF" stroke-width="0.8" opacity="0.7"/>
+              <line x1="0" y1="6" x2="0" y2="20" stroke="#4A9EBF" stroke-width="0.8" opacity="0.7"/>
+              <line x1="-6" y1="0" x2="-20" y2="0" stroke="#4A9EBF" stroke-width="0.8" opacity="0.7"/>
+              <circle cx="0" cy="-42" r="3" stroke="#4A9EBF" stroke-width="1"/>
+              <circle cx="30" cy="-30" r="3" stroke="#4A9EBF" stroke-width="1"/>
+              <circle cx="42" cy="0" r="3" stroke="#4A9EBF" stroke-width="1"/>
+              <circle cx="30" cy="30" r="3" stroke="#4A9EBF" stroke-width="1"/>
+              <circle cx="0" cy="42" r="3" stroke="#4A9EBF" stroke-width="1"/>
+              <circle cx="-30" cy="30" r="3" stroke="#4A9EBF" stroke-width="1"/>
+              <circle cx="-42" cy="0" r="3" stroke="#4A9EBF" stroke-width="1"/>
+              <circle cx="-30" cy="-30" r="3" stroke="#4A9EBF" stroke-width="1"/>
+            </svg>
+          </div>
           <div class="exclusive-head">
             <div class="exclusive-mark" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
@@ -445,7 +493,21 @@
         </div>
 
         <div class="exclusive-block">
-          <div class="exclusive-watermark" aria-hidden="true">03</div>
+          <div class="exclusive-watermark" aria-hidden="true">
+            <svg viewBox="-70 -70 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="0" cy="0" r="58" stroke="#7B6FAD" stroke-width="0.6" stroke-dasharray="3 4"/>
+              <path d="M-38 8Q-19 -6 0 -6Q19 -6 38 8" stroke="#7B6FAD" stroke-width="1" opacity="0.4"/>
+              <path d="M-46 16Q-23 -2 0 -2Q23 -2 46 16" stroke="#7B6FAD" stroke-width="1.2" opacity="0.6"/>
+              <path d="M-52 24Q-26 4 0 4Q26 4 52 24" stroke="#7B6FAD" stroke-width="1.5" opacity="0.85"/>
+              <line x1="0" y1="28" x2="0" y2="-34" stroke="#7B6FAD" stroke-width="2" stroke-linecap="round"/>
+              <path d="M-8 -22L0 -38L8 -22" stroke="#7B6FAD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="0" cy="-38" r="3.5" fill="#7B6FAD"/>
+              <circle cx="-24" cy="16" r="2.5" stroke="#7B6FAD" stroke-width="1"/>
+              <circle cx="24" cy="16" r="2.5" stroke="#7B6FAD" stroke-width="1"/>
+              <circle cx="-38" cy="24" r="2" stroke="#7B6FAD" stroke-width="0.8" opacity="0.6"/>
+              <circle cx="38" cy="24" r="2" stroke="#7B6FAD" stroke-width="0.8" opacity="0.6"/>
+            </svg>
+          </div>
           <div class="exclusive-head">
             <div class="exclusive-mark" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
@@ -507,7 +569,17 @@
         </div>
 
         <div class="exclusive-block">
-          <div class="exclusive-watermark" aria-hidden="true">04</div>
+          <div class="exclusive-watermark" aria-hidden="true">
+            <svg viewBox="-70 -70 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="0" cy="0" r="58" stroke="#5BA887" stroke-width="0.6" stroke-dasharray="3 4"/>
+              <path d="M0 -44A44 44 0 1 1 -44 0" stroke="#5BA887" stroke-width="1.5" opacity="0.4"/>
+              <path d="M-38 -22L-44 0L-26 -10" stroke="#5BA887" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
+              <path d="M0 28A28 28 0 1 0 28 0" stroke="#5BA887" stroke-width="1.8" opacity="0.75"/>
+              <path d="M22 14L28 0L14 8" stroke="#5BA887" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.75"/>
+              <rect x="-9" y="-9" width="18" height="18" rx="1" stroke="#5BA887" stroke-width="1.8" transform="rotate(45)"/>
+              <rect x="-4" y="-4" width="8" height="8" rx="0.5" fill="#5BA887" opacity="0.9" transform="rotate(45)"/>
+            </svg>
+          </div>
           <div class="exclusive-head">
             <div class="exclusive-mark" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
