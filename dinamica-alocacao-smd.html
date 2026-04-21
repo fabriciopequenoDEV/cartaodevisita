@@ -59,6 +59,14 @@
       0%,100%{box-shadow:0 0 0 0 rgba(232,101,10,0.18)}
       50%{box-shadow:0 0 0 10px rgba(232,101,10,0)}
     }
+    @keyframes carouselIn{
+      from{opacity:0;transform:translate3d(28px,0,0) scale(.985);filter:blur(5px)}
+      to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}
+    }
+    @keyframes premiumSweep{
+      from{transform:translateX(-120%) skewX(-18deg)}
+      to{transform:translateX(220%) skewX(-18deg)}
+    }
 
     .wrap{max-width:1360px;margin:0 auto;padding:18px 24px 64px}
     .topbar{
@@ -431,15 +439,47 @@
       line-height:1.5;
     }
 
-    .form-stack{display:grid;gap:16px}
-    .question-block{
+    .form-stack{
+      display:grid;
+      gap:16px;
       position:relative;
+    }
+    .question-block{
+      display:none;
+      position:relative;
+      min-height:560px;
       border:1px solid rgba(22,39,63,0.09);
       border-radius:28px;
       background:rgba(255,255,255,0.84);
       box-shadow:var(--shadow-soft);
       padding:22px;
       transition:border-color .18s ease,transform .18s ease,box-shadow .18s ease;
+      overflow:hidden;
+      transform-origin:center right;
+    }
+    .question-block.carousel-active{
+      display:block;
+      animation:carouselIn .48s cubic-bezier(.2,.8,.2,1) both;
+    }
+    .question-block.carousel-active::before{
+      content:"";
+      position:absolute;
+      inset:0 auto 0 0;
+      width:4px;
+      background:linear-gradient(180deg, var(--primary-2), rgba(232,101,10,0.10), transparent);
+      opacity:.82;
+    }
+    .question-block.carousel-active::after{
+      content:"";
+      position:absolute;
+      top:0;
+      left:-38%;
+      width:32%;
+      height:100%;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,0.36), transparent);
+      transform:translateX(-120%) skewX(-18deg);
+      pointer-events:none;
+      animation:premiumSweep .78s ease .08s both;
     }
     .question-block:hover{
       border-color:rgba(232,101,10,0.18);
@@ -462,6 +502,7 @@
       font-weight:700;
       letter-spacing:.08em;
       text-transform:uppercase;
+      animation:none;
     }
     .block-head{
       display:grid;
@@ -514,6 +555,83 @@
       line-height:1.45;
     }
     .microcopy strong{color:var(--ink)}
+
+    .carousel-controls{
+      display:grid;
+      grid-template-columns:auto minmax(0,1fr) auto;
+      gap:14px;
+      align-items:center;
+      border:1px solid rgba(22,39,63,0.08);
+      border-radius:26px;
+      background:rgba(255,255,255,0.78);
+      box-shadow:var(--shadow-soft);
+      padding:14px;
+    }
+    .carousel-btn{
+      min-height:48px;
+      padding:0 16px;
+      border-radius:16px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(244,247,252,0.96));
+      border:1px solid rgba(22,39,63,0.10);
+      color:var(--ink);
+      cursor:pointer;
+      font-weight:800;
+      transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,opacity .18s ease;
+    }
+    .carousel-btn.primary{
+      color:#fff;
+      border-color:rgba(232,101,10,0.34);
+      background:linear-gradient(180deg, var(--primary-2), var(--primary));
+      box-shadow:0 16px 28px rgba(232,101,10,0.22);
+    }
+    .carousel-btn:hover:not(:disabled){
+      transform:translateY(-2px);
+      box-shadow:0 14px 26px rgba(18,29,48,0.12);
+    }
+    .carousel-btn:disabled{
+      cursor:not-allowed;
+      opacity:.46;
+      box-shadow:none;
+    }
+    .carousel-center{
+      display:grid;
+      gap:10px;
+      justify-items:center;
+    }
+    .step-dots{
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .step-dot{
+      width:12px;
+      height:12px;
+      border-radius:999px;
+      border:1px solid rgba(22,39,63,0.14);
+      background:rgba(22,39,63,0.10);
+      cursor:pointer;
+      transition:width .2s ease,background .2s ease,border-color .2s ease,opacity .2s ease;
+    }
+    .step-dot.active{
+      width:34px;
+      background:linear-gradient(90deg, var(--primary-2), var(--primary));
+      border-color:rgba(232,101,10,0.34);
+    }
+    .step-dot.complete{
+      background:rgba(22,163,74,0.24);
+      border-color:rgba(22,163,74,0.28);
+    }
+    .step-dot.locked{
+      opacity:.32;
+      cursor:not-allowed;
+    }
+    .carousel-message{
+      color:#6a7f9a;
+      font-size:.88rem;
+      line-height:1.5;
+      text-align:center;
+    }
 
     .field-grid{display:grid;gap:16px}
     .field-grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -986,6 +1104,12 @@
       }
       .progress-shell{min-width:0}
       .question-block{padding:18px}
+      .carousel-controls{
+        grid-template-columns:1fr;
+      }
+      .carousel-btn{
+        width:100%;
+      }
     }
 
     @media (max-width: 560px){
@@ -1021,8 +1145,8 @@
       <div class="hero-grid">
         <div class="hero-copy">
           <div class="tag">Refino de vaga com leitura estratégica</div>
-          <h1>Sua vaga está mal definida ou o time só aprendeu a conviver com o problema?</h1>
-          <p class="subhead">Em poucos minutos você transforma incômodo difuso em perfil ideal, critérios de sucesso e riscos de contratação.</p>
+          <h1>Perfil ideal</h1>
+          <p class="subhead">Nossa dinâmica de entendimento de ritmo e momento</p>
           <p class="micro">Leva 5 minutos. Sai com diagnóstico, não com formulário.</p>
 
           <div class="hero-actions">
@@ -1077,7 +1201,7 @@
         <div class="canvas-head">
           <div>
             <span class="eyebrow">Consultoria guiada</span>
-            <h2>Mapeie o perfil ideal antes de abrir espaço para candidato errado.</h2>
+            <h2>Vamos começar!</h2>
             <p>Preencha como se estivesse em uma conversa de refino: a cada resposta, a leitura fica mais precisa e o diagnóstico vai ganhando forma ao lado.</p>
           </div>
 
@@ -1096,11 +1220,11 @@
         <form id="refineForm" class="form-stack" novalidate>
           <section class="question-block" data-section-key="contexto">
             <div class="block-head">
-              <div class="block-num">02</div>
+              <div class="block-num">01</div>
               <div>
                 <div class="block-kicker">Contexto da vaga</div>
-                <h3>Qual problema essa vaga precisa parar de esconder?</h3>
-                <p>O objetivo aqui é sair do título e encostar no motivo real da contratação. Se a vaga existe por ruído, baixa performance ou falta de direção, isso precisa aparecer.</p>
+                <h3>Qual motivo da vaga?</h3>
+                <p>O objetivo aqui é sair com um entendimento profundo sobre o contexto de atuação</p>
               </div>
             </div>
 
@@ -1112,6 +1236,11 @@
                   <button type="button" class="choice-btn" data-value="Crescimento">Crescimento</button>
                   <button type="button" class="choice-btn" data-value="Baixa performance">Baixa performance</button>
                   <button type="button" class="choice-btn" data-value="Novo projeto">Novo projeto</button>
+                  <button type="button" class="choice-btn" data-value="Reposição crítica">Reposição crítica</button>
+                  <button type="button" class="choice-btn" data-value="Aumento de demanda">Aumento de demanda</button>
+                  <button type="button" class="choice-btn" data-value="Mudança de estratégia">Mudança de estratégia</button>
+                  <button type="button" class="choice-btn" data-value="Gargalo técnico">Gargalo técnico</button>
+                  <button type="button" class="choice-btn" data-value="Reorganização do time">Reorganização do time</button>
                   <button type="button" class="choice-btn" data-value="Outro">Outro</button>
                 </div>
               </div>
@@ -1130,6 +1259,11 @@
                   <button type="button" class="helper-chip" data-append-target="incomodoAtual" data-append-text="a posição não anda sem cobrança">andar sem cobrança</button>
                   <button type="button" class="helper-chip" data-append-target="incomodoAtual" data-append-text="as áreas seguem desalinhadas">alinhar áreas</button>
                   <button type="button" class="helper-chip" data-append-target="incomodoAtual" data-append-text="as entregas não acontecem no ritmo esperado">entregar no ritmo</button>
+                  <button type="button" class="helper-chip" data-append-target="incomodoAtual" data-append-text="o gestor precisa destravar tudo">dependência do gestor</button>
+                  <button type="button" class="helper-chip" data-append-target="incomodoAtual" data-append-text="o time perde contexto entre uma etapa e outra">perda de contexto</button>
+                  <button type="button" class="helper-chip" data-append-target="incomodoAtual" data-append-text="as decisões chegam tarde demais">decisão lenta</button>
+                  <button type="button" class="helper-chip" data-append-target="incomodoAtual" data-append-text="as prioridades mudam sem critério claro">prioridade muda toda hora</button>
+                  <button type="button" class="helper-chip" data-append-target="incomodoAtual" data-append-text="a operação fica reativa e sem previsibilidade">operação reativa</button>
                 </div>
               </div>
             </div>
@@ -1137,7 +1271,7 @@
 
           <section class="question-block" data-section-key="objetivo">
             <div class="block-head">
-              <div class="block-num">03</div>
+              <div class="block-num">02</div>
               <div>
                 <div class="block-kicker">Objetivo real</div>
                 <h3>Se essa pessoa funcionar perfeitamente, o que muda em 90 dias?</h3>
@@ -1154,6 +1288,11 @@
                   <button type="button" class="choice-btn" data-value="Melhor comunicação entre áreas">Melhor comunicação entre áreas</button>
                   <button type="button" class="choice-btn" data-value="Aumento de receita">Aumento de receita</button>
                   <button type="button" class="choice-btn" data-value="Organização do time">Organização do time</button>
+                  <button type="button" class="choice-btn" data-value="Mais previsibilidade">Mais previsibilidade</button>
+                  <button type="button" class="choice-btn" data-value="Menos dependência do gestor">Menos dependência do gestor</button>
+                  <button type="button" class="choice-btn" data-value="Decisões melhores">Decisões melhores</button>
+                  <button type="button" class="choice-btn" data-value="Fluxo entre áreas">Fluxo entre áreas</button>
+                  <button type="button" class="choice-btn" data-value="Escala da operação">Escala da operação</button>
                   <button type="button" class="choice-btn" data-value="Outro">Outro</button>
                 </div>
               </div>
@@ -1161,13 +1300,25 @@
               <div class="field">
                 <label for="objetivoOutro">O que mais mudaria na prática?</label>
                 <textarea id="objetivoOutro" name="objetivoOutro" placeholder="Ex.: os refinamentos deixam de voltar, produto e tecnologia param de se desencontrar, o gestor para de centralizar tudo..."></textarea>
+                <div class="helper-chips">
+                  <button type="button" class="helper-chip" data-append-target="objetivoOutro" data-append-text="o time passa a saber qual decisão tomar sem esperar validação">decisão autônoma</button>
+                  <button type="button" class="helper-chip" data-append-target="objetivoOutro" data-append-text="as entregas deixam de voltar por falta de contexto">menos volta</button>
+                  <button type="button" class="helper-chip" data-append-target="objetivoOutro" data-append-text="as áreas conseguem negociar prioridade antes de virar conflito">negociação melhor</button>
+                  <button type="button" class="helper-chip" data-append-target="objetivoOutro" data-append-text="a liderança passa a enxergar ritmo e risco com antecedência">visibilidade de risco</button>
+                  <button type="button" class="helper-chip" data-append-target="objetivoOutro" data-append-text="o backlog fica mais claro e acionável">backlog claro</button>
+                  <button type="button" class="helper-chip" data-append-target="objetivoOutro" data-append-text="o cliente interno recebe respostas mais rápidas">resposta rápida</button>
+                  <button type="button" class="helper-chip" data-append-target="objetivoOutro" data-append-text="as dependências deixam de travar o fluxo">menos bloqueio</button>
+                  <button type="button" class="helper-chip" data-append-target="objetivoOutro" data-append-text="o time ganha cadência de entrega sem cobrança diária">cadência sem cobrança</button>
+                  <button type="button" class="helper-chip" data-append-target="objetivoOutro" data-append-text="o gestor sai do operacional e volta para decisões estratégicas">gestor fora do micro</button>
+                  <button type="button" class="helper-chip" data-append-target="objetivoOutro" data-append-text="a operação deixa de depender de uma única pessoa">menos pessoa-chave</button>
+                </div>
               </div>
             </div>
           </section>
 
           <section class="question-block" data-section-key="sucesso">
             <div class="block-head">
-              <div class="block-num">04</div>
+              <div class="block-num">03</div>
               <div>
                 <div class="block-kicker">Critérios de sucesso</div>
                 <h3>Como você vai saber que essa pessoa está dando certo?</h3>
@@ -1186,6 +1337,10 @@
                   <button type="button" class="choice-btn" data-value="O time para de travar">O time para de travar</button>
                   <button type="button" class="choice-btn" data-value="Stakeholders param de escalar ruído">Stakeholders param de escalar ruído</button>
                   <button type="button" class="choice-btn" data-value="A operação ganha previsibilidade">A operação ganha previsibilidade</button>
+                  <button type="button" class="choice-btn" data-value="Decisões são tomadas sem escalada">Decisões são tomadas sem escalada</button>
+                  <button type="button" class="choice-btn" data-value="Prioridades ficam claras antes da execução">Prioridades ficam claras antes da execução</button>
+                  <button type="button" class="choice-btn" data-value="Stakeholders entendem o andamento">Stakeholders entendem o andamento</button>
+                  <button type="button" class="choice-btn" data-value="O time antecipa riscos">O time antecipa riscos</button>
                 </div>
                 <div class="field-note" id="criteriaFeedback">Escolha até 4 sinais que tornariam o acerto da vaga visível.</div>
               </div>
@@ -1193,13 +1348,25 @@
               <div class="field">
                 <label for="criterioAberto">Se quiser, complemente com o seu critério</label>
                 <textarea id="criterioAberto" name="criterioAberto" placeholder="Ex.: o time deixa de escalar conflito pequeno, a área para de depender da minha validação diária..."></textarea>
+                <div class="helper-chips">
+                  <button type="button" class="helper-chip" data-append-target="criterioAberto" data-append-text="o gestor deixa de ser gargalo de aprovação">gestor não é gargalo</button>
+                  <button type="button" class="helper-chip" data-append-target="criterioAberto" data-append-text="as entregas chegam com contexto completo">contexto completo</button>
+                  <button type="button" class="helper-chip" data-append-target="criterioAberto" data-append-text="as áreas combinam prioridade antes de executar">prioridade combinada</button>
+                  <button type="button" class="helper-chip" data-append-target="criterioAberto" data-append-text="os riscos aparecem antes de virar atraso">risco antecipado</button>
+                  <button type="button" class="helper-chip" data-append-target="criterioAberto" data-append-text="o time sabe explicar tradeoffs sem rodeio">tradeoff claro</button>
+                  <button type="button" class="helper-chip" data-append-target="criterioAberto" data-append-text="as histórias entram no refinamento com menos ruído">refino limpo</button>
+                  <button type="button" class="helper-chip" data-append-target="criterioAberto" data-append-text="as dependências são mapeadas antes do prazo">dependências mapeadas</button>
+                  <button type="button" class="helper-chip" data-append-target="criterioAberto" data-append-text="o time ganha cadência previsível">cadência previsível</button>
+                  <button type="button" class="helper-chip" data-append-target="criterioAberto" data-append-text="o cliente interno entende o combinado">combinado visível</button>
+                  <button type="button" class="helper-chip" data-append-target="criterioAberto" data-append-text="a operação deixa de apagar incêndio">menos incêndio</button>
+                </div>
               </div>
             </div>
           </section>
 
           <section class="question-block" data-section-key="antiperfil">
             <div class="block-head">
-              <div class="block-num">05</div>
+              <div class="block-num">04</div>
               <div>
                 <div class="block-kicker">Comportamento esperado vs anti-perfil</div>
                 <h3>O que essa pessoa NÃO pode fazer?</h3>
@@ -1218,19 +1385,35 @@
                   <button type="button" class="choice-btn" data-value="Evitar conflito">Evitar conflito</button>
                   <button type="button" class="choice-btn" data-value="Não entregar no prazo">Não entregar no prazo</button>
                   <button type="button" class="choice-btn" data-value="Trabalhar isolado">Trabalhar isolado</button>
+                  <button type="button" class="choice-btn" data-value="Prometer e não sustentar">Prometer e não sustentar</button>
+                  <button type="button" class="choice-btn" data-value="Ignorar contexto">Ignorar contexto</button>
+                  <button type="button" class="choice-btn" data-value="Escalar tudo para o gestor">Escalar tudo para o gestor</button>
+                  <button type="button" class="choice-btn" data-value="Não negociar prioridade">Não negociar prioridade</button>
                 </div>
               </div>
 
               <div class="field">
                 <label for="antiPerfilAberto">O que mais te irrita em perfis assim?</label>
                 <textarea id="antiPerfilAberto" name="antiPerfilAberto" placeholder="Ex.: some quando precisa negociar, volta com problema sem proposta, gera ruído em vez de clareza..."></textarea>
+                <div class="helper-chips">
+                  <button type="button" class="helper-chip" data-append-target="antiPerfilAberto" data-append-text="traz problema sem proposta de caminho">problema sem proposta</button>
+                  <button type="button" class="helper-chip" data-append-target="antiPerfilAberto" data-append-text="espera alguém dizer exatamente o que fazer">espera roteiro</button>
+                  <button type="button" class="helper-chip" data-append-target="antiPerfilAberto" data-append-text="some quando a conversa fica difícil">some no conflito</button>
+                  <button type="button" class="helper-chip" data-append-target="antiPerfilAberto" data-append-text="comunica tarde demais quando algo vai atrasar">avisa tarde</button>
+                  <button type="button" class="helper-chip" data-append-target="antiPerfilAberto" data-append-text="cria alinhamento aparente e execução desalinhada">falso alinhamento</button>
+                  <button type="button" class="helper-chip" data-append-target="antiPerfilAberto" data-append-text="não consegue dizer não para demanda ruim">não sabe dizer não</button>
+                  <button type="button" class="helper-chip" data-append-target="antiPerfilAberto" data-append-text="trabalha bem sozinho, mas quebra na interface com áreas">quebra na interface</button>
+                  <button type="button" class="helper-chip" data-append-target="antiPerfilAberto" data-append-text="precisa ser cobrado para manter ritmo">precisa cobrança</button>
+                  <button type="button" class="helper-chip" data-append-target="antiPerfilAberto" data-append-text="não separa urgência de importância">confunde prioridade</button>
+                  <button type="button" class="helper-chip" data-append-target="antiPerfilAberto" data-append-text="defende solução antes de entender o problema">pula diagnóstico</button>
+                </div>
               </div>
             </div>
           </section>
 
           <section class="question-block" data-section-key="atuacao">
             <div class="block-head">
-              <div class="block-num">06</div>
+              <div class="block-num">05</div>
               <div>
                 <div class="block-kicker">Contexto de atuação</div>
                 <h3>Em que ambiente essa pessoa vai operar de verdade?</h3>
@@ -1280,6 +1463,8 @@
                   <button type="button" class="choice-btn" data-value="CS">CS</button>
                   <button type="button" class="choice-btn" data-value="Dados">Dados</button>
                   <button type="button" class="choice-btn" data-value="Diretoria">Diretoria</button>
+                  <button type="button" class="choice-btn" data-value="Financeiro">Financeiro</button>
+                  <button type="button" class="choice-btn" data-value="Jurídico">Jurídico</button>
                   <button type="button" class="choice-btn" data-value="Outro">Outro</button>
                 </div>
               </div>
@@ -1314,7 +1499,7 @@
 
           <section class="question-block" data-section-key="senioridade">
             <div class="block-head">
-              <div class="block-num">07</div>
+              <div class="block-num">06</div>
               <div>
                 <div class="block-kicker">Senioridade real</div>
                 <h3>Essa pessoa precisa executar, resolver, organizar ou estruturar?</h3>
@@ -1353,7 +1538,7 @@
 
           <section class="question-block" data-section-key="dominio">
             <div class="block-head">
-              <div class="block-num">08</div>
+              <div class="block-num">07</div>
               <div>
                 <div class="block-kicker">Conhecimento de domínio</div>
                 <h3>Essa vaga precisa de repertório de negócio ou aprende no caminho?</h3>
@@ -1370,6 +1555,11 @@
                   <button type="button" class="choice-btn" data-value="SaaS">SaaS</button>
                   <button type="button" class="choice-btn" data-value="Varejo">Varejo</button>
                   <button type="button" class="choice-btn" data-value="Saúde">Saúde</button>
+                  <button type="button" class="choice-btn" data-value="Marketplace">Marketplace</button>
+                  <button type="button" class="choice-btn" data-value="Logística">Logística</button>
+                  <button type="button" class="choice-btn" data-value="Educação">Educação</button>
+                  <button type="button" class="choice-btn" data-value="Indústria">Indústria</button>
+                  <button type="button" class="choice-btn" data-value="Serviços B2B">Serviços B2B</button>
                   <button type="button" class="choice-btn" data-value="Outro">Outro</button>
                 </div>
                 <input type="text" id="dominioOutro" name="dominioOutro" placeholder="Se marcou outro, qual domínio?" aria-label="Outro domínio">
@@ -1384,15 +1574,31 @@
                   <button type="button" class="choice-btn" data-value="Aumenta o risco operacional">Aumenta o risco operacional</button>
                   <button type="button" class="choice-btn" data-value="Perde credibilidade com stakeholders">Perde credibilidade com stakeholders</button>
                   <button type="button" class="choice-btn" data-value="Não performa">Não performa</button>
+                  <button type="button" class="choice-btn" data-value="Faz perguntas superficiais">Faz perguntas superficiais</button>
+                  <button type="button" class="choice-btn" data-value="Precisa de muito acompanhamento">Precisa de muito acompanhamento</button>
+                  <button type="button" class="choice-btn" data-value="Não entende restrições regulatórias">Não entende restrições regulatórias</button>
+                  <button type="button" class="choice-btn" data-value="Demora a gerar confiança">Demora a gerar confiança</button>
                 </div>
                 <textarea id="impactoSemDominioAberto" name="impactoSemDominioAberto" placeholder="Se quiser, detalhe a consequência na prática."></textarea>
+                <div class="helper-chips">
+                  <button type="button" class="helper-chip" data-append-target="impactoSemDominioAberto" data-append-text="a pessoa demora para entender regra de negócio crítica">regra crítica</button>
+                  <button type="button" class="helper-chip" data-append-target="impactoSemDominioAberto" data-append-text="stakeholders perdem confiança nas primeiras conversas">perde confiança</button>
+                  <button type="button" class="helper-chip" data-append-target="impactoSemDominioAberto" data-append-text="decisões ficam lentas porque tudo precisa ser explicado">decisão lenta</button>
+                  <button type="button" class="helper-chip" data-append-target="impactoSemDominioAberto" data-append-text="a pessoa não percebe riscos regulatórios ou operacionais">não percebe risco</button>
+                  <button type="button" class="helper-chip" data-append-target="impactoSemDominioAberto" data-append-text="o onboarding fica pesado para o gestor">onboarding pesado</button>
+                  <button type="button" class="helper-chip" data-append-target="impactoSemDominioAberto" data-append-text="a pessoa erra priorização por falta de contexto de negócio">prioriza errado</button>
+                  <button type="button" class="helper-chip" data-append-target="impactoSemDominioAberto" data-append-text="o time precisa revisar decisões básicas">revisão constante</button>
+                  <button type="button" class="helper-chip" data-append-target="impactoSemDominioAberto" data-append-text="a pessoa não entende linguagem do cliente interno">não entende linguagem</button>
+                  <button type="button" class="helper-chip" data-append-target="impactoSemDominioAberto" data-append-text="a execução fica correta tecnicamente, mas desalinhada com o negócio">técnico sem negócio</button>
+                  <button type="button" class="helper-chip" data-append-target="impactoSemDominioAberto" data-append-text="o ramp-up passa do tempo aceitável">ramp-up alto</button>
+                </div>
               </div>
             </div>
           </section>
 
           <section class="question-block" data-section-key="resultado">
             <div class="block-head">
-              <div class="block-num">09</div>
+              <div class="block-num">08</div>
               <div>
                 <div class="block-kicker">Resultado automático</div>
                 <h3>O diagnóstico final aparece aqui conforme a vaga ganha clareza.</h3>
@@ -1447,9 +1653,9 @@
               <div class="summary-box">
                 <div>
                   <div class="result-kicker">Resumo executivo</div>
-                  <div class="summary-title">Pronto para seguir com o CTA comercial</div>
+                  <div class="summary-title">Já temos o perfil ideal agora vamos seguir</div>
                 </div>
-                <p>Esse resumo já sai organizado para WhatsApp ou e-mail, acelerando o alinhamento com a SMD.</p>
+                <p>Esse resumo organiza o que foi entendido sobre a vaga e prepara a próxima conversa com a SMD.</p>
                 <div class="summary-preview" id="summaryPreview">O resumo vai aparecer aqui em 5 linhas assim que o diagnóstico estiver completo.</div>
                 <div class="cta-row">
                   <a id="whatsAppCta" class="cta-btn primary" href="#" aria-disabled="true" target="_blank" rel="noopener">Quero candidatos com esse perfil</a>
@@ -1459,6 +1665,14 @@
               </div>
             </div>
           </section>
+          <div class="carousel-controls" aria-label="Navegação da dinâmica">
+            <button type="button" class="carousel-btn" id="prevStep">Voltar</button>
+            <div class="carousel-center">
+              <div class="step-dots" id="stepDots" aria-label="Etapas da dinâmica"></div>
+              <div class="carousel-message" id="carouselMessage">Preencha esta etapa para avançar.</div>
+            </div>
+            <button type="button" class="carousel-btn primary" id="nextStep">Próxima etapa</button>
+          </div>
         </form>
       </main>
 
@@ -1533,7 +1747,14 @@
     const mailCta = document.getElementById('mailCta');
     const summaryPreview = document.getElementById('summaryPreview');
     const criteriaFeedback = document.getElementById('criteriaFeedback');
+    const prevStep = document.getElementById('prevStep');
+    const nextStep = document.getElementById('nextStep');
+    const stepDots = document.getElementById('stepDots');
+    const carouselMessage = document.getElementById('carouselMessage');
     const WHATSAPP_NUMBER = '5511971944501';
+    const slideKeys = ['contexto', 'objetivo', 'sucesso', 'antiperfil', 'atuacao', 'senioridade', 'dominio', 'resultado'];
+    const slideLabels = ['Motivo', 'Objetivo', 'Sucesso', 'Anti-perfil', 'Atuação', 'Senioridade', 'Domínio', 'Perfil ideal'];
+    let activeSlide = 0;
 
     const sectionConfig = [
       {
@@ -1572,6 +1793,11 @@
       'Melhor comunicação entre áreas': 'alinhar melhor as áreas',
       'Aumento de receita': 'movimentar resultado de negócio',
       'Organização do time': 'organizar o time',
+      'Mais previsibilidade': 'ganhar previsibilidade',
+      'Menos dependência do gestor': 'reduzir dependência do gestor',
+      'Decisões melhores': 'melhorar a qualidade das decisões',
+      'Fluxo entre áreas': 'melhorar o fluxo entre áreas',
+      'Escala da operação': 'preparar a operação para escalar',
       'Outro': 'resolver um objetivo específico'
     };
 
@@ -1719,6 +1945,10 @@
         (state.impactoSemDominio.includes('Aumenta o risco operacional') ? 3 : 0) +
         (state.impactoSemDominio.includes('Perde credibilidade com stakeholders') ? 2 : 0) +
         (state.impactoSemDominio.includes('Não performa') ? 3 : 0) +
+        (state.impactoSemDominio.includes('Faz perguntas superficiais') ? 1 : 0) +
+        (state.impactoSemDominio.includes('Precisa de muito acompanhamento') ? 2 : 0) +
+        (state.impactoSemDominio.includes('Não entende restrições regulatórias') ? 3 : 0) +
+        (state.impactoSemDominio.includes('Demora a gerar confiança') ? 2 : 0) +
         (state.impactoSemDominioAberto ? 1 : 0);
 
       const archetypeScore = {
@@ -1746,6 +1976,20 @@
         if (reason === 'Novo projeto') {
           archetypeScore.Estruturador += 3;
           archetypeScore.Transformador += 1;
+        }
+        if (reason === 'Reposição crítica') archetypeScore.Resolvedor += 2;
+        if (reason === 'Aumento de demanda') {
+          archetypeScore.Executor += 1;
+          archetypeScore.Organizador += 1;
+        }
+        if (reason === 'Mudança de estratégia') {
+          archetypeScore.Estruturador += 2;
+          archetypeScore.Transformador += 1;
+        }
+        if (reason === 'Gargalo técnico') archetypeScore.Resolvedor += 2;
+        if (reason === 'Reorganização do time') {
+          archetypeScore.Organizador += 2;
+          archetypeScore.Estruturador += 1;
         }
       });
 
@@ -1777,6 +2021,28 @@
           archetypeScore.Organizador += 4;
           archetypeScore.Estruturador += 1;
         }
+        if (objective === 'Mais previsibilidade') {
+          axis.coordination += 2;
+          archetypeScore.Organizador += 2;
+        }
+        if (objective === 'Menos dependência do gestor') {
+          axis.autonomy += 3;
+          archetypeScore.Resolvedor += 1;
+          archetypeScore.Estruturador += 1;
+        }
+        if (objective === 'Decisões melhores') {
+          axis.autonomy += 2;
+          archetypeScore.Estruturador += 2;
+        }
+        if (objective === 'Fluxo entre áreas') {
+          axis.coordination += 3;
+          archetypeScore.Organizador += 2;
+        }
+        if (objective === 'Escala da operação') {
+          axis.resultFocus += 2;
+          archetypeScore.Estruturador += 2;
+          archetypeScore.Transformador += 1;
+        }
       });
 
       state.criteriosSucesso.forEach((criterion) => {
@@ -1807,6 +2073,22 @@
           axis.coordination += 2;
           archetypeScore.Organizador += 2;
         }
+        if (criterion === 'Decisões são tomadas sem escalada') {
+          axis.autonomy += 2;
+          archetypeScore.Resolvedor += 1;
+        }
+        if (criterion === 'Prioridades ficam claras antes da execução') {
+          axis.coordination += 1;
+          archetypeScore.Estruturador += 1;
+        }
+        if (criterion === 'Stakeholders entendem o andamento') {
+          axis.coordination += 2;
+          archetypeScore.Organizador += 1;
+        }
+        if (criterion === 'O time antecipa riscos') {
+          axis.autonomy += 1;
+          archetypeScore.Resolvedor += 1;
+        }
       });
 
       state.antiPerfil.forEach((signal) => {
@@ -1816,6 +2098,10 @@
         if (signal === 'Evitar conflito') axis.coordination += 1;
         if (signal === 'Não entregar no prazo') axis.resultFocus += 1;
         if (signal === 'Trabalhar isolado') axis.coordination += 2;
+        if (signal === 'Prometer e não sustentar') axis.resultFocus += 2;
+        if (signal === 'Ignorar contexto') axis.coordination += 1;
+        if (signal === 'Escalar tudo para o gestor') axis.autonomy += 2;
+        if (signal === 'Não negociar prioridade') axis.coordination += 2;
       });
 
       if (state.senioridadeReal === 'Executar tarefas') {
@@ -1889,8 +2175,8 @@
       const transformEligible =
         state.senioridadeReal === 'Estruturar o caminho' &&
         state.stakeholders.length >= 4 &&
-        (state.motivoVaga.includes('Crescimento') || state.motivoVaga.includes('Novo projeto')) &&
-        (state.objetivo90d.includes('Organização do time') || state.objetivo90d.includes('Melhor comunicação entre áreas') || state.objetivo90d.includes('Aumento de receita'));
+        (state.motivoVaga.includes('Crescimento') || state.motivoVaga.includes('Novo projeto') || state.motivoVaga.includes('Mudança de estratégia') || state.motivoVaga.includes('Reorganização do time')) &&
+        (state.objetivo90d.includes('Organização do time') || state.objetivo90d.includes('Melhor comunicação entre áreas') || state.objetivo90d.includes('Aumento de receita') || state.objetivo90d.includes('Escala da operação'));
 
       if (profileType === 'Transformador' && !transformEligible) {
         profileType = state.senioridadeReal === 'Organizar o time' ? 'Organizador' : 'Estruturador';
@@ -1925,6 +2211,10 @@
       if (state.objetivo90d.includes('Redução de retrabalho')) addUnique(generatedCriteria, 'Histórias não voltam no refinamento');
       if (state.objetivo90d.includes('Melhor comunicação entre áreas')) addUnique(generatedCriteria, 'Stakeholders param de escalar ruído');
       if (state.objetivo90d.includes('Organização do time')) addUnique(generatedCriteria, 'A operação ganha previsibilidade');
+      if (state.objetivo90d.includes('Mais previsibilidade')) addUnique(generatedCriteria, 'A operação ganha previsibilidade');
+      if (state.objetivo90d.includes('Menos dependência do gestor')) addUnique(generatedCriteria, 'Não depende de você para decisões');
+      if (state.objetivo90d.includes('Fluxo entre áreas')) addUnique(generatedCriteria, 'Stakeholders entendem o andamento');
+      if (state.objetivo90d.includes('Escala da operação')) addUnique(generatedCriteria, 'O time antecipa riscos');
       if (state.antiPerfil.includes('Esperar direcionamento')) addUnique(generatedCriteria, 'Não depende de você para decisões');
       if (state.antiPerfil.includes('Não entregar no prazo')) addUnique(generatedCriteria, 'As entregas fluem sem bloqueio');
       if (!generatedCriteria.length) addUnique(generatedCriteria, 'A vaga ainda precisa de critério mais concreto para medir acerto');
@@ -2040,16 +2330,84 @@
       });
     }
 
+    function getAllComplete(validations) {
+      return sectionConfig.every((section) => validations[section.key]);
+    }
+
+    function getMaxAccessibleSlide(validations) {
+      const firstIncomplete = sectionConfig.findIndex((section) => !validations[section.key]);
+      return firstIncomplete === -1 ? slideKeys.length - 1 : firstIncomplete;
+    }
+
+    function getCurrentSlideValid(validations) {
+      const currentKey = slideKeys[activeSlide];
+      if (currentKey === 'resultado') return getAllComplete(validations);
+      return !!validations[currentKey];
+    }
+
+    function scrollToCanvas() {
+      const canvasStart = document.getElementById('canvasStart');
+      if (canvasStart) {
+        canvasStart.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function updateCarousel(validations) {
+      const maxAccessible = getMaxAccessibleSlide(validations);
+      const allComplete = getAllComplete(validations);
+      if (activeSlide > maxAccessible) activeSlide = maxAccessible;
+
+      document.querySelectorAll('.question-block[data-section-key]').forEach((section) => {
+        section.classList.toggle('carousel-active', section.dataset.sectionKey === slideKeys[activeSlide]);
+      });
+
+      const currentKey = slideKeys[activeSlide];
+      const currentValid = getCurrentSlideValid(validations);
+      const isResult = currentKey === 'resultado';
+      prevStep.disabled = activeSlide === 0;
+      nextStep.disabled = isResult || !currentValid;
+      nextStep.textContent = currentKey === 'dominio' ? 'Ver perfil ideal' : isResult ? 'Perfil pronto' : 'Próxima etapa';
+
+      if (isResult && allComplete) {
+        carouselMessage.textContent = 'Perfil ideal destravado. Agora é só seguir pelo WhatsApp ou e-mail.';
+      } else if (currentValid) {
+        carouselMessage.textContent = currentKey === 'dominio'
+          ? 'Tudo preenchido. Avance para ver o perfil ideal.'
+          : 'Etapa preenchida. Você já pode avançar.';
+      } else {
+        const currentConfig = sectionConfig.find((section) => section.key === currentKey);
+        carouselMessage.textContent = currentConfig ? currentConfig.message : 'Preencha esta etapa para avançar.';
+      }
+
+      stepDots.innerHTML = slideKeys.map((key, index) => {
+        const isAccessible = index <= maxAccessible;
+        const isComplete = key === 'resultado' ? allComplete : !!validations[key];
+        const classes = [
+          'step-dot',
+          index === activeSlide ? 'active' : '',
+          isComplete ? 'complete' : '',
+          !isAccessible ? 'locked' : ''
+        ].filter(Boolean).join(' ');
+        const disabled = isAccessible ? '' : 'disabled';
+        return `<button type="button" class="${classes}" data-slide="${index}" aria-label="${escapeHtml(slideLabels[index])}" ${disabled}></button>`;
+      }).join('');
+    }
+
     function updateProgress(validations) {
       const completed = sectionConfig.filter((section) => validations[section.key]).length;
-      const pending = sectionConfig.filter((section) => !validations[section.key]);
-      const step = completed >= sectionConfig.length ? 8 : Math.min(completed + 1, 8);
       const percent = Math.round((completed / sectionConfig.length) * 100);
+      const currentKey = slideKeys[activeSlide];
+      const currentConfig = sectionConfig.find((section) => section.key === currentKey);
+      const currentValid = getCurrentSlideValid(validations);
 
-      progressStep.textContent = `Passo ${step} de 8`;
+      progressStep.textContent = `Passo ${activeSlide + 1} de 8`;
       progressPercent.textContent = `${percent}% completo`;
       progressFill.style.width = `${percent}%`;
-      progressNote.textContent = pending.length ? pending[0].message : 'Diagnóstico completo. Agora o CTA já carrega o contexto da vaga.';
+      progressNote.textContent = currentKey === 'resultado'
+        ? 'Perfil ideal pronto para seguir.'
+        : currentValid
+          ? 'Etapa completa. Avance no carrossel.'
+          : currentConfig.message;
     }
 
     function updateSticky(state, diagnosis, validations) {
@@ -2102,7 +2460,7 @@
         : 'Diagnóstico fechado e pronto para conversão';
       pendingIntro.textContent = pendingMessages.length
         ? 'Esse bloco mostra o que ainda está frouxo demais para gerar o perfil final com segurança.'
-        : 'Agora a vaga já tem leitura suficiente para seguir com o CTA comercial e briefing de busca.';
+        : 'Agora a vaga já tem leitura suficiente para seguir com o perfil ideal e briefing de busca.';
       pendingList.innerHTML = (pendingMessages.length ? pendingMessages : ['Tudo travado: contexto, resultado, senioridade e domínio já estão coerentes.'])
         .slice(0, 3)
         .map((item) => `<div class="pending-item">${escapeHtml(item)}</div>`)
@@ -2147,7 +2505,7 @@
 
       resultShell.classList.toggle('locked', !allComplete);
       resultStatus.textContent = allComplete
-        ? 'Diagnóstico fechado. O perfil ideal já está pronto para seguir no CTA comercial.'
+        ? 'Diagnóstico fechado. O perfil ideal já está pronto para seguir.'
         : sectionConfig.filter((section) => !validations[section.key]).map((section) => section.message).join(' ');
 
       if (allComplete) {
@@ -2184,6 +2542,7 @@
       rangeLive.textContent = getRangeLabel(state.negocioVsTech);
       updateCriteriaFeedback();
       updateSectionCompletion(validations);
+      updateCarousel(validations);
       updateProgress(validations);
       updateSticky(state, diagnosis, validations);
       updateResults(state, diagnosis, validations);
@@ -2250,6 +2609,31 @@
     form.addEventListener('input', refresh);
     form.addEventListener('change', refresh);
     rangeInput.addEventListener('input', refresh);
+    prevStep.addEventListener('click', () => {
+      if (activeSlide > 0) {
+        activeSlide -= 1;
+        refresh();
+        scrollToCanvas();
+      }
+    });
+    nextStep.addEventListener('click', () => {
+      const state = getState();
+      const validations = sectionValidation(state);
+      if (!getCurrentSlideValid(validations)) return;
+      const maxAccessible = getMaxAccessibleSlide(validations);
+      if (activeSlide < Math.min(maxAccessible, slideKeys.length - 1)) {
+        activeSlide += 1;
+        refresh();
+        scrollToCanvas();
+      }
+    });
+    stepDots.addEventListener('click', (event) => {
+      const dot = event.target.closest('.step-dot');
+      if (!dot || dot.disabled) return;
+      activeSlide = parseInt(dot.dataset.slide, 10);
+      refresh();
+      scrollToCanvas();
+    });
 
     refresh();
   </script>
