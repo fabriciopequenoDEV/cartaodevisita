@@ -37,6 +37,9 @@ Além disso, o projeto inclui:
 ├── cartao_fabricio.html
 ├── cartao_ricardo.html
 ├── institucional-ser-mais-digital.html
+├── smd-offer-nav.css
+├── logo_smd.png
+├── logo_smd_dark.png
 ├── oferta-ia-smd.html
 ├── estudio-da-oferta-smd.html
 ├── metodo_de_ia_smd.html
@@ -63,6 +66,12 @@ Cartão digital do Ricardo Avigro.
 
 ### `institucional-ser-mais-digital.html`
 Apresentação institucional fullscreen com navegação por slides e slide final conectado às ofertas atuais.
+
+### `smd-offer-nav.css`
+Contrato visual compartilhado dos menus `Home / Oferta / Dinâmica / Método` nas páginas comerciais. Deve ser carregado depois do `<style>` local de cada página de oferta.
+
+### `logo_smd_dark.png`
+Versão escura do logo para uso em fundos claros. A versão `logo_smd.png` permanece como padrão para fundos escuros.
 
 ### `oferta-ia-smd.html`
 Landing comercial da oferta de IA.
@@ -142,6 +151,24 @@ O projeto já consolidou um padrão visual e estrutural importante:
 - ícones discretos, mas com presença
 - navegação simples e direta
 - páginas comerciais com leitura rápida e objetiva
+
+### Navegação das ofertas
+
+Todas as páginas comerciais com o menu `Home / Oferta / Dinâmica / Método` devem carregar:
+
+```html
+<link rel="stylesheet" href="/smd-offer-nav.css">
+```
+
+Esse link deve ficar logo depois do bloco `<style>` da página. O arquivo padroniza largura, altura, espaçamento e responsividade do menu, enquanto cada página continua livre para manter suas próprias cores de tema.
+
+Regras do padrão:
+
+- use sempre as classes `.ia-nav` e `.ia-link`
+- mantenha os quatro itens na ordem `Home`, `Oferta`, `Dinâmica`, `Método`
+- use `.active` apenas no item da página atual
+- use `.disabled` quando a etapa ainda não existir
+- em páginas de fundo claro, use `logo_smd_dark.png`; em fundos escuros, use `logo_smd.png`
 
 ### Home
 
