@@ -231,7 +231,7 @@
       align-items:stretch;
     }
     .detail-panel,
-    .metric-card{
+    .diff-card{
       border:1px solid var(--border);
       border-radius:24px;
       background:rgba(255,255,255,0.86);
@@ -329,30 +329,30 @@
       transform:translateY(-2px);
       box-shadow:0 16px 28px rgba(20,32,54,0.10);
     }
-    .metrics-grid{
+    .differentials-grid{
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
       gap:12px;
     }
-    .metric-card{
+    .diff-card{
       position:relative;
       overflow:hidden;
       padding:18px;
       min-height:132px;
       transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
     }
-    .metric-card:hover{
+    .diff-card:hover{
       transform:translateY(-4px);
       border-color:rgba(232,101,10,0.18);
       box-shadow:var(--shadow-strong);
     }
-    .metric-label{
+    .diff-label{
       color:var(--blue);
       font-size:.78rem;
       font-weight:800;
       margin-bottom:10px;
     }
-    .metric-value{
+    .diff-value{
       font-family:'Syne',sans-serif;
       color:var(--orange);
       font-size:clamp(1.65rem,2.4vw,2.4rem);
@@ -360,25 +360,25 @@
       letter-spacing:-0.03em;
       margin-bottom:12px;
     }
-    .metric-card p{
+    .diff-card p{
       color:var(--muted);
       line-height:1.65;
       font-size:.92rem;
     }
-    .differentials{
+    .metrics-strip{
       display:grid;
       grid-template-columns:repeat(4,minmax(0,1fr));
       gap:14px;
       margin-top:16px;
     }
-    .diff-card{
+    .metric-card{
       border:1px solid var(--border);
       border-radius:22px;
       background:rgba(255,255,255,0.78);
       box-shadow:0 18px 34px rgba(20,32,54,0.06);
       padding:18px;
     }
-    .diff-label{
+    .metric-label{
       color:var(--orange);
       font-size:.72rem;
       font-weight:800;
@@ -386,14 +386,14 @@
       text-transform:uppercase;
       margin-bottom:10px;
     }
-    .diff-card strong{
+    .metric-card strong{
       display:block;
       font-family:'Syne',sans-serif;
       font-size:1.16rem;
       line-height:1.25;
       margin-bottom:8px;
     }
-    .diff-card p{
+    .metric-card p{
       color:var(--muted);
       line-height:1.65;
       font-size:.92rem;
@@ -409,10 +409,10 @@
     @media (max-width:1100px){
       .steps-row,
       .method-grid,
-      .differentials{
+      .metrics-strip{
         grid-template-columns:1fr;
       }
-      .metrics-grid{
+      .differentials-grid{
         grid-template-columns:repeat(2,minmax(0,1fr));
       }
     }
@@ -420,7 +420,7 @@
       .wrap{padding:16px 14px 40px}
       .ia-nav{grid-template-columns:1fr}
       .hero{padding:18px}
-      .metrics-grid{grid-template-columns:1fr}
+      .differentials-grid{grid-template-columns:1fr}
       .cta-row{flex-direction:column}
       .cta{width:100%}
     }
@@ -490,50 +490,50 @@
           </div>
         </article>
 
-        <div class="metrics-grid" aria-label="Números e diferenciais">
-          <article class="metric-card">
-            <div class="metric-label">Time-to-Hire</div>
-            <div class="metric-value">-40%</div>
-            <p>Redução drástica no tempo médio de contratação com curadoria focada.</p>
+        <div class="differentials-grid" aria-label="Diferenciais SMD em destaque">
+          <article class="diff-card">
+            <div class="diff-label">Shortlist</div>
+            <div class="diff-value">7 dias</div>
+            <p>Perfis apresentados após alinhamento técnico, contexto da vaga e leitura de aderência.</p>
           </article>
-          <article class="metric-card">
-            <div class="metric-label">Curadoria Técnica</div>
-            <div class="metric-value">Especialistas</div>
-            <p>Especialistas avaliando especialistas, sem ruído nas apresentações.</p>
+          <article class="diff-card">
+            <div class="diff-label">Aderência inicial</div>
+            <div class="diff-value">93%</div>
+            <p>Compatibilidade entre desafio, stack, senioridade e ritmo real da equipe.</p>
           </article>
-          <article class="metric-card">
-            <div class="metric-label">Fit Cultural</div>
-            <div class="metric-value">Leitura ativa</div>
-            <p>Análise profunda da sinergia entre time, projeto, liderança e momento.</p>
+          <article class="diff-card">
+            <div class="diff-label">Rampa esperada</div>
+            <div class="diff-value">15 dias</div>
+            <p>Onboarding orientado por checkpoints, shadowing e autonomia progressiva.</p>
           </article>
-          <article class="metric-card">
-            <div class="metric-label">Jornada 360</div>
-            <div class="metric-value">Acompanhamento</div>
-            <p>Acompanhamento ativo após a alocação para preservar ritmo e satisfação.</p>
+          <article class="diff-card">
+            <div class="diff-label">Curadoria</div>
+            <div class="diff-value">Sem currículo solto</div>
+            <p>Cada indicação vem com leitura de encaixe, risco, disponibilidade e contexto.</p>
           </article>
         </div>
       </section>
 
-      <section class="differentials" aria-label="Diferenciais SMD">
-        <article class="diff-card">
-          <div class="diff-label">Shortlist</div>
-          <strong>7 dias</strong>
-          <p>Perfis apresentados após alinhamento técnico, contexto da vaga e leitura de aderência.</p>
+      <section class="metrics-strip" aria-label="Números e diferenciais">
+        <article class="metric-card">
+          <div class="metric-label">Time-to-Hire</div>
+          <strong>-40%</strong>
+          <p>Redução drástica no tempo médio de contratação com curadoria focada.</p>
         </article>
-        <article class="diff-card">
-          <div class="diff-label">Aderência inicial</div>
-          <strong>93%</strong>
-          <p>Compatibilidade entre desafio, stack, senioridade e ritmo real da equipe.</p>
+        <article class="metric-card">
+          <div class="metric-label">Curadoria Técnica</div>
+          <strong>Especialistas</strong>
+          <p>Especialistas avaliando especialistas, sem ruído nas apresentações.</p>
         </article>
-        <article class="diff-card">
-          <div class="diff-label">Rampa esperada</div>
-          <strong>15 dias</strong>
-          <p>Onboarding orientado por checkpoints, shadowing e autonomia progressiva.</p>
+        <article class="metric-card">
+          <div class="metric-label">Fit Cultural</div>
+          <strong>Leitura ativa</strong>
+          <p>Análise profunda da sinergia entre time, projeto, liderança e momento.</p>
         </article>
-        <article class="diff-card">
-          <div class="diff-label">Curadoria</div>
-          <strong>Sem currículo solto</strong>
-          <p>Cada indicação vem com leitura de encaixe, risco, disponibilidade e contexto.</p>
+        <article class="metric-card">
+          <div class="metric-label">Jornada 360</div>
+          <strong>Acompanhamento</strong>
+          <p>Acompanhamento ativo após a alocação para preservar ritmo e satisfação.</p>
         </article>
       </section>
     </main>
