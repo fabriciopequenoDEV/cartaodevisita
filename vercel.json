@@ -30,6 +30,11 @@
       "permanent": true
     },
     {
+      "source": "/metodo_alocacao_smd",
+      "destination": "/metodo-alocacao-smd",
+      "permanent": true
+    },
+    {
       "source": "/oferta_gerente_de_mudancas_smd",
       "destination": "/oferta-gerente-de-mudancas-smd",
       "permanent": true
@@ -84,6 +89,10 @@
     {
       "source": "/dinamica-alocacao-smd",
       "destination": "/dinamica-alocacao-smd.html"
+    },
+    {
+      "source": "/metodo-alocacao-smd",
+      "destination": "/metodo-alocacao-smd.html"
     },
     {
       "source": "/oferta-gerente-de-mudancas-smd",

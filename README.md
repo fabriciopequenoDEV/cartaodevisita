@@ -42,6 +42,7 @@ Além disso, o projeto inclui:
 ├── metodo_de_ia_smd.html
 ├── oferta-alocacao-smd.html
 ├── dinamica-alocacao-smd.html
+├── metodo-alocacao-smd.html
 ├── oferta-planejamento-estrategico-smd.html
 └── oferta-gerente-de-mudancas-smd.html
 ```
@@ -78,6 +79,9 @@ Landing comercial de Alocação / Bodyshop.
 ### `dinamica-alocacao-smd.html`
 Onepager dinâmico de refino de vaga e geração de perfil ideal da oferta de Alocação.
 
+### `metodo-alocacao-smd.html`
+Página do método de curadoria e seleção em 5 etapas da oferta de Alocação.
+
 ### `oferta-planejamento-estrategico-smd.html`
 Landing comercial de Planejamento estratégico.
 
@@ -112,6 +116,7 @@ Responsável por:
 
 - `/oferta-alocacao-smd`
 - `/dinamica-alocacao-smd`
+- `/metodo-alocacao-smd`
 - `/oferta-planejamento-estrategico-smd`
 - `/oferta-gerente-de-mudancas-smd`
 
