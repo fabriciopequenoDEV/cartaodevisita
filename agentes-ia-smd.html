@@ -195,16 +195,16 @@
       background:rgba(255,255,255,.04);
     }
     .stat-num{
-      font-family:'Syne',sans-serif;
       font-size:clamp(1.9rem,3.4vw,2.9rem);
-      font-weight:800;
+      font-weight:700;
       line-height:1;
       color:#fff;
       margin-bottom:8px;
     }
     .stat-num span{
       color:var(--primary-2);
-      font-size:.58em;
+      font-size:.52em;
+      font-weight:600;
     }
     .stat-label{
       color:var(--muted);
@@ -212,6 +212,14 @@
       letter-spacing:.08em;
       text-transform:uppercase;
       line-height:1.45;
+    }
+    .stats-footnote{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:.74rem;
+      line-height:1.55;
+      max-width:720px;
+      opacity:.75;
     }
     .hero-mark{
       position:relative;
@@ -371,6 +379,47 @@
       letter-spacing:.06em;
       text-transform:uppercase;
     }
+    /* info buttons below diagram */
+    .diagram-actions{
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:24px;
+    }
+    .info-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      padding:8px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.09);
+      background:rgba(255,255,255,0.03);
+      color:var(--muted);
+      font-size:.75rem;
+      font-weight:600;
+      letter-spacing:.06em;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+    .info-btn:hover{
+      border-color:rgba(232,101,10,0.28);
+      color:var(--label);
+      background:rgba(232,101,10,0.06);
+    }
+    .info-btn svg{
+      width:14px;
+      height:14px;
+      flex-shrink:0;
+      color:var(--primary-2);
+    }
+    .info-btn.faq-btn{
+      font-size:.7rem;
+      padding:6px 12px;
+      opacity:.72;
+    }
+    .info-btn.faq-btn:hover{opacity:1}
+    /* filter / agents grid */
     .filter-tags{
       display:flex;
       flex-wrap:wrap;
@@ -458,12 +507,10 @@
       text-transform:uppercase;
     }
     .card-name{
-      font-family:'Syne',sans-serif;
-      font-size:1.25rem;
-      font-weight:800;
-      line-height:1.15;
+      font-size:1.18rem;
+      font-weight:700;
+      line-height:1.2;
       margin-bottom:10px;
-      letter-spacing:-.02em;
     }
     .card-tagline{
       color:var(--label);
@@ -540,10 +587,9 @@
       background:rgba(255,255,255,.04);
     }
     .roi-num{
-      font-family:'Syne',sans-serif;
       color:var(--primary-2);
       font-size:1.45rem;
-      font-weight:800;
+      font-weight:700;
       line-height:1;
       margin-bottom:6px;
     }
@@ -554,14 +600,39 @@
       line-height:1.35;
       text-transform:uppercase;
     }
-    .card-trigger-text{
-      color:var(--label);
-      font-size:.88rem;
-      line-height:1.62;
-      margin-bottom:16px;
+    .characteristics-block{
+      margin-bottom:18px;
     }
-    .card-trigger-text strong{
-      color:#fff;
+    .characteristics-label{
+      color:var(--primary-2);
+      font-size:.68rem;
+      font-weight:800;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+    .characteristics-list{
+      list-style:none;
+      display:flex;
+      flex-direction:column;
+      gap:7px;
+    }
+    .characteristics-list li{
+      display:flex;
+      align-items:flex-start;
+      gap:9px;
+      color:var(--label);
+      font-size:.86rem;
+      line-height:1.55;
+    }
+    .characteristics-list li::before{
+      content:"";
+      flex:0 0 auto;
+      width:6px;
+      height:6px;
+      border-radius:50%;
+      background:var(--primary);
+      margin-top:5px;
     }
     .price-btn{
       width:100%;
@@ -628,6 +699,7 @@
       text-align:center;
       font-size:.88rem;
     }
+    /* ── Investment modal ── */
     .modal-overlay{
       position:fixed;
       inset:0;
@@ -761,6 +833,13 @@
       color:var(--muted);
       font-size:.86rem;
     }
+    .price-footnote{
+      color:var(--muted);
+      font-size:.72rem;
+      line-height:1.55;
+      margin-top:6px;
+      opacity:.7;
+    }
     .price-includes{
       margin-bottom:22px;
     }
@@ -780,6 +859,285 @@
       height:7px;
       border-radius:50%;
       background:var(--primary);
+    }
+    .buy-btn{
+      width:100%;
+      min-height:48px;
+      border:0;
+      border-radius:12px;
+      background:var(--primary);
+      color:#fff;
+      font-weight:800;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      transition:.2s ease;
+      text-decoration:none;
+      font-size:1rem;
+    }
+    .buy-btn:hover{
+      transform:translateY(-1px);
+      background:#c85008;
+      color:#fff;
+    }
+    /* ── Contact choice popup ── */
+    .contact-popup{
+      position:fixed;
+      z-index:10001;
+      bottom:80px;
+      right:24px;
+      width:min(100%,300px);
+      border:1px solid rgba(232,101,10,0.38);
+      border-radius:20px;
+      background:linear-gradient(180deg, rgba(22,32,48,.98), rgba(13,20,32,.98));
+      padding:20px;
+      box-shadow:0 20px 60px rgba(0,0,0,.5);
+      opacity:0;
+      pointer-events:none;
+      transform:translateY(10px) scale(.97);
+      transition:opacity .22s ease, transform .22s ease;
+    }
+    .contact-popup.open{
+      opacity:1;
+      pointer-events:auto;
+      transform:translateY(0) scale(1);
+    }
+    .contact-popup-title{
+      font-weight:700;
+      font-size:.92rem;
+      margin-bottom:6px;
+    }
+    .contact-popup-sub{
+      color:var(--muted);
+      font-size:.8rem;
+      line-height:1.5;
+      margin-bottom:16px;
+    }
+    .contact-popup-options{
+      display:flex;
+      flex-direction:column;
+      gap:9px;
+    }
+    .contact-option{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:12px 14px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      text-decoration:none;
+      font-weight:600;
+      font-size:.88rem;
+      transition:.18s ease;
+    }
+    .contact-option:hover{
+      border-color:rgba(232,101,10,.42);
+      background:var(--primary-dim);
+      color:var(--primary-2);
+    }
+    .contact-option-icon{
+      font-size:1.1rem;
+    }
+    .contact-popup-close{
+      position:absolute;
+      top:12px;
+      right:12px;
+      width:28px;
+      height:28px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      cursor:pointer;
+      font-size:.8rem;
+    }
+    .contact-popup-close:hover{color:#fff}
+    /* ── What-is-agent modal ── */
+    .info-overlay{
+      position:fixed;
+      inset:0;
+      z-index:10000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      background:rgba(0,0,0,.72);
+      backdrop-filter:blur(10px);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .25s ease;
+    }
+    .info-overlay.open{
+      opacity:1;
+      pointer-events:auto;
+    }
+    .info-dialog{
+      position:relative;
+      width:min(100%,680px);
+      max-height:min(86vh,720px);
+      overflow-y:auto;
+      border:1px solid rgba(255,255,255,.09);
+      border-radius:26px;
+      background:linear-gradient(180deg, rgba(16,24,38,.98), rgba(10,16,26,.98));
+      padding:32px;
+      box-shadow:0 30px 90px rgba(0,0,0,.5);
+      transform:translateY(14px) scale(.98);
+      transition:transform .25s ease;
+    }
+    .info-overlay.open .info-dialog{
+      transform:translateY(0) scale(1);
+    }
+    .info-dialog-close{
+      position:absolute;
+      top:16px;
+      right:16px;
+      width:34px;
+      height:34px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      cursor:pointer;
+    }
+    .info-dialog-close:hover{color:#fff;border-color:rgba(232,101,10,.38)}
+    .info-kicker{
+      color:var(--primary-2);
+      font-size:.7rem;
+      font-weight:800;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+    .info-title{
+      font-family:'Syne',sans-serif;
+      font-size:clamp(1.45rem,3vw,2rem);
+      line-height:1.08;
+      margin-bottom:14px;
+    }
+    .info-body{
+      color:var(--label);
+      line-height:1.72;
+      margin-bottom:22px;
+    }
+    .info-steps{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-bottom:24px;
+    }
+    .info-step{
+      border:1px solid var(--border);
+      border-radius:16px;
+      background:rgba(255,255,255,.04);
+      padding:16px;
+      text-align:center;
+    }
+    .info-step-num{
+      width:32px;
+      height:32px;
+      border-radius:50%;
+      background:var(--primary-dim);
+      border:1px solid rgba(232,101,10,.3);
+      color:var(--primary-2);
+      font-size:.8rem;
+      font-weight:800;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin:0 auto 10px;
+    }
+    .info-step-title{
+      font-weight:700;
+      font-size:.88rem;
+      margin-bottom:6px;
+      color:#fff;
+    }
+    .info-step p{
+      color:var(--muted);
+      font-size:.8rem;
+      line-height:1.5;
+    }
+    .vs-row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-bottom:8px;
+    }
+    .vs-item{
+      border:1px solid var(--border);
+      border-radius:14px;
+      background:rgba(255,255,255,.04);
+      padding:14px;
+    }
+    .vs-item-label{
+      font-size:.68rem;
+      font-weight:800;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
+    .vs-item-label.orange{color:var(--primary-2)}
+    .vs-item-label.muted{color:var(--muted)}
+    .vs-item ul{
+      list-style:none;
+      display:flex;
+      flex-direction:column;
+      gap:5px;
+    }
+    .vs-item ul li{
+      color:var(--label);
+      font-size:.82rem;
+      line-height:1.4;
+      padding-left:12px;
+      position:relative;
+    }
+    .vs-item ul li::before{
+      content:"·";
+      position:absolute;
+      left:0;
+      color:var(--muted);
+    }
+    /* ── FAQ modal ── */
+    .faq-item{
+      border-bottom:1px solid var(--border);
+      padding:14px 0;
+    }
+    .faq-item:last-child{border-bottom:none}
+    .faq-q{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      cursor:pointer;
+      font-weight:600;
+      color:#fff;
+      font-size:.92rem;
+      line-height:1.4;
+    }
+    .faq-q svg{
+      flex-shrink:0;
+      width:16px;
+      height:16px;
+      color:var(--muted);
+      transition:transform .2s ease;
+    }
+    .faq-item.open .faq-q svg{transform:rotate(180deg)}
+    .faq-a{
+      display:grid;
+      grid-template-rows:0fr;
+      transition:grid-template-rows .25s ease;
+    }
+    .faq-item.open .faq-a{grid-template-rows:1fr}
+    .faq-a-inner{
+      overflow:hidden;
+      color:var(--muted);
+      font-size:.88rem;
+      line-height:1.7;
+      padding-top:10px;
     }
     @media(max-width:900px){
       .hero-grid,
@@ -801,6 +1159,7 @@
       .filter-tags{
         justify-content:flex-start;
       }
+      .info-steps,.vs-row{grid-template-columns:1fr}
     }
     @media(max-width:640px){
       .wrap{padding:16px 16px 48px}
@@ -811,6 +1170,7 @@
       .hero-stats,
       .roi-row{grid-template-columns:1fr}
       .modal{padding:28px 20px}
+      .info-dialog{padding:24px 18px}
     }
   </style>
   <link rel="stylesheet" href="/smd-offer-nav.css">
@@ -837,7 +1197,7 @@
           <p class="hero-sub">Agentes pré-construídos para os departamentos que mais precisam de velocidade. Sem projeto longo. Operando em semanas.</p>
           <div class="hero-stats">
             <div class="stat-item">
-              <div class="stat-num">30<span>dias</span></div>
+              <div class="stat-num">30<span>dias*</span></div>
               <div class="stat-label">para entrar em operação</div>
             </div>
             <div class="stat-item">
@@ -849,6 +1209,7 @@
               <div class="stat-label">recuperadas por semana / analista</div>
             </div>
           </div>
+          <p class="stats-footnote">* Considerando condições pré-definidas de acessos e ferramentas 100% disponíveis desde a largada do projeto.</p>
         </div>
         <div class="hero-mark" aria-hidden="true">
           <img src="logo_smd.png" alt="">
@@ -891,6 +1252,23 @@
           <div class="channel-item"><span class="channel-icon">⚙️</span><span class="channel-label">Sistemas</span></div>
         </div>
       </div>
+      <div class="diagram-actions">
+        <button class="info-btn" type="button" id="whatIsAgentBtn">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="8.2" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M12 10.2v5.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="12" cy="7.3" r="1" fill="currentColor"/>
+          </svg>
+          O que é um agente de IA?
+        </button>
+        <button class="info-btn faq-btn" type="button" id="faqBtn">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M9 9c0-1.66 1.34-3 3-3s3 1.34 3 3c0 1.5-1.5 2.5-3 2.5v1.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            <circle cx="12" cy="17.5" r=".9" fill="currentColor"/>
+          </svg>
+          Perguntas frequentes
+        </button>
+      </div>
     </section>
 
     <section class="section" aria-label="Prateleira de agentes">
@@ -919,19 +1297,20 @@
       <div class="cta-box">
         <div class="cta-box-title">Quero falar com um especialista</div>
         <div class="cta-box-sub">Diagnóstico rápido, sem compromisso. Em 30 minutos identificamos o agente certo para o seu contexto.</div>
-        <button class="cta-primary" type="button" data-open-modal="Diagnóstico de Agentes de IA">Quero o diagnóstico</button>
+        <button class="cta-primary" type="button" id="diagnosisBtn">Quero diagnóstico gratuito</button>
       </div>
     </section>
 
     <div class="footer-copy">© 2026 · Ser Mais Digital · <a href="mailto:contato@sermaisdigital.com.br">contato@sermaisdigital.com.br</a></div>
   </div>
 
+  <!-- Investment modal -->
   <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <button class="modal-close" id="modalClose" type="button" aria-label="Fechar">✕</button>
       <div class="modal-badge">Investimento</div>
       <div class="modal-title" id="modalTitle">Agente de IA</div>
-      <div class="modal-agent-name" id="modalAgentName">Agente pronto para operar em até 30 dias</div>
+      <div class="modal-agent-name" id="modalAgentName">Agente pronto para operar em até 30 dias*</div>
 
       <div class="qualifier-step" id="qualifierStep">
         <div class="qualifier-label">Para garantir que o investimento faça sentido para o seu contexto, me conta:</div>
@@ -946,7 +1325,8 @@
         <div class="price-display">
           <div class="price-label-small">Investimento por agente</div>
           <div class="price-value"><small>R$</small> 20.000</div>
-          <div class="price-context">Implementação completa · Operando em até 30 dias</div>
+          <div class="price-context">Implementação completa · Operando em até 30 dias*</div>
+          <div class="price-footnote">* Considerando condições pré-definidas de acessos e ferramentas 100% disponíveis desde a largada.</div>
         </div>
         <div class="price-includes">
           <div class="price-includes-title">O que está incluso</div>
@@ -957,121 +1337,265 @@
           <div class="include-item">Acompanhamento na entrada em operação</div>
           <div class="include-item">1 mês de suporte pós-implantação</div>
         </div>
-        <button class="cta-primary" type="button" id="scheduleCta">Quero agendar uma conversa</button>
+        <a class="buy-btn" id="buyBtn" href="#" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.031-.967-.273-.1-.472-.149-.67.15-.198.298-.767.967-.94 1.166-.173.198-.347.223-.645.074-1.643-.822-2.72-1.463-3.803-3.319-.287-.495.287-.46.822-1.53.09-.198.045-.373-.025-.521-.074-.149-.67-1.612-.917-2.208-.242-.58-.487-.5-.67-.51-.173-.009-.372-.01-.57-.01-.198 0-.52.074-.793.372-.273.298-1.04 1.016-1.04 2.48s1.065 2.875 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.71.307 1.263.489 1.694.625.711.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.29.173-1.413-.074-.124-.273-.198-.571-.347z"/>
+            <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.418A9.956 9.956 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" stroke="currentColor" stroke-width="1.4" fill="none"/>
+          </svg>
+          Quero comprar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact choice popup (diagnosis) -->
+  <div class="contact-popup" id="contactPopup">
+    <button class="contact-popup-close" id="contactPopupClose" type="button" aria-label="Fechar">✕</button>
+    <div class="contact-popup-title">Como prefere conversar?</div>
+    <div class="contact-popup-sub">Escolha o canal e já te conecto com um especialista.</div>
+    <div class="contact-popup-options">
+      <a class="contact-option" id="diagWhatsapp" href="#" target="_blank" rel="noopener">
+        <span class="contact-option-icon">📱</span>
+        <span>WhatsApp</span>
+      </a>
+      <a class="contact-option" href="mailto:contato@sermaisdigital.com.br?subject=Diagnóstico%20de%20Agentes%20de%20IA&body=Olá%21%20Tenho%20interesse%20no%20diagnóstico%20de%20agentes%20de%20IA%20da%20Ser%20Mais%20Digital.">
+        <span class="contact-option-icon">✉️</span>
+        <span>E-mail</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- What is an agent overlay -->
+  <div class="info-overlay" id="whatIsOverlay" aria-hidden="true">
+    <div class="info-dialog" role="dialog" aria-modal="true" aria-labelledby="whatIsTitle">
+      <button class="info-dialog-close" data-close-info="whatIsOverlay" type="button" aria-label="Fechar">✕</button>
+      <div class="info-kicker">Entenda antes de decidir</div>
+      <div class="info-title" id="whatIsTitle">O que é um agente de IA?</div>
+      <p class="info-body">Um agente de IA é um software que interpreta instruções, planeja etapas, usa ferramentas e executa tarefas de forma autônoma — sem precisar que um humano supervisione cada passo. Ele aprende sobre a sua empresa, conecta-se aos seus sistemas e entrega resultados onde o time já trabalha.</p>
+      <div class="info-steps">
+        <div class="info-step">
+          <div class="info-step-num">1</div>
+          <div class="info-step-title">Recebe a tarefa</div>
+          <p>O time faz uma pergunta ou dispara um evento. O agente entende o contexto completo.</p>
+        </div>
+        <div class="info-step">
+          <div class="info-step-num">2</div>
+          <div class="info-step-title">Raciocina e age</div>
+          <p>Consulta a base de conhecimento, acessa sistemas e decide os próximos passos.</p>
+        </div>
+        <div class="info-step">
+          <div class="info-step-num">3</div>
+          <div class="info-step-title">Entrega o resultado</div>
+          <p>Responde, registra, escala ou gera o documento — tudo no canal onde o time está.</p>
+        </div>
+      </div>
+      <div class="vs-row">
+        <div class="vs-item">
+          <div class="vs-item-label orange">Agente de IA</div>
+          <ul>
+            <li>Executa tarefas completas de ponta a ponta</li>
+            <li>Integra com sistemas reais</li>
+            <li>Escala para humano com contexto completo</li>
+            <li>Aprende com base de conhecimento da empresa</li>
+          </ul>
+        </div>
+        <div class="vs-item">
+          <div class="vs-item-label muted">Chatbot tradicional</div>
+          <ul>
+            <li>Responde perguntas simples com fluxo fixo</li>
+            <li>Sem integração real com sistemas</li>
+            <li>Escalada sem contexto acumulado</li>
+            <li>Limitado a roteiros pré-definidos</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ overlay -->
+  <div class="info-overlay" id="faqOverlay" aria-hidden="true">
+    <div class="info-dialog" role="dialog" aria-modal="true" aria-labelledby="faqTitle">
+      <button class="info-dialog-close" data-close-info="faqOverlay" type="button" aria-label="Fechar">✕</button>
+      <div class="info-kicker">Tire suas dúvidas</div>
+      <div class="info-title" id="faqTitle">Perguntas frequentes</div>
+      <div id="faqList">
+        <div class="faq-item">
+          <div class="faq-q">
+            Quanto tempo leva para o agente entrar em operação?
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Em média 30 dias, contando que todos os acessos, ferramentas e base de conhecimento estejam disponíveis desde o início. Integrações mais complexas podem estender o prazo — isso é mapeado no diagnóstico antes do contrato.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            O agente substitui colaboradores?
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Não. O agente assume as tarefas repetitivas e de baixo valor, liberando o time para atividades estratégicas. É uma ferramenta de escala, não de substituição de pessoas.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Como o agente aprende sobre a minha empresa?
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Alimentamos a base de conhecimento com documentos, FAQs, processos e dados que a empresa já tem. Todo esse conteúdo é estruturado durante a fase de implantação, sem necessidade de equipe técnica do cliente.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Preciso de equipe técnica interna para manter o agente?
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Não. A SMD cuida da manutenção técnica. O time interno apenas atualiza conteúdo quando necessário — sem precisar de conhecimento técnico ou programação.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            O que acontece quando o agente não sabe responder?
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">O agente escala automaticamente para um humano, com o contexto completo da conversa. Nenhuma informação é perdida e o atendente assume de onde o agente parou, sem o cliente precisar repetir tudo.</div></div>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
+    const WA_NUMBER = '5511971944501';
+
     const agents = [
       {
-        dept:'rh',
-        deptLabel:'RH',
-        color:'#8b6fd1',
-        icon:'👥',
+        dept:'rh',deptLabel:'RH',color:'#8b6fd1',icon:'👥',
         name:'Agente RH<br>Base de Respostas',
         modalName:'Agente RH — Base de Respostas',
         tagline:'Responde no Teams ou Slack as dúvidas repetitivas do time — folha, férias, benefícios, holerite e políticas.',
         integrations:['Teams','Slack','WhatsApp'],
         roi:[['70%','dúvidas resolvidas sem humano'],['8h','recuperadas por semana / analista']],
-        trigger:'toda empresa com 50+ colaboradores tem um analista de RH que responde as mesmas 15 perguntas todo mês.'
+        characteristics:[
+          'RH com 5 ou mais colaboradores ativos',
+          'Analista de RH que responde as mesmas 15 perguntas todo mês',
+          'Dúvidas recorrentes sobre férias, holerite, benefícios e políticas internas',
+          'Empresa que usa Teams, Slack ou WhatsApp como canal interno de comunicação',
+          'Gestão que quer liberar o RH para iniciativas de maior valor estratégico'
+        ]
       },
       {
-        dept:'rh',
-        deptLabel:'RH',
-        color:'#8b6fd1',
-        icon:'🚀',
+        dept:'rh',deptLabel:'RH',color:'#8b6fd1',icon:'🚀',
         name:'Agente<br>Onboarding',
         modalName:'Agente Onboarding',
         tagline:'Conduz o novo colaborador pelos primeiros 30 dias — documentos, acessos, treinamentos e checklists sem intervenção manual.',
         integrations:['Teams','Slack','E-mail'],
         roi:[['-40%','tempo do RH no onboarding'],['30d','jornada guiada e auditável']],
-        trigger:'empresas com crescimento acelerado ou turnover alto onde o onboarding depende de pessoas específicas.'
+        characteristics:[
+          'Empresa com crescimento acelerado ou mais de 5 contratações por mês',
+          'Onboarding que depende de pessoas específicas, criando gargalo operacional',
+          'Novos colaboradores ficam sem respostas claras nos primeiros dias',
+          'Processo atual gera retrabalho com documentos, acessos e treinamentos incompletos',
+          'Gestão quer reduzir tempo operacional do RH sem perder qualidade na chegada do colaborador'
+        ]
       },
       {
-        dept:'comercial',
-        deptLabel:'Comercial',
-        color:'#E8650A',
-        icon:'⚡',
+        dept:'comercial',deptLabel:'Comercial',color:'#E8650A',icon:'⚡',
         name:'Agente SDR<br>Qualificação Inbound',
         modalName:'Agente SDR — Qualificação Inbound',
         tagline:'Recebe o lead pelo site ou WhatsApp, qualifica com perguntas, agenda reunião e alimenta o CRM automaticamente.',
         integrations:['WhatsApp','HubSpot','Pipedrive','Google Cal'],
         roi:[['+22%','taxa de conversão de leads'],['24/7','qualificação sem parar']],
-        trigger:'time de vendas gasta mais tempo qualificando do que fechando. Lead fica sem resposta fora do horário comercial.'
+        characteristics:[
+          'Time de vendas que gasta mais tempo qualificando do que fechando negócios',
+          'Leads chegam fora do horário comercial e ficam sem resposta por horas',
+          'Volume de inbound alto demais para o time humano dar conta com agilidade',
+          'CRM com leads sem primeiro contato rápido, perdendo temperatura',
+          'Empresa que usa HubSpot, Pipedrive ou ferramenta de calendário integrado'
+        ]
       },
       {
-        dept:'comercial',
-        deptLabel:'Comercial',
-        color:'#E8650A',
-        icon:'🔁',
+        dept:'comercial',deptLabel:'Comercial',color:'#E8650A',icon:'🔁',
         name:'Agente de<br>Reativação de Leads',
         modalName:'Agente de Reativação de Leads',
         tagline:'Varre a base de leads frios, dispara sequência personalizada e identifica quem voltou a ter interesse para o comercial humano.',
         integrations:['CRM','WhatsApp','E-mail'],
         roi:[['3x','aproveitamento da base existente'],['0h','de SDR humano na reativação']],
-        trigger:'todo CRM tem centenas de leads parados. Esse agente monetiza o ativo que já existe sem custo extra de aquisição.'
+        characteristics:[
+          'CRM com centenas ou milhares de leads frios sem follow-up ativo',
+          'Time de vendas sem tempo para trabalhar a base existente além dos leads quentes',
+          'Empresa que investe em aquisição mas não monetiza base já conquistada',
+          'Leads que pararam de responder mas não foram descartados definitivamente',
+          'Quer gerar novas oportunidades sem aumentar o custo de aquisição'
+        ]
       },
       {
-        dept:'atendimento',
-        deptLabel:'Atendimento',
-        color:'#2a9d8f',
-        icon:'🎯',
+        dept:'atendimento',deptLabel:'Atendimento',color:'#2a9d8f',icon:'🎯',
         name:'Agente de<br>Suporte Nível 1',
         modalName:'Agente de Suporte Nível 1',
         tagline:'Resolve as 20 dúvidas que representam 80% dos tickets. Escalona só o que não sabe resolver, com contexto completo.',
         integrations:['Zendesk','Freshdesk','Intercom','WhatsApp'],
         roi:[['60%','de tickets resolvidos sem humano'],['-80%','no tempo médio de resposta']],
-        trigger:'Klarna reduziu tempo de atendimento em 80% com agente de suporte. ROI visível em 60 dias.',
-        triggerLabel:'Referência de mercado'
+        characteristics:[
+          'Operação com alto volume de tickets repetitivos que representam 80% das solicitações',
+          'SLA comprometido por demandas simples que não precisam de atendimento humano',
+          'Time de suporte sobrecarregado e sem tempo disponível para casos realmente complexos',
+          'Empresa que usa Zendesk, Freshdesk, Intercom ou WhatsApp para atendimento',
+          'Quer escalar volume de atendimento sem aumentar headcount'
+        ]
       },
       {
-        dept:'atendimento',
-        deptLabel:'Atendimento',
-        color:'#2a9d8f',
-        icon:'📊',
+        dept:'atendimento',deptLabel:'Atendimento',color:'#2a9d8f',icon:'📊',
         name:'Agente de NPS<br>e Satisfação',
         modalName:'Agente de NPS e Satisfação',
         tagline:'Dispara pesquisa, coleta resposta, consolida e entrega relatório executivo automaticamente a cada ciclo — sem depender de ninguém.',
         integrations:['WhatsApp','E-mail','Relatório PDF'],
         roi:[['100%','automação do ciclo de NPS'],['Ciclo','mensal ou trimestral configurável']],
-        trigger:'pesquisas de satisfação que nunca saem do papel por falta de tempo operacional para conduzir e consolidar.'
+        characteristics:[
+          'Empresa que precisa medir satisfação mas nunca tem tempo para conduzir o processo',
+          'Ciclos de pesquisa que demoram semanas para consolidar manualmente',
+          'Relatório de NPS sempre atrasado ou incompleto para apresentar à liderança',
+          'Base de clientes com mais de 50 respondentes potenciais por ciclo',
+          'Gestão que quer visibilidade de satisfação sem depender de operação manual'
+        ]
       },
       {
-        dept:'operacoes',
-        deptLabel:'Operações',
-        color:'#4a6fa5',
-        icon:'🖥️',
+        dept:'operacoes',deptLabel:'Operações',color:'#4a6fa5',icon:'🖥️',
         name:'Agente<br>Help Desk Interno',
         modalName:'Agente Help Desk Interno',
         tagline:'Responde dúvidas de TI dos colaboradores — VPN, acesso, senha, impressora — sem abrir chamado. Resolve o que pode, escalona com contexto.',
         integrations:['Teams','Slack','GLPI'],
         roi:[['40%','do tempo do analista de TI liberado'],['24/7','suporte disponível sem plantão']],
-        trigger:'analista de TI interrompido dezenas de vezes por dia para resolver dúvidas simples que poderiam ser autoservidas.'
+        characteristics:[
+          'TI com poucos analistas para uma base grande de colaboradores',
+          'Chamados simples consomem mais de 40% da capacidade do time de TI',
+          'Colaboradores frustrados com tempo de resposta para dúvidas básicas e recorrentes',
+          'Empresa que usa Teams, Slack ou GLPI para chamados e suporte internos',
+          'Quer suporte 24/7 sem custo de plantão ou contratação de analista adicional'
+        ]
       },
       {
-        dept:'operacoes',
-        deptLabel:'Operações',
-        color:'#4a6fa5',
-        icon:'📈',
+        dept:'operacoes',deptLabel:'Operações',color:'#4a6fa5',icon:'📈',
         name:'Agente de<br>Relatórios Automatizados',
         modalName:'Agente de Relatórios Automatizados',
         tagline:'Puxa dados de planilhas ou sistemas, monta o relatório no formato certo e envia para os gestores toda semana ou mês.',
         integrations:['Google Sheets','Excel','E-mail'],
         roi:[['0h','de trabalho manual por ciclo'],['100%','consistência nos dados entregues']],
-        trigger:'relatórios que demoram horas para montar toda semana, sempre com risco de erro humano e sem padrão de apresentação.'
+        characteristics:[
+          'Alguém dedica horas toda semana ou mês para montar o mesmo relatório do zero',
+          'Relatórios com erros manuais frequentes ou inconsistências de formatação entre ciclos',
+          'Dados disponíveis em Google Sheets, Excel ou sistemas com acesso estruturado',
+          'Gestores precisam de visibilidade recorrente sobre métricas operacionais',
+          'Empresa que quer liberar analistas para análise e decisão em vez de montagem de dados'
+        ]
       },
       {
-        dept:'financeiro',
-        deptLabel:'Financeiro',
-        color:'#d6aa2d',
-        icon:'💰',
+        dept:'financeiro',deptLabel:'Financeiro',color:'#d6aa2d',icon:'💰',
         name:'Agente Financeiro<br>Dúvidas de Fornecedores',
         modalName:'Agente Financeiro — Dúvidas de Fornecedores',
         tagline:'Responde fornecedores sobre status de pagamento, prazo e pendências de NF — sem envolver o time de Contas a Pagar.',
         integrations:['E-mail','WhatsApp','ERP','Planilhas'],
         roi:[['-65%','interrupções no time de AP'],['24/7','resposta para fornecedores']],
-        trigger:'empresas com muitos fornecedores têm o time financeiro parado respondendo "onde está meu pagamento?" dezenas de vezes por semana.'
+        characteristics:[
+          'Empresa com 20 ou mais fornecedores ativos gerando volume constante de consultas',
+          'Time de Contas a Pagar interrompido dezenas de vezes por dia com "onde está meu pagamento?"',
+          'Fornecedores sem portal de autoatendimento para consultar status de NF e pagamentos',
+          'Dados de pagamento acessíveis via ERP ou planilhas com estrutura definida',
+          'Quer melhorar relacionamento com fornecedores sem aumentar a equipe financeira'
+        ]
       }
     ];
 
@@ -1081,6 +1605,8 @@
     const modalAgentName = document.getElementById('modalAgentName');
     const qualifierStep = document.getElementById('qualifierStep');
     const priceStep = document.getElementById('priceStep');
+    const buyBtn = document.getElementById('buyBtn');
+    let currentAgentName = '';
 
     function renderAgents() {
       agentsGrid.innerHTML = agents.map((agent, index) => `
@@ -1104,7 +1630,12 @@
                 <div class="roi-row">
                   ${agent.roi.map(([value, label]) => `<div class="roi-item"><div class="roi-num">${value}</div><div class="roi-label">${label}</div></div>`).join('')}
                 </div>
-                <p class="card-trigger-text"><strong>${agent.triggerLabel || 'Gatilho de compra'}:</strong> ${agent.trigger}</p>
+                <div class="characteristics-block">
+                  <div class="characteristics-label">Características</div>
+                  <ul class="characteristics-list">
+                    ${agent.characteristics.map((c) => `<li>${c}</li>`).join('')}
+                  </ul>
+                </div>
                 <button class="price-btn" type="button" data-open-modal="${agent.modalName}">Ver investimento</button>
               </div>
             </div>
@@ -1114,10 +1645,10 @@
     }
 
     function closeExpandedCards() {
-      document.querySelectorAll('.card-expanded-content').forEach((content) => content.classList.remove('open'));
-      document.querySelectorAll('.agent-card').forEach((card) => card.classList.remove('expanded'));
-      document.querySelectorAll('[data-expand]').forEach((button) => {
-        button.innerHTML = 'Ver como funciona <span class="arrow">→</span>';
+      document.querySelectorAll('.card-expanded-content').forEach((c) => c.classList.remove('open'));
+      document.querySelectorAll('.agent-card').forEach((c) => c.classList.remove('expanded'));
+      document.querySelectorAll('[data-expand]').forEach((b) => {
+        b.innerHTML = 'Ver como funciona <span class="arrow">→</span>';
       });
     }
 
@@ -1126,7 +1657,6 @@
       const content = card.querySelector('.card-expanded-content');
       const isOpen = content.classList.contains('open');
       closeExpandedCards();
-
       if (!isOpen) {
         content.classList.add('open');
         card.classList.add('expanded');
@@ -1136,7 +1666,7 @@
     }
 
     function filterAgents(filter, button) {
-      document.querySelectorAll('.filter-tag').forEach((tag) => tag.classList.remove('active'));
+      document.querySelectorAll('.filter-tag').forEach((t) => t.classList.remove('active'));
       button.classList.add('active');
       document.querySelectorAll('.agent-card').forEach((card) => {
         card.hidden = filter !== 'all' && card.dataset.dept !== filter;
@@ -1145,8 +1675,9 @@
     }
 
     function openModal(agentName) {
+      currentAgentName = agentName;
       modalTitle.textContent = agentName;
-      modalAgentName.textContent = 'Agente pronto para operar em até 30 dias';
+      modalAgentName.textContent = 'Agente pronto para operar em até 30 dias*';
       qualifierStep.classList.remove('hidden');
       priceStep.classList.remove('active');
       modalOverlay.classList.add('open');
@@ -1160,38 +1691,55 @@
       document.body.style.overflow = '';
     }
 
+    function openInfoOverlay(id) {
+      const el = document.getElementById(id);
+      el.classList.add('open');
+      el.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeInfoOverlay(id) {
+      const el = document.getElementById(id);
+      el.classList.remove('open');
+      el.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    const contactPopup = document.getElementById('contactPopup');
+    function openContactPopup() {
+      const msg = encodeURIComponent('Olá! Tenho interesse no diagnóstico de agentes de IA da Ser Mais Digital.');
+      document.getElementById('diagWhatsapp').href = `https://wa.me/${WA_NUMBER}?text=${msg}`;
+      contactPopup.classList.add('open');
+    }
+    function closeContactPopup() {
+      contactPopup.classList.remove('open');
+    }
+
     function drawFan() {
       const svg = document.getElementById('fanSvg');
       const channels = document.getElementById('channelsRow');
       const agentNode = document.querySelector('.diag-agent');
       if (!svg || !channels || !agentNode) return;
-
       const svgRect = svg.getBoundingClientRect();
       const agentRect = agentNode.getBoundingClientRect();
       const icons = channels.querySelectorAll('.channel-item');
       const originX = agentRect.left + agentRect.width / 2 - svgRect.left;
-      const originY = 0;
       const barY = 21;
       svg.innerHTML = '';
-
       const createLine = (x1, y1, x2, y2, opacity) => {
         const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        line.setAttribute('x1', x1);
-        line.setAttribute('y1', y1);
-        line.setAttribute('x2', x2);
-        line.setAttribute('y2', y2);
+        line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+        line.setAttribute('x2', x2); line.setAttribute('y2', y2);
         line.setAttribute('stroke', `rgba(232,101,10,${opacity})`);
         line.setAttribute('stroke-width', '1');
         svg.appendChild(line);
       };
-
-      createLine(originX, originY, originX, barY, 0.62);
+      createLine(originX, 0, originX, barY, 0.62);
       const targets = Array.from(icons).map((item) => {
         const rect = item.getBoundingClientRect();
         return rect.left + rect.width / 2 - svgRect.left;
       });
       if (!targets.length) return;
-
       createLine(Math.min(...targets), barY, Math.max(...targets), barY, 0.34);
       targets.forEach((targetX) => {
         createLine(targetX, barY, targetX, 37, 0.3);
@@ -1202,34 +1750,84 @@
       });
     }
 
+    // Render agents
     renderAgents();
+
+    // Agent grid interactions
     agentsGrid.addEventListener('click', (event) => {
       const expandButton = event.target.closest('[data-expand]');
       const modalButton = event.target.closest('[data-open-modal]');
       if (expandButton) toggleExpand(expandButton);
       if (modalButton) openModal(modalButton.dataset.openModal);
     });
+
+    // Filter tags
     document.getElementById('filterTags').addEventListener('click', (event) => {
       const button = event.target.closest('[data-filter]');
       if (button) filterAgents(button.dataset.filter, button);
     });
+
+    // Qualifier → show price
     document.querySelectorAll('[data-qualifier]').forEach((button) => {
       button.addEventListener('click', () => {
         qualifierStep.classList.add('hidden');
         priceStep.classList.add('active');
       });
     });
-    document.querySelectorAll('.bottom-cta [data-open-modal]').forEach((button) => {
-      button.addEventListener('click', () => openModal(button.dataset.openModal));
+
+    // Buy button → WhatsApp
+    document.getElementById('priceStep').addEventListener('click', (event) => {
+      if (event.target.closest('#buyBtn')) {
+        const msg = encodeURIComponent(`Olá! Estou interessado em fechar a oferta do ${currentAgentName} da Ser Mais Digital.`);
+        buyBtn.href = `https://wa.me/${WA_NUMBER}?text=${msg}`;
+      }
     });
+
+    // Modal close
     document.getElementById('modalClose').addEventListener('click', closeModal);
-    document.getElementById('scheduleCta').addEventListener('click', closeModal);
     modalOverlay.addEventListener('click', (event) => {
       if (event.target === modalOverlay) closeModal();
     });
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') closeModal();
+
+    // Diagnosis button → contact popup
+    document.getElementById('diagnosisBtn').addEventListener('click', openContactPopup);
+    document.getElementById('contactPopupClose').addEventListener('click', closeContactPopup);
+    document.addEventListener('click', (event) => {
+      if (
+        contactPopup.classList.contains('open') &&
+        !contactPopup.contains(event.target) &&
+        event.target !== document.getElementById('diagnosisBtn')
+      ) closeContactPopup();
     });
+
+    // What is agent & FAQ buttons
+    document.getElementById('whatIsAgentBtn').addEventListener('click', () => openInfoOverlay('whatIsOverlay'));
+    document.getElementById('faqBtn').addEventListener('click', () => openInfoOverlay('faqOverlay'));
+    document.querySelectorAll('[data-close-info]').forEach((btn) => {
+      btn.addEventListener('click', () => closeInfoOverlay(btn.dataset.closeInfo));
+    });
+    document.querySelectorAll('.info-overlay').forEach((overlay) => {
+      overlay.addEventListener('click', (event) => {
+        if (event.target === overlay) closeInfoOverlay(overlay.id);
+      });
+    });
+
+    // FAQ accordion
+    document.getElementById('faqList').addEventListener('click', (event) => {
+      const q = event.target.closest('.faq-q');
+      if (!q) return;
+      const item = q.closest('.faq-item');
+      item.classList.toggle('open');
+    });
+
+    // Global ESC
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      closeModal();
+      closeContactPopup();
+      document.querySelectorAll('.info-overlay.open').forEach((o) => closeInfoOverlay(o.id));
+    });
+
     window.addEventListener('load', () => setTimeout(drawFan, 200));
     window.addEventListener('resize', drawFan);
   </script>
