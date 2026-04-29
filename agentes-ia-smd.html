@@ -309,6 +309,12 @@
       padding:10px 14px;
       font-size:.84rem;
     }
+    .kb-icon{
+      width:16px;
+      height:16px;
+      flex-shrink:0;
+      color:var(--primary-2);
+    }
     .diag-arrow{
       display:flex;
       flex-direction:column;
@@ -371,7 +377,16 @@
       justify-content:center;
     }
     .channel-icon{
-      font-size:1.5rem;
+      width:28px;
+      height:28px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+    }
+    .channel-icon svg{
+      width:26px;
+      height:26px;
     }
     .channel-label{
       color:var(--muted);
@@ -678,10 +693,12 @@
       padding:26px;
     }
     .cta-box-title{
-      font-family:'Syne',sans-serif;
-      font-size:1.2rem;
-      font-weight:800;
+      font-family:'DM Sans',sans-serif;
+      font-size:1.35rem;
+      font-weight:700;
+      letter-spacing:-.02em;
       margin-bottom:8px;
+      color:#fff;
     }
     .cta-primary{
       width:100%;
@@ -1139,6 +1156,133 @@
       line-height:1.7;
       padding-top:10px;
     }
+    /* ── Info dialog larger fonts ── */
+    .info-body{ font-size:1rem; line-height:1.75; }
+    .info-step-title{ font-size:.97rem; }
+    .info-step p{ font-size:.88rem; line-height:1.55; }
+    .vs-item ul li{ font-size:.9rem; }
+    .faq-q{ font-size:1.05rem; }
+    .faq-a-inner{ font-size:.98rem; line-height:1.72; }
+    /* ── AI logos row ── */
+    .ai-logos-section{
+      margin-top:22px;
+      padding-top:18px;
+      border-top:1px solid var(--border);
+    }
+    .ai-logos-label{
+      color:var(--muted);
+      font-size:.72rem;
+      font-weight:600;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+      text-align:center;
+    }
+    .ai-logos-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      justify-content:center;
+    }
+    .ai-logo-item{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:6px;
+    }
+    .ai-logo-wrap{
+      width:52px;
+      height:52px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.1);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(255,255,255,.05);
+    }
+    .ai-logo-wrap svg{ width:30px; height:30px; }
+    .ai-logo-name{
+      font-size:.68rem;
+      font-weight:600;
+      color:var(--muted);
+      text-align:center;
+    }
+    /* ── Support block ── */
+    .support-block{
+      border-color:rgba(91,168,135,0.28) !important;
+      background:
+        radial-gradient(circle at top left, rgba(91,168,135,0.12), transparent 30%),
+        linear-gradient(180deg, rgba(17,26,41,.94), rgba(11,18,29,.98)) !important;
+    }
+    .support-inner{
+      display:flex;
+      align-items:flex-start;
+      gap:20px;
+    }
+    .support-icon{
+      width:54px;
+      height:54px;
+      border-radius:16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(91,168,135,0.14);
+      border:1px solid rgba(91,168,135,0.28);
+      color:#5BA887;
+      flex-shrink:0;
+    }
+    .support-icon svg{ width:26px; height:26px; }
+    .support-content{ flex:1; }
+    .support-badge{
+      color:#5BA887;
+      font-size:.7rem;
+      font-weight:800;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
+    .support-title{
+      font-family:'Syne',sans-serif;
+      font-size:clamp(1.15rem,2.4vw,1.65rem);
+      font-weight:800;
+      line-height:1.12;
+      margin-bottom:12px;
+    }
+    .support-desc{
+      color:var(--label);
+      line-height:1.72;
+      font-size:.92rem;
+    }
+    .support-cta{
+      display:flex;
+      align-items:flex-start;
+      flex-shrink:0;
+      padding-top:4px;
+    }
+    .support-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:12px 20px;
+      border-radius:12px;
+      background:rgba(91,168,135,0.18);
+      border:1px solid rgba(91,168,135,0.36);
+      color:#5BA887;
+      font-weight:700;
+      font-size:.9rem;
+      text-decoration:none;
+      transition:.18s ease;
+      white-space:nowrap;
+    }
+    .support-btn:hover{
+      background:rgba(91,168,135,0.3);
+      color:#7fd3b5;
+    }
+    @media(max-width:700px){
+      .support-inner{ flex-direction:column; }
+      .support-cta{ padding-top:0; }
+    }
+
     @media(max-width:900px){
       .hero-grid,
       .bottom-cta{
@@ -1231,6 +1375,12 @@
           <div class="kb-item">🗂️ FAQs e processos</div>
           <div class="kb-item">🔗 Sistemas e ERPs</div>
           <div class="kb-item">📊 Dados estruturados</div>
+          <div class="kb-item">
+            <svg class="kb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 8l-4 4 4 4M17 8l4 4-4 4"/><line x1="14" y1="4" x2="10" y2="20"/>
+            </svg>
+            API
+          </div>
         </div>
         <div class="diag-arrow">
           <div class="arrow-line"></div>
@@ -1245,11 +1395,56 @@
           <svg class="fan-svg" id="fanSvg" aria-hidden="true"></svg>
         </div>
         <div class="diag-channels" id="channelsRow">
-          <div class="channel-item"><span class="channel-icon">💬</span><span class="channel-label">Teams</span></div>
-          <div class="channel-item"><span class="channel-icon">#</span><span class="channel-label">Slack</span></div>
-          <div class="channel-item"><span class="channel-icon">📱</span><span class="channel-label">WhatsApp</span></div>
-          <div class="channel-item"><span class="channel-icon">✉️</span><span class="channel-label">E-mail</span></div>
-          <div class="channel-item"><span class="channel-icon">⚙️</span><span class="channel-label">Sistemas</span></div>
+          <div class="channel-item">
+            <span class="channel-icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="7.5" width="14" height="12" rx="2.5" fill="#5059C9"/>
+                <path d="M6 11.5h5.5M8.75 11.5v5.5" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+                <circle cx="19.5" cy="6.5" r="3.5" fill="#7B83EB"/>
+                <rect x="15" y="10" width="9" height="7.5" rx="2" fill="#7B83EB"/>
+              </svg>
+            </span>
+            <span class="channel-label">Teams</span>
+          </div>
+          <div class="channel-item">
+            <span class="channel-icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3.5" y="9.5" width="4.2" height="9" rx="2.1" fill="#E01E5A"/>
+                <rect x="9" y="3.5" width="9" height="4.2" rx="2.1" fill="#ECB22E"/>
+                <rect x="16.3" y="9.5" width="4.2" height="9" rx="2.1" fill="#2EB67D"/>
+                <rect x="9" y="16.3" width="9" height="4.2" rx="2.1" fill="#36C5F0"/>
+                <rect x="9" y="9.5" width="4.2" height="4.2" rx="1.2" fill="#E01E5A" opacity="0.85"/>
+                <rect x="10.8" y="10.3" width="2.5" height="2.5" rx="0.8" fill="#ECB22E" opacity="0.7"/>
+              </svg>
+            </span>
+            <span class="channel-label">Slack</span>
+          </div>
+          <div class="channel-item">
+            <span class="channel-icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#25D366" d="M20.5 3.5A11.9 11.9 0 0 0 3.4 20.5L2 22l1.6-.5A11.9 11.9 0 1 0 20.5 3.5z"/>
+                <path fill="white" d="M17.5 14.9c-.3-.15-1.72-.86-1.98-.95-.27-.1-.47-.14-.67.14-.2.3-.76.95-.93 1.15-.17.2-.34.22-.64.07a8 8 0 0 1-2.42-1.48 8 8 0 0 1-1.67-2.07c-.17-.3.17-.44.5-1.06.08-.18.04-.34-.02-.48-.07-.14-.67-1.6-.92-2.19-.23-.57-.47-.49-.67-.5-.17 0-.36-.01-.56-.01-.2 0-.52.07-.8.37-.27.3-1.02 1-1.02 2.47 0 1.44 1.05 2.84 1.2 3.04.14.2 2.06 3.16 5.02 4.43.7.3 1.24.48 1.67.62.7.22 1.34.19 1.84.11.56-.08 1.73-.7 1.97-1.39.25-.68.25-1.26.18-1.38-.07-.12-.27-.19-.57-.33z"/>
+              </svg>
+            </span>
+            <span class="channel-label">WhatsApp</span>
+          </div>
+          <div class="channel-item">
+            <span class="channel-icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" fill="#2CA5E0"/>
+                <path fill="white" d="M5.5 11.9l12.5-4.8c.5-.2.9.12.8.82l-2.1 9.9c-.15.5-.5.62-.86.38l-2.9-2.14-1.4 1.34c-.14.14-.3.18-.6.18l.22-3.28 5.5-4.96c.22-.2 0-.32-.3-.12l-6.8 4.28-2.85-.88c-.58-.2-.6-.58.3-.67z"/>
+              </svg>
+            </span>
+            <span class="channel-label">Telegram</span>
+          </div>
+          <div class="channel-item">
+            <span class="channel-icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#5865F2" d="M20.3 4.6A18.5 18.5 0 0 0 15.5 3c-.25.44-.53.97-.72 1.4a16.9 16.9 0 0 0-5.54 0A13 13 0 0 0 8.5 3 18.4 18.4 0 0 0 3.7 4.6C.53 9.4-.33 14.1.1 18.6a18.8 18.8 0 0 0 5.63 2.85 14 14 0 0 0 1.22-1.97 11.9 11.9 0 0 1-1.9-.92l.46-.35a13.4 13.4 0 0 0 11.5 0l.47.35a12 12 0 0 1-1.9.92 14 14 0 0 0 1.22 1.97 18.7 18.7 0 0 0 5.63-2.85c.5-5.4-1.07-9.95-3.84-13.85zM8.02 16.1c-1.17 0-2.14-1.07-2.14-2.4s.93-2.4 2.14-2.4 2.17 1.07 2.15 2.4c0 1.33-.96 2.4-2.15 2.4zm7.97 0c-1.17 0-2.14-1.07-2.14-2.4s.93-2.4 2.14-2.4 2.14 1.07 2.14 2.4c0 1.33-.95 2.4-2.14 2.4z"/>
+              </svg>
+            </span>
+            <span class="channel-label">Discord</span>
+          </div>
         </div>
       </div>
       <div class="diagram-actions">
@@ -1298,6 +1493,30 @@
         <div class="cta-box-title">Quero falar com um especialista</div>
         <div class="cta-box-sub">Diagnóstico rápido, sem compromisso. Em 30 minutos identificamos o agente certo para o seu contexto.</div>
         <button class="cta-primary" type="button" id="diagnosisBtn">Quero diagnóstico gratuito</button>
+      </div>
+    </section>
+
+    <section class="section support-block" aria-label="Suporte e manutenção de agentes">
+      <div class="support-inner">
+        <div class="support-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </div>
+        <div class="support-content">
+          <div class="support-badge">Suporte &amp; Manutenção</div>
+          <h2 class="support-title">Já tem agentes de IA e precisa de suporte ou manutenção?</h2>
+          <p class="support-desc">Se você já opera com agentes de IA e precisa de especialistas para manutenção, ajustes, integrações ou evolução contínua — temos o time certo para isso. Atuamos em agentes construídos com a SMD e em soluções desenvolvidas por outras equipes.</p>
+        </div>
+        <div class="support-cta">
+          <a class="support-btn" href="https://wa.me/5511971944501?text=Ol%C3%A1!%20J%C3%A1%20tenho%20agentes%20de%20IA%20e%20preciso%20de%20suporte%20ou%20manuten%C3%A7%C3%A3o%20com%20a%20Ser%20Mais%20Digital." target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path fill="#fff" d="M17.5 14.4c-.3-.1-1.8-.9-2-.97-.3-.1-.5-.15-.7.15-.2.3-.76.96-.93 1.15-.17.2-.35.22-.65.07a8 8 0 0 1-2.4-1.48 8 8 0 0 1-1.66-2.07c-.17-.3.17-.44.5-1.06.07-.17.03-.33-.02-.47-.07-.14-.67-1.6-.92-2.19-.23-.57-.47-.49-.67-.5-.17 0-.36-.01-.56-.01-.2 0-.52.07-.79.37-.27.3-1.03 1-1.03 2.46 0 1.44 1.06 2.84 1.2 3.04.15.2 2.07 3.16 5.02 4.43.7.3 1.25.48 1.67.62.7.22 1.34.19 1.84.11.56-.08 1.73-.7 1.97-1.39.25-.68.25-1.26.18-1.38-.07-.12-.27-.19-.57-.34z"/>
+              <path d="M20.5 3.5A11.9 11.9 0 0 0 3.4 20.5L2 22l1.6-.5A11.9 11.9 0 1 0 20.5 3.5z" stroke="#fff" stroke-width="1.4" fill="none"/>
+            </svg>
+            Falar sobre suporte
+          </a>
+        </div>
       </div>
     </section>
 
@@ -1409,6 +1628,62 @@
           </ul>
         </div>
       </div>
+
+      <div class="ai-logos-section">
+        <div class="ai-logos-label">Alimentados pelos principais modelos de IA do mercado</div>
+        <div class="ai-logos-row">
+          <div class="ai-logo-item">
+            <div class="ai-logo-wrap" style="background:rgba(205,120,58,0.15);border-color:rgba(205,120,58,0.32)">
+              <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 4L23 24H7L15 4Z" fill="#CD782E" opacity="0.9"/>
+                <line x1="10" y1="17.5" x2="20" y2="17.5" stroke="#CD782E" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <span class="ai-logo-name">Claude</span>
+          </div>
+          <div class="ai-logo-item">
+            <div class="ai-logo-wrap" style="background:rgba(16,163,127,0.15);border-color:rgba(16,163,127,0.32)">
+              <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#10A37F" d="M27.1 13.7c.4-1.1.4-2.3 0-3.4-.5-1.1-1.3-2-2.3-2.6a6 6 0 0 0-2-3.2c-1-.8-2.2-1.2-3.4-1.1-.9-.9-2-1.5-3.2-1.7C15 1.5 13.8 1.7 12.8 2.3c-.9-.5-2-.7-3-.5-1 .1-2 .6-2.7 1.4-1 .4-1.9 1.1-2.5 2-.6.9-.9 2-.8 3C3 9 2.5 10.2 2.5 11.5c0 1.2.3 2.4 1 3.3-.4 1.1-.4 2.3 0 3.4.5 1.1 1.3 2 2.3 2.6.2 1.2.8 2.3 1.8 3.1 1 .8 2.2 1.2 3.4 1.1.9.9 2 1.5 3.2 1.7 1.2.2 2.4 0 3.4-.6.9.5 2 .7 3 .5 1-.2 2-.6 2.7-1.4 1-.4 1.9-1.1 2.5-2 .6-.9.9-2 .8-3 .8-.9 1.3-2 1.3-3.2 0-1.2-.3-2.3-1-3.3zM15 21.7a4.2 4.2 0 1 1 0-8.4 4.2 4.2 0 0 1 0 8.4z"/>
+              </svg>
+            </div>
+            <span class="ai-logo-name">ChatGPT</span>
+          </div>
+          <div class="ai-logo-item">
+            <div class="ai-logo-wrap" style="background:rgba(66,133,244,0.15);border-color:rgba(66,133,244,0.32)">
+              <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 3 C15 10 20.5 15 28 15 C20.5 15 15 19.5 15 27 C15 19.5 9.5 15 2 15 C9.5 15 15 10 15 3Z" fill="url(#gemG1)"/>
+                <defs>
+                  <linearGradient id="gemG1" x1="2" y1="15" x2="28" y2="15" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#4285F4"/>
+                    <stop offset="100%" stop-color="#34A853"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <span class="ai-logo-name">Gemini</span>
+          </div>
+          <div class="ai-logo-item">
+            <div class="ai-logo-wrap" style="background:rgba(123,111,173,0.15);border-color:rgba(123,111,173,0.32)">
+              <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 24V8L15 17L25 8V24" stroke="#8B7EC8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span class="ai-logo-name">Manus</span>
+          </div>
+          <div class="ai-logo-item">
+            <div class="ai-logo-wrap" style="background:rgba(0,85,179,0.15);border-color:rgba(0,85,179,0.32)">
+              <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="15" cy="15" r="11" stroke="#0055B3" stroke-width="2"/>
+                <circle cx="15" cy="15" r="5" fill="#0055B3"/>
+                <circle cx="15" cy="15" r="2" fill="white"/>
+                <path d="M15 7V10M15 20V23M7 15H10M20 15H23" stroke="#0055B3" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <span class="ai-logo-name">DeepSeek</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1497,7 +1772,7 @@
         name:'Agente SDR<br>Qualificação Inbound',
         modalName:'Agente SDR — Qualificação Inbound',
         tagline:'Recebe o lead pelo site ou WhatsApp, qualifica com perguntas, agenda reunião e alimenta o CRM automaticamente.',
-        integrations:['WhatsApp','HubSpot','Pipedrive','Google Cal'],
+        integrations:['WhatsApp','HubSpot','Google Cal'],
         roi:[['+22%','taxa de conversão de leads'],['24/7','qualificação sem parar']],
         characteristics:[
           'Time de vendas que gasta mais tempo qualificando do que fechando negócios',
