@@ -994,8 +994,8 @@
     }
     .info-dialog{
       position:relative;
-      width:min(100%,680px);
-      max-height:min(86vh,720px);
+      width:min(96vw,860px);
+      max-height:92vh;
       overflow-y:auto;
       border:1px solid rgba(255,255,255,.09);
       border-radius:26px;
@@ -1243,10 +1243,11 @@
     }
     .support-title{
       font-family:'Syne',sans-serif;
-      font-size:clamp(1.15rem,2.4vw,1.65rem);
-      font-weight:800;
-      line-height:1.12;
-      margin-bottom:12px;
+      font-size:clamp(1.4rem,2.8vw,2.1rem);
+      font-weight:700;
+      line-height:1.1;
+      letter-spacing:-.04em;
+      margin-bottom:14px;
     }
     .support-desc{
       color:var(--label);
@@ -1634,29 +1635,32 @@
         <div class="ai-logos-row">
           <div class="ai-logo-item">
             <div class="ai-logo-wrap" style="background:rgba(205,120,58,0.15);border-color:rgba(205,120,58,0.32)">
+              <!-- Claude / Anthropic: starburst mark -->
               <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 4L23 24H7L15 4Z" fill="#CD782E" opacity="0.9"/>
-                <line x1="10" y1="17.5" x2="20" y2="17.5" stroke="#CD782E" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M15 2L16.6 12.4L24.9 6.1L18.6 14.4L29 16L18.6 17.6L24.9 25.9L16.6 19.6L15 30L13.4 19.6L5.1 25.9L11.4 17.6L1 16L11.4 14.4L5.1 6.1L13.4 12.4Z" fill="#CD782E"/>
               </svg>
             </div>
             <span class="ai-logo-name">Claude</span>
           </div>
           <div class="ai-logo-item">
             <div class="ai-logo-wrap" style="background:rgba(16,163,127,0.15);border-color:rgba(16,163,127,0.32)">
+              <!-- ChatGPT / OpenAI: interlocking hexagonal swirl -->
               <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill="#10A37F" d="M27.1 13.7c.4-1.1.4-2.3 0-3.4-.5-1.1-1.3-2-2.3-2.6a6 6 0 0 0-2-3.2c-1-.8-2.2-1.2-3.4-1.1-.9-.9-2-1.5-3.2-1.7C15 1.5 13.8 1.7 12.8 2.3c-.9-.5-2-.7-3-.5-1 .1-2 .6-2.7 1.4-1 .4-1.9 1.1-2.5 2-.6.9-.9 2-.8 3C3 9 2.5 10.2 2.5 11.5c0 1.2.3 2.4 1 3.3-.4 1.1-.4 2.3 0 3.4.5 1.1 1.3 2 2.3 2.6.2 1.2.8 2.3 1.8 3.1 1 .8 2.2 1.2 3.4 1.1.9.9 2 1.5 3.2 1.7 1.2.2 2.4 0 3.4-.6.9.5 2 .7 3 .5 1-.2 2-.6 2.7-1.4 1-.4 1.9-1.1 2.5-2 .6-.9.9-2 .8-3 .8-.9 1.3-2 1.3-3.2 0-1.2-.3-2.3-1-3.3zM15 21.7a4.2 4.2 0 1 1 0-8.4 4.2 4.2 0 0 1 0 8.4z"/>
+                <path fill="#10A37F" d="M26.8 12.1a6.7 6.7 0 00-.7-5.4 6.8 6.8 0 00-5.9-3.2 6.7 6.7 0 00-4.5-2A6.8 6.8 0 009 3.8a6.7 6.7 0 00-4.5 3.1 6.8 6.8 0 00-.8 5.3 6.7 6.7 0 000 5.9 6.8 6.8 0 00.7 5.4 6.8 6.8 0 005.9 3.2 6.7 6.7 0 004.5 2A6.8 6.8 0 0021 26.2a6.7 6.7 0 004.5-3.1 6.8 6.8 0 00.8-5.3 6.7 6.7 0 00.5-5.7zm-11.8 10a4.7 4.7 0 01-3-.9l.1-.1 5-2.9a.8.8 0 00.4-.7v-7l2.1 1.2v.1a4.7 4.7 0 01-4.6 10.3zm-10-4.3a4.7 4.7 0 01-.5-3.2v-.1l5 2.9a.8.8 0 00.8 0l6.1-3.5v2.4a.1.1 0 010 .1L12 19.5a4.7 4.7 0 01-7-1.8zm-1.3-11a4.7 4.7 0 012.4-2.1v.1l-.1 5.8c0 .3.2.6.4.7l6.1 3.5-2.1 1.2h-.1L6 11.7a4.7 4.7 0 01-.3-4.9zm15.6 4L13.2 7.3a.1.1 0 010-.1 4.7 4.7 0 017.7 1.8l-.1.1-5 2.9a.8.8 0 00-.4.7v7l-2.1-1.2v-.1l5-2.9zm1.2 2.5l-5-2.9a.8.8 0 00-.8 0L8.6 14v-2.4a.1.1 0 010-.1l5.3-3a4.7 4.7 0 017 1.8v.1a4.7 4.7 0 01-.4 4.8z"/>
               </svg>
             </div>
             <span class="ai-logo-name">ChatGPT</span>
           </div>
           <div class="ai-logo-item">
             <div class="ai-logo-wrap" style="background:rgba(66,133,244,0.15);border-color:rgba(66,133,244,0.32)">
+              <!-- Gemini: 4-pointed star with gradient (actual Gemini logo) -->
               <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 3 C15 10 20.5 15 28 15 C20.5 15 15 19.5 15 27 C15 19.5 9.5 15 2 15 C9.5 15 15 10 15 3Z" fill="url(#gemG1)"/>
+                <path d="M15 2C15 10.3 19.7 15 28 15C19.7 15 15 19.7 15 28C15 19.7 10.3 15 2 15C10.3 15 15 10.3 15 2Z" fill="url(#gemG1)"/>
                 <defs>
-                  <linearGradient id="gemG1" x1="2" y1="15" x2="28" y2="15" gradientUnits="userSpaceOnUse">
+                  <linearGradient id="gemG1" x1="2" y1="2" x2="28" y2="28" gradientUnits="userSpaceOnUse">
                     <stop offset="0%" stop-color="#4285F4"/>
-                    <stop offset="100%" stop-color="#34A853"/>
+                    <stop offset="50%" stop-color="#9B72CB"/>
+                    <stop offset="100%" stop-color="#EA4335"/>
                   </linearGradient>
                 </defs>
               </svg>
@@ -1664,20 +1668,26 @@
             <span class="ai-logo-name">Gemini</span>
           </div>
           <div class="ai-logo-item">
-            <div class="ai-logo-wrap" style="background:rgba(123,111,173,0.15);border-color:rgba(123,111,173,0.32)">
+            <div class="ai-logo-wrap" style="background:rgba(101,74,184,0.15);border-color:rgba(101,74,184,0.32)">
+              <!-- Manus: stylized circuit/agent brain mark in purple -->
               <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5 24V8L15 17L25 8V24" stroke="#8B7EC8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="15" cy="15" r="10" stroke="#654AB8" stroke-width="1.8"/>
+                <circle cx="9" cy="10" r="2" fill="#654AB8"/>
+                <circle cx="21" cy="10" r="2" fill="#654AB8"/>
+                <circle cx="15" cy="20" r="2" fill="#654AB8"/>
+                <path d="M9 10L15 15M21 10L15 15M15 15L15 20" stroke="#654AB8" stroke-width="1.6" stroke-linecap="round"/>
               </svg>
             </div>
             <span class="ai-logo-name">Manus</span>
           </div>
           <div class="ai-logo-item">
-            <div class="ai-logo-wrap" style="background:rgba(0,85,179,0.15);border-color:rgba(0,85,179,0.32)">
+            <div class="ai-logo-wrap" style="background:rgba(30,111,232,0.15);border-color:rgba(30,111,232,0.32)">
+              <!-- DeepSeek: stylized eye/seek with whale-tail hint -->
               <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="15" cy="15" r="11" stroke="#0055B3" stroke-width="2"/>
-                <circle cx="15" cy="15" r="5" fill="#0055B3"/>
-                <circle cx="15" cy="15" r="2" fill="white"/>
-                <path d="M15 7V10M15 20V23M7 15H10M20 15H23" stroke="#0055B3" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M3 15C6.5 8 10.5 5 15 5C19.5 5 23.5 8 27 15C23.5 22 19.5 25 15 25C10.5 25 6.5 22 3 15Z" stroke="#1E6FE8" stroke-width="1.8" fill="rgba(30,111,232,0.08)"/>
+                <circle cx="15" cy="15" r="4.5" fill="#1E6FE8"/>
+                <circle cx="16.8" cy="13.2" r="1.6" fill="white"/>
+                <path d="M20 8C21.5 6.5 23 6 24.5 7" stroke="#1E6FE8" stroke-width="1.4" stroke-linecap="round"/>
               </svg>
             </div>
             <span class="ai-logo-name">DeepSeek</span>
