@@ -68,6 +68,11 @@
       "source": "/estudio_da_oferta_smd",
       "destination": "/estudio-da-oferta-smd",
       "permanent": true
+    },
+    {
+      "source": "/agentes_ia_smd",
+      "destination": "/agentes-ia-smd",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -90,6 +95,10 @@
     {
       "source": "/oferta-ia-smd",
       "destination": "/oferta-ia-smd.html"
+    },
+    {
+      "source": "/agentes-ia-smd",
+      "destination": "/agentes-ia-smd.html"
     },
     {
       "source": "/oferta-alocacao-smd",

@@ -25,7 +25,7 @@ Além disso, o projeto inclui:
 - cartão digital do Ricardo
 - cartão digital do Antonio
 - apresentação institucional fullscreen da Ser Mais Digital
-- páginas do bloco de IA: `Oferta > Dinâmica > Método`
+- páginas do bloco de IA: `Oferta > Agentes > Dinâmica > Método`
 
 ## Estrutura atual
 
@@ -43,6 +43,7 @@ Além disso, o projeto inclui:
 ├── logo_smd.png
 ├── logo_smd_dark.png
 ├── oferta-ia-smd.html
+├── agentes-ia-smd.html
 ├── estudio-da-oferta-smd.html
 ├── metodo_de_ia_smd.html
 ├── oferta-alocacao-smd.html
@@ -80,6 +81,9 @@ Versão escura do logo para uso em fundos claros. A versão `logo_smd.png` perma
 
 ### `oferta-ia-smd.html`
 Landing comercial da oferta de IA.
+
+### `agentes-ia-smd.html`
+Sub-oferta de agentes de IA com prateleira de agentes, filtros, modal de investimento e CTA para diagnóstico.
 
 ### `estudio-da-oferta-smd.html`
 Página de dinâmica da oferta de IA, com seções, artefatos, simulador e navegação lateral.
@@ -122,6 +126,7 @@ Responsável por:
 ### Bloco de IA
 
 - `/oferta-ia-smd`
+- `/agentes-ia-smd`
 - `/estudio-da-oferta-smd`
 - `/metodo_de_ia_smd`
 - `/dinamica-alocacao-smd`
@@ -139,6 +144,7 @@ Responsável por:
 O projeto preserva algumas rotas antigas por compatibilidade, por exemplo:
 
 - `/oferta_ia_smd` → `/oferta-ia-smd`
+- `/agentes_ia_smd` → `/agentes-ia-smd`
 - `/oferta_alocacao_smd` → `/oferta-alocacao-smd`
 - `/oferta_planejamento_estrategico_smd` → `/oferta-planejamento-estrategico-smd`
 - `/oferta_gerente_de_mudancas_smd` → `/oferta-gerente-de-mudancas-smd`
