@@ -219,6 +219,21 @@
     .card-disabled .linkline {
       color: var(--muted);
     }
+    .card-wide {
+      min-height: 138px;
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 18px;
+    }
+    .card-wide .icon {
+      margin-bottom: 0;
+    }
+    .card-wide .linkline {
+      margin-top: 0;
+      white-space: nowrap;
+    }
     .icon {
       width: 44px;
       height: 44px;
@@ -263,6 +278,18 @@
     footer a:hover { color: var(--primary-2); }
     @media (max-width: 820px) {
       .grid { grid-template-columns: 1fr; }
+      .card-wide {
+        display: flex;
+        align-items: stretch;
+        gap: 0;
+      }
+      .card-wide .icon {
+        margin-bottom: 18px;
+      }
+      .card-wide .linkline {
+        margin-top: 18px;
+        white-space: normal;
+      }
       .panel { padding: 30px 20px 24px; }
       .exclusive-head {
         grid-template-columns: 1fr;
@@ -329,14 +356,28 @@
             <div class="linkline">Abrir página</div>
           </a>
 
-          <a class="card" href="/institucional-ser-mais-digital">
+          <a class="card" href="/cartao_antonio">
             <div>
               <div class="icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <rect x="4" y="5" width="16" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/>
-                  <path d="M8 3v4M16 3v4M8 11h8M8 15h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  <path d="M20 21a8 8 0 0 0-16 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/>
                 </svg>
               </div>
+              <div class="title">Cartão Antonio</div>
+              <div class="desc">Página de contato e apresentação do Antonio Costa.</div>
+            </div>
+            <div class="linkline">Abrir página</div>
+          </a>
+
+          <a class="card card-wide" href="/institucional-ser-mais-digital">
+            <div class="icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="4" y="5" width="16" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M8 3v4M16 3v4M8 11h8M8 15h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
               <div class="title">Cartão Institucional SMD</div>
               <div class="desc">Apresentação institucional da Ser Mais Digital em tela cheia, pronta para reuniões com clientes.</div>
             </div>

@@ -23,6 +23,7 @@ Além disso, o projeto inclui:
 
 - cartão digital do Fabricio
 - cartão digital do Ricardo
+- cartão digital do Antonio
 - apresentação institucional fullscreen da Ser Mais Digital
 - páginas do bloco de IA: `Oferta > Dinâmica > Método`
 
@@ -36,6 +37,7 @@ Além disso, o projeto inclui:
 ├── index_sermaisdigital.html
 ├── cartao_fabricio.html
 ├── cartao_ricardo.html
+├── cartao_antonio.html
 ├── institucional-ser-mais-digital.html
 ├── smd-offer-nav.css
 ├── logo_smd.png
@@ -63,6 +65,9 @@ Cartão digital do Fabricio Pequeno.
 
 ### `cartao_ricardo.html`
 Cartão digital do Ricardo Avigro.
+
+### `cartao_antonio.html`
+Cartão digital do Antonio Costa.
 
 ### `institucional-ser-mais-digital.html`
 Apresentação institucional fullscreen com navegação por slides e slide final conectado às ofertas atuais.

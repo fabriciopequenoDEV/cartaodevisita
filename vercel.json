@@ -55,6 +55,11 @@
       "permanent": true
     },
     {
+      "source": "/cartão_antonio",
+      "destination": "/cartao_antonio",
+      "permanent": true
+    },
+    {
       "source": "/MétodoDeIA_SMD",
       "destination": "/metodo_de_ia_smd",
       "permanent": true
@@ -77,6 +82,10 @@
     {
       "source": "/cartao_ricardo",
       "destination": "/cartao_ricardo.html"
+    },
+    {
+      "source": "/cartao_antonio",
+      "destination": "/cartao_antonio.html"
     },
     {
       "source": "/oferta-ia-smd",
