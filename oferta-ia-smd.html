@@ -338,22 +338,6 @@
       color:#c7d0dd;
       line-height:1.65;
     }
-    .numbers-panel-brand{
-      margin-top:auto;
-      padding-top:28px;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      min-height:170px;
-      opacity:.14;
-      pointer-events:none;
-    }
-    .numbers-panel-brand img{
-      width:min(220px, 65%);
-      height:auto;
-      display:block;
-      filter:drop-shadow(0 12px 24px rgba(0,0,0,0.25));
-    }
     .agents-offer-link{
       position:relative;
       z-index:1;
@@ -361,7 +345,7 @@
       align-items:center;
       justify-content:space-between;
       gap:16px;
-      margin-top:16px;
+      margin-top:auto;
       padding:18px;
       border-radius:18px;
       border:1px solid rgba(232,101,10,0.36);
@@ -881,22 +865,19 @@
               <div class="number-value">1 dashboard</div>
               <div class="number-desc">Adoção, governança e evolução do uso em uma leitura direta para liderança.</div>
             </div>
-            <div class="numbers-panel-brand" aria-hidden="true">
-              <img src="logo_smd.png" alt="">
-            </div>
+            <a class="agents-offer-link" href="/agentes-ia-smd">
+              <div class="agents-offer-copy">
+                <div class="agents-offer-badge">Agentes de IA · novo</div>
+                <div class="agents-offer-title">Prateleira de agentes prontos para operar</div>
+                <div class="agents-offer-text">Conheça agentes por área, integrações e investimento por agente.</div>
+              </div>
+              <div class="agents-offer-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </a>
           </div>
-          <a class="agents-offer-link" href="/agentes-ia-smd">
-            <div class="agents-offer-copy">
-              <div class="agents-offer-badge">Agentes de IA · novo</div>
-              <div class="agents-offer-title">Prateleira de agentes prontos para operar</div>
-              <div class="agents-offer-text">Conheça agentes por área, integrações e investimento por agente.</div>
-            </div>
-            <div class="agents-offer-arrow" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none">
-                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </a>
         </aside>
       </div>
     </section>
