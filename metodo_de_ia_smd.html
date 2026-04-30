@@ -298,33 +298,33 @@
 
   .section-header {
     text-align: center;
-    max-width: 700px;
-    margin: 0 auto 5rem;
+    max-width: 860px;
+    margin: 0 auto 5.5rem;
   }
 
   .section-title {
     font-family: 'Syne', sans-serif;
     font-weight: 700;
-    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-size: clamp(2.2rem, 4vw, 3.35rem);
     letter-spacing: -0.02em;
     margin-bottom: 1rem;
   }
 
   .section-desc {
-    font-size: 1rem;
+    font-size: 1.15rem;
     color: var(--muted);
     font-weight: 300;
-    line-height: 1.75;
+    line-height: 1.8;
   }
 
-  .phases-list { max-width: 1000px; margin: 0 auto; }
+  .phases-list { max-width: 1180px; margin: 0 auto; }
 
   .phase-item {
     display: grid;
-    grid-template-columns: 80px 1fr;
+    grid-template-columns: 92px 1fr;
     gap: 0;
     border-top: 1px solid var(--border);
-    padding: 2.5rem 0;
+    padding: 2.9rem 0;
     transition: background 0.3s;
     cursor: default;
     position: relative;
@@ -344,7 +344,7 @@
 
   .phase-num {
     font-family: 'Syne', sans-serif;
-    font-size: 3.5rem;
+    font-size: 4rem;
     font-weight: 800;
     color: rgba(232,101,10,0.15);
     line-height: 1;
@@ -357,7 +357,7 @@
   .phase-body { padding-left: 2rem; }
 
   .phase-tag {
-    font-size: 0.68rem;
+    font-size: 0.82rem;
     font-weight: 600;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -367,18 +367,18 @@
 
   .phase-title {
     font-family: 'Syne', sans-serif;
-    font-size: 1.4rem;
+    font-size: 1.7rem;
     font-weight: 700;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.95rem;
     letter-spacing: -0.01em;
   }
 
   .phase-desc {
-    font-size: 0.92rem;
+    font-size: 1.08rem;
     color: var(--muted);
-    line-height: 1.7;
-    max-width: 600px;
-    margin-bottom: 1.2rem;
+    line-height: 1.82;
+    max-width: 780px;
+    margin-bottom: 1.4rem;
   }
 
   .phase-deliverables {
@@ -388,9 +388,9 @@
   }
 
   .tag {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     letter-spacing: 0.06em;
-    padding: 0.3rem 0.7rem;
+    padding: 0.42rem 0.85rem;
     background: var(--surface2);
     border: 1px solid var(--border);
     color: var(--muted);
@@ -406,20 +406,21 @@
 
   .modules-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 1px;
     background: var(--border);
-    max-width: 1100px;
+    max-width: 1650px;
     margin: 0 auto;
     border: 1px solid var(--border);
   }
 
   .module-card {
     background: var(--surface);
-    padding: 2.5rem 2rem;
+    padding: 2.7rem 2.1rem 2.8rem;
     transition: background 0.3s;
     position: relative;
     overflow: hidden;
+    min-height: 440px;
   }
 
   .module-card::after {
@@ -438,7 +439,7 @@
 
   .module-num {
     font-family: 'Syne', sans-serif;
-    font-size: 0.7rem;
+    font-size: 0.86rem;
     font-weight: 700;
     letter-spacing: 0.2em;
     color: var(--gold);
@@ -447,35 +448,35 @@
   }
 
   .module-icon {
-    width: 42px;
-    height: 42px;
+    width: 64px;
+    height: 64px;
     border: 1px solid var(--border);
     background: rgba(255,255,255,0.02);
     display:flex;
     align-items:center;
     justify-content:center;
-    margin-bottom: 1rem;
+    margin-bottom: 1.35rem;
     color: var(--gold);
   }
   .module-icon svg {
-    width: 18px;
-    height: 18px;
+    width: 24px;
+    height: 24px;
     display:block;
   }
 
   .module-title {
     font-family: 'Syne', sans-serif;
-    font-size: 1.05rem;
+    font-size: 1.45rem;
     font-weight: 700;
-    line-height: 1.3;
-    margin-bottom: 0.8rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
     letter-spacing: -0.01em;
   }
 
   .module-desc {
-    font-size: 0.82rem;
+    font-size: 1.08rem;
     color: var(--muted);
-    line-height: 1.65;
+    line-height: 1.78;
     font-weight: 300;
   }
 
@@ -493,7 +494,7 @@
   .kpi-group {}
 
   .kpi-group-title {
-    font-size: 0.68rem;
+    font-size: 0.86rem;
     font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -506,7 +507,7 @@
   .kpi-list { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
 
   .kpi-list li {
-    font-size: 0.85rem;
+    font-size: 1.02rem;
     color: var(--muted);
     display: flex;
     align-items: flex-start;
@@ -530,11 +531,11 @@
   }
 
   .method-inner {
-    max-width: 900px;
+    max-width: 1120px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 5rem;
+    grid-template-columns: minmax(320px, 0.95fr) minmax(0, 1.35fr);
+    gap: 4.25rem;
     align-items: center;
   }
 
@@ -544,10 +545,20 @@
     font-weight: 800;
     line-height: 1;
     letter-spacing: -0.02em;
+    white-space: nowrap;
   }
 
   .method-name .m { color: var(--gold); }
-  .method-name .dim { color: rgba(255,255,255,0.15); font-size: 0.5em; display: block; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-top: 0.5rem; }
+  .method-name .dim {
+    color: rgba(255,255,255,0.18);
+    font-size: 0.34em;
+    display: inline;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-left: 0.5rem;
+    white-space: nowrap;
+  }
 
   .aim-grid { display: flex; flex-direction: column; gap: 2rem; }
 
@@ -559,17 +570,17 @@
 
   .aim-letter {
     font-family: 'Syne', sans-serif;
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 800;
     color: var(--gold);
     line-height: 1;
-    width: 50px;
+    width: 66px;
     flex-shrink: 0;
   }
 
   .aim-body {}
-  .aim-word { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.25rem; }
-  .aim-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+  .aim-word { font-family: 'Syne', sans-serif; font-size: 1.7rem; font-weight: 700; margin-bottom: 0.35rem; }
+  .aim-desc { font-size: 1.08rem; color: var(--muted); line-height: 1.72; font-weight: 300; }
 
   /* ── SIZES ── */
   .sizes { padding: 7rem 3rem; }
@@ -594,14 +605,14 @@
 
   .size-range {
     font-family: 'Syne', sans-serif;
-    font-size: 2rem;
+    font-size: 2.35rem;
     font-weight: 800;
     color: var(--gold);
     margin-bottom: 0.25rem;
   }
 
   .size-label {
-    font-size: 0.72rem;
+    font-size: 0.9rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--muted);
@@ -611,7 +622,7 @@
   .size-features { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
 
   .size-features li {
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: #7a8499;
     display: flex;
     gap: 0.6rem;
@@ -903,7 +914,8 @@
     .phases, .modules, .kpis, .sizes, .cta-section, .method-block { padding: 4rem 1.5rem; }
     .kpis-grid { grid-template-columns: repeat(2, 1fr); }
     .sizes-grid { grid-template-columns: 1fr; }
-    .method-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .method-inner { grid-template-columns: 1fr; gap: 2.8rem; }
+    .modules-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     footer { flex-direction: column; gap: 1rem; text-align: center; }
   }
 
@@ -912,6 +924,8 @@
     .modules-grid { grid-template-columns: 1fr; }
     .phase-item { grid-template-columns: 50px 1fr; }
     .phase-num { font-size: 2.5rem; }
+    .method-name { white-space: normal; }
+    .method-name .dim { display: inline-block; margin-left: 0; margin-top: 0.75rem; }
   }
 </style>
 <link rel="stylesheet" href="/smd-offer-nav.css">
@@ -1145,7 +1159,7 @@
       </div>
       <span class="module-num">M·01</span>
       <h3 class="module-title">Diagnóstico<br>e Direção</h3>
-      <p class="module-desc">Entrada consultiva. Bom para abrir conta ou iniciar com baixo risco e custo. Revela onde IA faz sentido.</p>
+      <p class="module-desc">Entrada consultiva. Modelo de entrada no universo da Inteligência Artificial iniciando com baixo risco e custo. Revela onde IA faz sentido e acelera a priorização do que vale implantar primeiro.</p>
     </div>
     <div class="module-card reveal">
       <div class="module-icon" aria-hidden="true">
@@ -1156,7 +1170,7 @@
       </div>
       <span class="module-num">M·02</span>
       <h3 class="module-title">Cultura e<br>Capacitação em IA</h3>
-      <p class="module-desc">Treinamentos por função, workshops práticos, champions e playbooks de uso real por perfil.</p>
+      <p class="module-desc">Treinamentos por função, workshops práticos, champions e playbooks de uso real por perfil. Gera confiança, reduz resistência e transforma curiosidade em uso recorrente no dia a dia.</p>
     </div>
     <div class="module-card reveal">
       <div class="module-icon" aria-hidden="true">
@@ -1167,7 +1181,7 @@
       </div>
       <span class="module-num">M·03</span>
       <h3 class="module-title">Governança e<br>Uso Responsável</h3>
-      <p class="module-desc">Política de uso, matriz de risco, validação humana e regras claras. IA como gestão, não como moda.</p>
+      <p class="module-desc">Política de uso, matriz de risco, validação humana e regras claras. Protege a operação, reduz exposição e dá segurança para escalar IA com critério.</p>
     </div>
     <div class="module-card reveal">
       <div class="module-icon" aria-hidden="true">
@@ -1179,7 +1193,7 @@
       </div>
       <span class="module-num">M·04</span>
       <h3 class="module-title">Automação e<br>Casos Aplicados</h3>
-      <p class="module-desc">Chatbots, copilots, fluxos automatizados e assistentes internos. IA funcionando dentro do processo.</p>
+      <p class="module-desc">Chatbots, copilots, fluxos automatizados e assistentes internos. Coloca IA dentro do processo para capturar ganho real de produtividade, tempo e qualidade.</p>
     </div>
     <div class="module-card reveal">
       <div class="module-icon" aria-hidden="true">
@@ -1189,7 +1203,7 @@
       </div>
       <span class="module-num">M·05</span>
       <h3 class="module-title">Operação e<br>Escala de IA</h3>
-      <p class="module-desc">Monitoramento contínuo, indicadores de adoção, ajuste e expansão para novas áreas e processos.</p>
+      <p class="module-desc">Monitoramento contínuo, indicadores de adoção, ajuste e expansão para novas áreas e processos. Sustenta o uso ao longo do tempo e prepara a evolução para escala.</p>
     </div>
   </div>
 </section>
@@ -1250,7 +1264,7 @@
     <div class="reveal">
       <div class="method-name">
         <span class="m">A</span>.I.<span class="m">M</span>.
-        <span class="dim">Método SMD</span>
+        <span class="dim">Método Ser Mais Digital</span>
       </div>
     </div>
 
