@@ -340,8 +340,8 @@
       position: relative;
       z-index: 1;
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      justify-content: space-between;
       gap: 14px;
     }
 
@@ -352,23 +352,17 @@
       letter-spacing: -0.03em;
     }
 
-    .status {
-      flex-shrink: 0;
+    .offer-flag {
       border-radius: 999px;
-      padding: 6px 11px;
+      padding: 5px 10px;
       font-size: 10px;
       font-weight: 800;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--muted);
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    .status.is-live {
-      color: #ffd7b3;
-      border-color: rgba(232, 101, 10, 0.34);
-      background: rgba(232, 101, 10, 0.14);
+      color: #bfefff;
+      background: rgba(74, 158, 191, 0.18);
+      border: 1px solid rgba(74, 158, 191, 0.36);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
     }
 
     .offer-desc {
@@ -624,7 +618,6 @@
                 </div>
                 <div class="offer-name-row">
                   <h2 class="offer-name">Alocação de profissionais</h2>
-                  <span class="status is-live">Disponível</span>
                 </div>
                 <p class="offer-desc">Especialistas alocados com aderência real ao momento do cliente, reduzindo tempo de contratação e acelerando a operação.</p>
                 <ul class="offer-benefits">
@@ -672,15 +665,16 @@
                 </div>
                 <div class="offer-name-row">
                   <h2 class="offer-name">Inteligência Artificial</h2>
-                  <span class="status is-live">Disponível</span>
+                  <span class="offer-flag">Agentes prontos</span>
                 </div>
-                <p class="offer-desc">Treinamentos, consultoria e implantação prática de IA com método, governança e foco em resultado operacional.</p>
+                <p class="offer-desc">Treinamentos, consultoria, implantação prática e prateleira de agentes de IA prontos para acelerar casos aplicados com método, governança e foco em resultado operacional.</p>
                 <ul class="offer-benefits">
                   <li>Identifica onde IA gera valor real antes de dispersar energia em testes soltos.</li>
-                  <li>Implanta casos aplicados com governança, capacitação e visão executiva.</li>
-                  <li>Transforma uso isolado em operação contínua com metas e indicadores claros.</li>
+                  <li>Ativa agentes de IA já prontos para encurtar o caminho entre estratégia e operação.</li>
+                  <li>Transforma uso isolado em operação contínua com metas, indicadores e visão executiva.</li>
                 </ul>
                 <div class="offer-meta">
+                  <span class="chip">9 agentes prontos</span>
                   <span class="chip">Piloto em 30 dias</span>
                   <span class="chip">Método em 6 fases</span>
                   <span class="chip">Dashboard executivo</span>
@@ -712,7 +706,6 @@
                 </div>
                 <div class="offer-name-row">
                   <h2 class="offer-name">Planejamento estratégico</h2>
-                  <span class="status is-live">Disponível</span>
                 </div>
                 <p class="offer-desc">Projetos estruturados para transformar ambição executiva em agenda de execução com clareza de prioridades e visibilidade.</p>
                 <ul class="offer-benefits">
@@ -749,7 +742,6 @@
                 </div>
                 <div class="offer-name-row">
                   <h2 class="offer-name">Gerente de mudanças</h2>
-                  <span class="status is-live">Disponível</span>
                 </div>
                 <p class="offer-desc">Condução sob demanda para estruturar comunicação, engajamento e sustentação da mudança até a adesão real da operação.</p>
                 <ul class="offer-benefits">
