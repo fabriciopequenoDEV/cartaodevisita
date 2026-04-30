@@ -266,10 +266,10 @@
       position: relative;
       overflow: hidden;
       display: grid;
-      grid-template-rows: auto auto 1fr auto;
-      gap: 10px;
+      grid-template-rows: auto auto auto 1fr auto;
+      gap: 12px;
       min-height: 0;
-      padding: 20px 18px 18px;
+      padding: 22px 20px 20px;
       border-radius: 22px;
       border: 1px solid rgba(255, 255, 255, 0.08);
       background: linear-gradient(180deg, rgba(28, 38, 58, 0.88), rgba(18, 24, 38, 0.94));
@@ -375,9 +375,37 @@
       position: relative;
       z-index: 1;
       margin: 0;
-      font-size: clamp(12px, 0.9vw, 15px);
-      line-height: 1.42;
+      font-size: clamp(14px, 1vw, 17px);
+      line-height: 1.56;
       color: var(--muted);
+    }
+
+    .offer-benefits {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .offer-benefits li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: clamp(12px, 0.92vw, 15px);
+      line-height: 1.45;
+      color: #dbe4f7;
+    }
+
+    .offer-benefits li::before {
+      content: "•";
+      color: var(--accent);
+      font-size: 16px;
+      line-height: 1;
+      margin-top: 2px;
+      flex-shrink: 0;
     }
 
     .offer-meta {
@@ -390,14 +418,15 @@
 
     .chip {
       border-radius: 999px;
-      padding: 7px 10px;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
+      padding: 8px 12px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: #d6dff5;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #f5dcc9;
+      background: rgba(232, 101, 10, 0.14);
+      border: 1px solid rgba(232, 101, 10, 0.28);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
     }
 
     .slide-note {
@@ -427,28 +456,6 @@
       background: rgba(10, 14, 24, 0.68);
       border: 1px solid rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(16px);
-    }
-
-    .click-zone {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      width: 14vw;
-      min-width: 90px;
-      z-index: 10;
-      background: transparent;
-    }
-
-    .click-zone.left {
-      left: 0;
-    }
-
-    .click-zone.right {
-      right: 0;
-    }
-
-    .is-fullscreen .click-zone {
-      display: none;
     }
 
     .sr-only {
@@ -527,9 +534,6 @@
         width: 82px;
       }
 
-      .click-zone {
-        display: none;
-      }
     }
   </style>
 </head>
@@ -550,9 +554,6 @@
     </div>
     <div class="brand-chip progress" id="progress">1 / 7</div>
   </div>
-
-  <button class="click-zone left" type="button" data-nav="prev" aria-label="Slide anterior"></button>
-  <button class="click-zone right" type="button" data-nav="next" aria-label="Próximo slide"></button>
 
   <main class="deck" aria-label="Apresentação institucional da Ser Mais Digital">
     <section class="viewport">
@@ -626,6 +627,11 @@
                   <span class="status is-live">Disponível</span>
                 </div>
                 <p class="offer-desc">Especialistas alocados com aderência real ao momento do cliente, reduzindo tempo de contratação e acelerando a operação.</p>
+                <ul class="offer-benefits">
+                  <li>Entra mais rápido com shortlist aderente ao contexto e ao seniority desejado.</li>
+                  <li>Reduz desgaste de recrutamento interno e acelera a produtividade inicial.</li>
+                  <li>Ganha flexibilidade para estruturar time sob medida sem inflar a operação.</li>
+                </ul>
                 <div class="offer-meta">
                   <span class="chip">Shortlist em 7 dias</span>
                   <span class="chip">Onboarding em 15 dias</span>
@@ -669,6 +675,11 @@
                   <span class="status is-live">Disponível</span>
                 </div>
                 <p class="offer-desc">Treinamentos, consultoria e implantação prática de IA com método, governança e foco em resultado operacional.</p>
+                <ul class="offer-benefits">
+                  <li>Identifica onde IA gera valor real antes de dispersar energia em testes soltos.</li>
+                  <li>Implanta casos aplicados com governança, capacitação e visão executiva.</li>
+                  <li>Transforma uso isolado em operação contínua com metas e indicadores claros.</li>
+                </ul>
                 <div class="offer-meta">
                   <span class="chip">Piloto em 30 dias</span>
                   <span class="chip">Método em 6 fases</span>
@@ -704,6 +715,11 @@
                   <span class="status is-live">Disponível</span>
                 </div>
                 <p class="offer-desc">Projetos estruturados para transformar ambição executiva em agenda de execução com clareza de prioridades e visibilidade.</p>
+                <ul class="offer-benefits">
+                  <li>Traduz visão executiva em frentes priorizadas com critério e ritmo de execução.</li>
+                  <li>Organiza decisões em horizontes claros para evitar dispersão e retrabalho.</li>
+                  <li>Dá leitura objetiva para liderança acompanhar progresso, foco e capacidade.</li>
+                </ul>
                 <div class="offer-meta">
                   <span class="chip">3 horizontes</span>
                   <span class="chip">Mapa de prioridades</span>
@@ -736,6 +752,11 @@
                   <span class="status is-live">Disponível</span>
                 </div>
                 <p class="offer-desc">Condução sob demanda para estruturar comunicação, engajamento e sustentação da mudança até a adesão real da operação.</p>
+                <ul class="offer-benefits">
+                  <li>Reduz resistência na ponta com comunicação prática e checkpoints executivos.</li>
+                  <li>Conecta liderança, áreas e operação para sustentar adesão ao longo da jornada.</li>
+                  <li>Aumenta previsibilidade da mudança com leitura de risco e ações corretivas.</li>
+                </ul>
                 <div class="offer-meta">
                   <span class="chip">TO on demand</span>
                   <span class="chip">4-6 entregas</span>
@@ -746,7 +767,7 @@
           </div>
 
           <div class="slide-note">
-            <span>Use as setas do teclado ou os controles discretos para navegar na apresentação.</span>
+            <span>Use as setas do teclado ou os botões de anterior e próximo para navegar na apresentação.</span>
             <span>Ofertas atuais com acesso imediato ao detalhamento comercial.</span>
           </div>
         </div>
@@ -772,7 +793,6 @@
       const nextBtn = document.getElementById("nextBtn");
       const progress = document.getElementById("progress");
       const fullscreenBtn = document.getElementById("fullscreenBtn");
-      const zones = Array.from(document.querySelectorAll("[data-nav]"));
       let activeIndex = 0;
 
       const update = () => {
@@ -799,16 +819,6 @@
       prevBtn.addEventListener("click", goPrev);
       nextBtn.addEventListener("click", goNext);
 
-      zones.forEach((zone) => {
-        zone.addEventListener("click", () => {
-          if (zone.dataset.nav === "prev") {
-            goPrev();
-          } else {
-            goNext();
-          }
-        });
-      });
-
       window.addEventListener("keydown", (event) => {
         if (event.key === "ArrowLeft") {
           event.preventDefault();
@@ -819,28 +829,6 @@
           goNext();
         }
       });
-
-      let touchStartX = null;
-
-      window.addEventListener("touchstart", (event) => {
-        touchStartX = event.changedTouches[0].clientX;
-      }, { passive: true });
-
-      window.addEventListener("touchend", (event) => {
-        if (touchStartX === null) {
-          return;
-        }
-        const touchEndX = event.changedTouches[0].clientX;
-        const delta = touchEndX - touchStartX;
-        if (Math.abs(delta) > 60) {
-          if (delta > 0) {
-            goPrev();
-          } else {
-            goNext();
-          }
-        }
-        touchStartX = null;
-      }, { passive: true });
 
       const syncFullscreenLabel = () => {
         const isFullscreen = !!document.fullscreenElement;
