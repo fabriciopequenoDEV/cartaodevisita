@@ -705,10 +705,6 @@
           <span>Exportar</span>
         </button>
         <div class="export-menu" id="exportMenu" role="menu" aria-label="Exportar apresentação para envio">
-          <button class="export-option" type="button" data-export="pptx" role="menuitem">
-            <span>PPT</span>
-            <small>download</small>
-          </button>
           <button class="export-option" type="button" data-export="pdf" role="menuitem">
             <span>PDF</span>
             <small>imprimir</small>
@@ -716,14 +712,6 @@
           <button class="export-option" type="button" data-export="html" role="menuitem">
             <span>HTML dinâmico</span>
             <small>download</small>
-          </button>
-          <button class="export-option" type="button" data-export="whatsapp" role="menuitem">
-            <span>WhatsApp</span>
-            <small>mensagem</small>
-          </button>
-          <button class="export-option" type="button" data-export="email" role="menuitem">
-            <span>Email</span>
-            <small>rascunho</small>
           </button>
           <div class="export-status" id="exportStatus" aria-live="polite"></div>
         </div>
@@ -1002,7 +990,6 @@
 
       const goNext = () => goTo(activeIndex + 1);
       const goPrev = () => goTo(activeIndex - 1);
-      const encoder = new TextEncoder();
       const setExportStatus = (message) => {
         exportStatus.textContent = message;
       };
@@ -1037,32 +1024,6 @@
         return btoa(binary);
       };
 
-      const blobToBase64 = async (blob) => {
-        const buffer = await blob.arrayBuffer();
-        const bytes = new Uint8Array(buffer);
-        let binary = "";
-        bytes.forEach((byte) => {
-          binary += String.fromCharCode(byte);
-        });
-        return btoa(binary);
-      };
-
-      const dataUrlToBytes = (dataUrl) => {
-        const base64 = dataUrl.split(",")[1];
-        const binary = atob(base64);
-        const bytes = new Uint8Array(binary.length);
-        for (let index = 0; index < binary.length; index += 1) {
-          bytes[index] = binary.charCodeAt(index);
-        }
-        return bytes;
-      };
-
-      const getShareUrl = () => {
-        const url = new URL(window.location.href);
-        url.hash = "";
-        return url.toString();
-      };
-
       const getOfferSlideMarkup = () => {
         const slide = document.querySelector(".offer-slide").cloneNode(true);
         slide.querySelectorAll("a.offer-link").forEach((link) => {
@@ -1086,66 +1047,12 @@
         return getOfferSlideMarkup().replaceAll("logo_smd.png", `data:image/png;base64,${logoBase64}`);
       };
 
-      const renderOfferSlideDataUrl = async () => {
-        if (document.fonts && document.fonts.ready) {
-          await document.fonts.ready;
-        }
-
-        const width = 1920;
-        const height = 1080;
-        const offerMarkup = await getOfferSlideMarkupWithInlineAssets();
-        const styleText = document.querySelector("style").textContent;
-        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
-          <foreignObject width="${width}" height="${height}">
-            <div xmlns="http://www.w3.org/1999/xhtml" class="export-render-root">
-              <style>
-                ${styleText}
-                .export-render-root { width: ${width}px; height: ${height}px; margin: 0; background: #05070d; overflow: hidden; color: var(--text); font-family: Inter, "Segoe UI", sans-serif; }
-                .export-render-root .offer-slide { width: ${width}px; height: ${height}px; min-height: 0; padding: 34px; gap: 18px; overflow: hidden; border-radius: 0; }
-                .export-render-root .offer-top { gap: 24px; }
-                .export-render-root .headline { font-size: 52px; line-height: 0.96; }
-                .export-render-root .offer-grid { gap: 14px; }
-                .export-render-root .offer-card { padding: 20px 18px 18px; gap: 10px; border-radius: 20px; }
-                .export-render-root .offer-icon { width: 44px; height: 44px; border-radius: 15px; }
-                .export-render-root .offer-name { font-size: 24px; }
-                .export-render-root .offer-desc { font-size: 16px; line-height: 1.44; }
-                .export-render-root .offer-benefits { gap: 9px; }
-                .export-render-root .offer-benefits li { font-size: 14px; line-height: 1.38; }
-                .export-render-root .chip { padding: 8px 11px; font-size: 10px; }
-                .export-render-root .offer-brand img { width: 300px; height: auto; object-fit: contain; background: transparent; }
-                .export-render-root .slide-note { margin-top: 0; }
-              </style>
-              ${offerMarkup}
-            </div>
-          </foreignObject>
-        </svg>`;
-
-        const svgBlob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
-        const url = URL.createObjectURL(svgBlob);
-        try {
-          const image = new Image();
-          await new Promise((resolve, reject) => {
-            image.onload = resolve;
-            image.onerror = reject;
-            image.src = url;
-          });
-          const canvas = document.createElement("canvas");
-          canvas.width = width;
-          canvas.height = height;
-          const context = canvas.getContext("2d");
-          context.drawImage(image, 0, 0, width, height);
-          return canvas.toDataURL("image/png");
-        } finally {
-          URL.revokeObjectURL(url);
-        }
-      };
-
       const buildStandaloneHtml = async () => {
         const imageTags = await Promise.all(slideImages.map(async (src, index) => {
           const base64 = await fetchAsBase64(src);
           return `<section class="export-slide"><img class="export-slide-image" src="data:image/png;base64,${base64}" alt="Slide ${index + 1}"></section>`;
         }));
-        const offerImage = await renderOfferSlideDataUrl();
+        const offerMarkup = await getOfferSlideMarkupWithInlineAssets();
 
         return `<!DOCTYPE html>
 <html lang="pt-BR">
@@ -1160,6 +1067,17 @@
     .export-deck { display: block; padding: 22px; }
     .export-slide { display: none; width: min(100%, 1280px); aspect-ratio: 16 / 9; margin: 0 auto; overflow: hidden; border-radius: 18px; background: #05070d; box-shadow: var(--shadow); break-after: page; page-break-after: always; }
     .export-slide-image { width: 100%; height: 100%; object-fit: contain; display: block; background: #02040a; }
+    .export-slide .offer-slide { width: 100%; height: 100%; min-height: 0; padding: clamp(18px, 1.8vw, 28px); gap: 14px; overflow: hidden; border-radius: 0; }
+    .export-slide .offer-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .export-slide .offer-card { gap: 10px; padding: 18px 16px 16px; border-radius: 20px; }
+    .export-slide .offer-brand img { width: clamp(180px, 14vw, 280px); height: auto; object-fit: contain; background: transparent; }
+    .export-slide .headline { font-size: clamp(24px, 2.55vw, 40px); }
+    .export-slide .offer-name { font-size: clamp(16px, 1.15vw, 22px); }
+    .export-slide .offer-desc { font-size: clamp(13px, 0.88vw, 15px); line-height: 1.46; }
+    .export-slide .offer-benefits { gap: 10px; }
+    .export-slide .offer-benefits li { font-size: clamp(11px, 0.82vw, 14px); line-height: 1.44; }
+    .export-slide .chip { padding: 7px 10px; font-size: 10px; }
+    .export-slide .offer-link { cursor: default; }
     .export-player-controls { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 20; display: flex; align-items: center; gap: 10px; padding: 9px 11px; border-radius: 999px; background: rgba(10, 14, 24, 0.72); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(16px); }
     .export-player-controls button { appearance: none; border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(20, 28, 43, 0.68); color: var(--text); border-radius: 999px; padding: 9px 12px; font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
     .export-player-controls button:disabled { opacity: 0.38; }
@@ -1170,6 +1088,7 @@
       .export-deck { padding: 0; gap: 0; }
       .export-slide { display: block !important; width: 100vw; height: 100vh; margin: 0; border-radius: 0; box-shadow: none; break-after: page; page-break-after: always; }
       .export-slide-image { width: 100%; height: 100%; object-fit: contain; }
+      .export-slide .offer-slide { height: 100vh; }
       .export-player-controls { display: none; }
     }
   </style>
@@ -1177,7 +1096,7 @@
 <body>
   <main class="export-deck" aria-label="Apresentacao institucional para envio">
     ${imageTags.join("\n    ")}
-    <section class="export-slide"><img class="export-slide-image" src="${offerImage}" alt="Slide 7"></section>
+    <section class="export-slide">${offerMarkup}</section>
   </main>
   <nav class="export-player-controls" aria-label="Controles da apresentacao">
     <button type="button" id="exportPrev">Anterior</button>
@@ -1221,115 +1140,21 @@
         printWindow.document.open();
         printWindow.document.write("<!DOCTYPE html><title>Preparando PDF</title><body style=\"font-family:sans-serif;background:#05070d;color:#f3f6fd;display:grid;place-items:center;min-height:100vh;margin:0\">Preparando apresentacao...</body>");
         printWindow.document.close();
-        const html = await buildStandaloneHtml();
-        printWindow.document.open();
-        printWindow.document.write(html);
-        printWindow.document.close();
-        printWindow.addEventListener("load", () => {
-          printWindow.focus();
-          printWindow.print();
-        }, { once: true });
-      };
-
-      const crcTable = (() => {
-        const table = [];
-        for (let n = 0; n < 256; n += 1) {
-          let c = n;
-          for (let k = 0; k < 8; k += 1) {
-            c = (c & 1) ? (0xedb88320 ^ (c >>> 1)) : (c >>> 1);
-          }
-          table[n] = c >>> 0;
+        try {
+          const html = await buildStandaloneHtml();
+          printWindow.document.open();
+          printWindow.document.write(html);
+          printWindow.document.close();
+          window.setTimeout(() => {
+            printWindow.focus();
+            printWindow.print();
+          }, 700);
+        } catch (error) {
+          printWindow.document.open();
+          printWindow.document.write("<!DOCTYPE html><title>Erro na exportacao</title><body style=\"font-family:sans-serif;background:#05070d;color:#f3f6fd;display:grid;place-items:center;min-height:100vh;margin:0\">Nao foi possivel preparar o PDF.</body>");
+          printWindow.document.close();
+          throw error;
         }
-        return table;
-      })();
-
-      const crc32 = (data) => {
-        let crc = 0xffffffff;
-        data.forEach((byte) => {
-          crc = crcTable[(crc ^ byte) & 0xff] ^ (crc >>> 8);
-        });
-        return (crc ^ 0xffffffff) >>> 0;
-      };
-
-      const concatBytes = (parts) => {
-        const total = parts.reduce((sum, part) => sum + part.length, 0);
-        const output = new Uint8Array(total);
-        let offset = 0;
-        parts.forEach((part) => {
-          output.set(part, offset);
-          offset += part.length;
-        });
-        return output;
-      };
-
-      const u16 = (value) => new Uint8Array([value & 255, (value >>> 8) & 255]);
-      const u32 = (value) => new Uint8Array([value & 255, (value >>> 8) & 255, (value >>> 16) & 255, (value >>> 24) & 255]);
-
-      const zipStore = (files) => {
-        const localParts = [];
-        const centralParts = [];
-        let offset = 0;
-
-        files.forEach((file) => {
-          const name = encoder.encode(file.name);
-          const data = typeof file.data === "string" ? encoder.encode(file.data) : file.data;
-          const crc = crc32(data);
-          const localHeader = concatBytes([
-            u32(0x04034b50), u16(20), u16(0), u16(0), u16(0), u16(0),
-            u32(crc), u32(data.length), u32(data.length), u16(name.length), u16(0), name
-          ]);
-          localParts.push(localHeader, data);
-          centralParts.push(concatBytes([
-            u32(0x02014b50), u16(20), u16(20), u16(0), u16(0), u16(0), u16(0),
-            u32(crc), u32(data.length), u32(data.length), u16(name.length), u16(0), u16(0),
-            u16(0), u16(0), u32(0), u32(offset), name
-          ]));
-          offset += localHeader.length + data.length;
-        });
-
-        const central = concatBytes(centralParts);
-        const end = concatBytes([
-          u32(0x06054b50), u16(0), u16(0), u16(files.length), u16(files.length),
-          u32(central.length), u32(offset), u16(0)
-        ]);
-        return concatBytes([...localParts, central, end]);
-      };
-
-      const imageSlideXml = (index) => `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<p:sld xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main"><p:cSld><p:spTree><p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="0" cy="0"/><a:chOff x="0" y="0"/><a:chExt cx="0" cy="0"/></a:xfrm></p:grpSpPr><p:pic><p:nvPicPr><p:cNvPr id="2" name="Slide ${index}"/><p:cNvPicPr><a:picLocks noChangeAspect="1"/></p:cNvPicPr><p:nvPr/></p:nvPicPr><p:blipFill><a:blip r:embed="rId1"/><a:stretch><a:fillRect/></a:stretch></p:blipFill><p:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="12192000" cy="6858000"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></p:spPr></p:pic></p:spTree></p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sld>`;
-
-      const imageSlideRels = (index) => `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/slide-${index}.png"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout" Target="../slideLayouts/slideLayout1.xml"/></Relationships>`;
-
-      const buildPptx = async () => {
-        const imageBuffers = await Promise.all(slideImages.map(async (src) => {
-          const response = await fetch(src);
-          if (!response.ok) {
-            throw new Error(`Nao foi possivel carregar ${src}`);
-          }
-          return new Uint8Array(await response.arrayBuffer());
-        }));
-        const offerSlideImage = dataUrlToBytes(await renderOfferSlideDataUrl());
-        const slideCount = 7;
-        const slideIds = Array.from({ length: slideCount }, (_, index) => `<p:sldId id="${256 + index}" r:id="rId${index + 1}"/>`).join("");
-        const files = [
-          { name: "[Content_Types].xml", data: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="png" ContentType="image/png"/><Override PartName="/ppt/presentation.xml" ContentType="application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"/><Override PartName="/ppt/slideMasters/slideMaster1.xml" ContentType="application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml"/><Override PartName="/ppt/slideLayouts/slideLayout1.xml" ContentType="application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml"/>${Array.from({ length: slideCount }, (_, index) => `<Override PartName="/ppt/slides/slide${index + 1}.xml" ContentType="application/vnd.openxmlformats-officedocument.presentationml.slide+xml"/>`).join("")}</Types>` },
-          { name: "_rels/.rels", data: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="ppt/presentation.xml"/></Relationships>` },
-          { name: "ppt/presentation.xml", data: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><p:presentation xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main"><p:sldMasterIdLst><p:sldMasterId id="2147483648" r:id="rId8"/></p:sldMasterIdLst><p:sldIdLst>${slideIds}</p:sldIdLst><p:sldSz cx="12192000" cy="6858000" type="wide"/><p:notesSz cx="6858000" cy="9144000"/></p:presentation>` },
-          { name: "ppt/_rels/presentation.xml.rels", data: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${Array.from({ length: slideCount }, (_, index) => `<Relationship Id="rId${index + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide" Target="slides/slide${index + 1}.xml"/>`).join("")}<Relationship Id="rId8" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster" Target="slideMasters/slideMaster1.xml"/></Relationships>` },
-          { name: "ppt/slideMasters/slideMaster1.xml", data: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><p:sldMaster xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main"><p:cSld><p:spTree><p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="0" cy="0"/><a:chOff x="0" y="0"/><a:chExt cx="0" cy="0"/></a:xfrm></p:grpSpPr></p:spTree></p:cSld><p:sldLayoutIdLst><p:sldLayoutId id="1" r:id="rId1"/></p:sldLayoutIdLst><p:txStyles><p:titleStyle/><p:bodyStyle/><p:otherStyle/></p:txStyles></p:sldMaster>` },
-          { name: "ppt/slideMasters/_rels/slideMaster1.xml.rels", data: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout" Target="../slideLayouts/slideLayout1.xml"/></Relationships>` },
-          { name: "ppt/slideLayouts/slideLayout1.xml", data: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><p:sldLayout xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main" type="blank"><p:cSld name="Blank"><p:spTree><p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="0" cy="0"/><a:chOff x="0" y="0"/><a:chExt cx="0" cy="0"/></a:xfrm></p:grpSpPr></p:spTree></p:cSld></p:sldLayout>` },
-          { name: "ppt/slideLayouts/_rels/slideLayout1.xml.rels", data: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster" Target="../slideMasters/slideMaster1.xml"/></Relationships>` }
-        ];
-        imageBuffers.forEach((buffer, index) => {
-          files.push({ name: `ppt/media/slide-${index + 1}.png`, data: buffer });
-          files.push({ name: `ppt/slides/slide${index + 1}.xml`, data: imageSlideXml(index + 1) });
-          files.push({ name: `ppt/slides/_rels/slide${index + 1}.xml.rels`, data: imageSlideRels(index + 1) });
-        });
-        files.push({ name: "ppt/media/slide-7.png", data: offerSlideImage });
-        files.push({ name: "ppt/slides/slide7.xml", data: imageSlideXml(7) });
-        files.push({ name: "ppt/slides/_rels/slide7.xml.rels", data: imageSlideRels(7) });
-        return new Blob([zipStore(files)], { type: "application/vnd.openxmlformats-officedocument.presentationml.presentation" });
       };
 
       const exportPresentation = async (type) => {
@@ -1343,34 +1168,6 @@
           if (type === "pdf") {
             await openPrintPdf();
             setExportStatus("Escolha Salvar como PDF na janela de impressao.");
-          }
-          if (type === "pptx") {
-            const pptx = await buildPptx();
-            downloadBlob(pptx, `${fileBaseName}.pptx`);
-            setExportStatus("PPT baixado sem links no slide 7.");
-          }
-          if (type === "whatsapp") {
-            const shareText = `Segue a apresentacao institucional da Ser Mais Digital para envio: ${getShareUrl()}`;
-            if (navigator.canShare) {
-              const html = await buildStandaloneHtml();
-              const file = new File([html], `${fileBaseName}.html`, { type: "text/html" });
-              if (!navigator.canShare({ files: [file] })) {
-                window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, "_blank", "noopener");
-                setExportStatus("WhatsApp aberto com a mensagem.");
-                return;
-              }
-              await navigator.share({ files: [file], title: "Institucional Ser Mais Digital" });
-              setExportStatus("Arquivo enviado para compartilhamento.");
-            } else {
-              window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, "_blank", "noopener");
-              setExportStatus("WhatsApp aberto com a mensagem.");
-            }
-          }
-          if (type === "email") {
-            const subject = encodeURIComponent("Apresentacao institucional - Ser Mais Digital");
-            const body = encodeURIComponent(`Ola,\n\nSegue a apresentacao institucional da Ser Mais Digital para envio.\n\nVersao online: ${getShareUrl()}\n\nPara anexar a copia sem links no slide 7, use a opcao Exportar > HTML, PDF ou PPT nesta pagina.`);
-            window.location.href = `mailto:?subject=${subject}&body=${body}`;
-            setExportStatus("Rascunho de email aberto.");
           }
         } catch (error) {
           console.error(error);
