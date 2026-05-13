@@ -709,10 +709,6 @@
             <span>PDF</span>
             <small>imprimir</small>
           </button>
-          <button class="export-option" type="button" data-export="html" role="menuitem">
-            <span>HTML dinâmico</span>
-            <small>download</small>
-          </button>
           <div class="export-status" id="exportStatus" aria-live="polite"></div>
         </div>
       </div>
@@ -959,14 +955,13 @@
       const exportBtn = document.getElementById("exportBtn");
       const exportMenu = document.getElementById("exportMenu");
       const exportStatus = document.getElementById("exportStatus");
-      const fileBaseName = "ser-mais-digital-institucional-envio";
       const slideImages = [
-        "institucional-smd-slide-01.png",
-        "institucional-smd-slide-02.png",
-        "institucional-smd-slide-03.png",
-        "institucional-smd-slide-04.png",
-        "institucional-smd-slide-05.png",
-        "institucional-smd-slide-06.png"
+        { src: "institucional-smd-slide-01.png", theme: "blue" },
+        { src: "institucional-smd-slide-02.png", theme: "white" },
+        { src: "institucional-smd-slide-03.png", theme: "blue" },
+        { src: "institucional-smd-slide-04.png", theme: "blue" },
+        { src: "institucional-smd-slide-05.png", theme: "white" },
+        { src: "institucional-smd-slide-06.png", theme: "white" }
       ];
       let activeIndex = 0;
 
@@ -997,17 +992,6 @@
       const closeExportMenu = () => {
         exportMenu.classList.remove("is-open");
         exportBtn.setAttribute("aria-expanded", "false");
-      };
-
-      const downloadBlob = (blob, filename) => {
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        window.setTimeout(() => URL.revokeObjectURL(url), 800);
       };
 
       const fetchAsBase64 = async (src) => {
@@ -1081,9 +1065,9 @@
       };
 
       const buildStandaloneHtml = async () => {
-        const imageTags = await Promise.all(slideImages.map(async (src, index) => {
-          const base64 = await fetchAsBase64(src);
-          return `<section class="export-slide"><img class="export-slide-image" src="data:image/png;base64,${base64}" alt="Slide ${index + 1}"></section>`;
+        const imageTags = await Promise.all(slideImages.map(async (slide, index) => {
+          const base64 = await fetchAsBase64(slide.src);
+          return `<section class="export-slide export-slide-${slide.theme}"><img class="export-slide-image" src="data:image/png;base64,${base64}" alt="Slide ${index + 1}"></section>`;
         }));
         const offerSlideImage = await getOfferSlideSvgDataUrl();
 
@@ -1098,58 +1082,27 @@
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     html, body { width: 100%; min-height: 100%; overflow: auto; }
     body { margin: 0; background: #05070d; }
-    .export-deck { display: block; padding: 22px; }
-    .export-slide { display: none; width: min(100%, 1280px); aspect-ratio: 16 / 9; margin: 0 auto; overflow: hidden; border-radius: 18px; background: #05070d; box-shadow: var(--shadow); break-after: page; page-break-after: always; }
+    .export-deck { display: block; padding: 0; }
+    .export-slide { display: block; width: 100vw; height: 100vh; margin: 0; overflow: hidden; background: #05070d; break-after: page; page-break-after: always; }
+    .export-slide-blue { background: #05070d; }
+    .export-slide-white { background: #ffffff; }
     .export-slide-image { width: 100%; height: 100%; object-fit: contain; display: block; background: #02040a; }
-    .export-player-controls { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 20; display: flex; align-items: center; gap: 10px; padding: 9px 11px; border-radius: 999px; background: rgba(10, 14, 24, 0.72); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(16px); }
-    .export-player-controls button { appearance: none; border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(20, 28, 43, 0.68); color: var(--text); border-radius: 999px; padding: 9px 12px; font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
-    .export-player-controls button:disabled { opacity: 0.38; }
-    .export-player-controls span { min-width: 48px; text-align: center; color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: 0.12em; }
+    .export-slide-white .export-slide-image { background: #ffffff; }
+    .export-slide-blue .export-slide-image { background: #05070d; }
     @media print {
       @page { size: landscape; margin: 0; }
       html, body { width: 100%; height: auto; overflow: visible; background: #05070d; }
-      .export-deck { padding: 0; gap: 0; }
-      .export-slide { display: block !important; width: 100vw; height: 100vh; margin: 0; border-radius: 0; box-shadow: none; break-after: page; page-break-after: always; }
+      .export-deck { padding: 0; }
+      .export-slide { width: 100vw; height: 100vh; margin: 0; break-after: page; page-break-after: always; }
       .export-slide-image { width: 100%; height: 100%; object-fit: contain; }
-      .export-player-controls { display: none; }
     }
   </style>
 </head>
 <body>
   <main class="export-deck" aria-label="Apresentacao institucional para envio">
     ${imageTags.join("\n    ")}
-    <section class="export-slide"><img class="export-slide-image" src="${offerSlideImage}" alt="Slide 7"></section>
+    <section class="export-slide export-slide-blue"><img class="export-slide-image" src="${offerSlideImage}" alt="Slide 7"></section>
   </main>
-  <nav class="export-player-controls" aria-label="Controles da apresentacao">
-    <button type="button" id="exportPrev">Anterior</button>
-    <span id="exportProgress">1 / 7</span>
-    <button type="button" id="exportNext">Proximo</button>
-  </nav>
-  <script>
-    (() => {
-      const slides = Array.from(document.querySelectorAll(".export-slide"));
-      const prev = document.getElementById("exportPrev");
-      const next = document.getElementById("exportNext");
-      const progress = document.getElementById("exportProgress");
-      let active = 0;
-      const show = () => {
-        slides.forEach((slide, index) => slide.style.display = index === active ? "block" : "none");
-        prev.disabled = active === 0;
-        next.disabled = active === slides.length - 1;
-        progress.textContent = (active + 1) + " / " + slides.length;
-      };
-      prev.addEventListener("click", () => { active = Math.max(0, active - 1); show(); });
-      next.addEventListener("click", () => { active = Math.min(slides.length - 1, active + 1); show(); });
-      window.addEventListener("keydown", (event) => {
-        if (event.key === "ArrowRight") active = Math.min(slides.length - 1, active + 1);
-        if (event.key === "ArrowLeft") active = Math.max(0, active - 1);
-        show();
-      });
-      show();
-      window.addEventListener("beforeprint", () => slides.forEach((slide) => slide.style.display = "block"));
-      window.addEventListener("afterprint", show);
-    })();
-  <\/script>
 </body>
 </html>`;
       };
@@ -1182,11 +1135,6 @@
       const exportPresentation = async (type) => {
         try {
           setExportStatus("Preparando arquivo...");
-          if (type === "html") {
-            const html = await buildStandaloneHtml();
-            downloadBlob(new Blob([html], { type: "text/html;charset=utf-8" }), `${fileBaseName}.html`);
-            setExportStatus("HTML baixado sem links no slide 7.");
-          }
           if (type === "pdf") {
             await openPrintPdf();
             setExportStatus("Escolha Salvar como PDF na janela de impressao.");
