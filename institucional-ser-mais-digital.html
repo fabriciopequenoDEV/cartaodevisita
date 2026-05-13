@@ -1047,12 +1047,45 @@
         return getOfferSlideMarkup().replaceAll("logo_smd.png", `data:image/png;base64,${logoBase64}`);
       };
 
+      const getOfferSlideSvgDataUrl = async () => {
+        const offerMarkup = await getOfferSlideMarkupWithInlineAssets();
+        const styleText = document.querySelector("style").textContent;
+        const width = 1920;
+        const height = 1080;
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+          <foreignObject width="${width}" height="${height}">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="export-render-root">
+              <style>
+                ${styleText}
+                .export-render-root { width: ${width}px; height: ${height}px; margin: 0; overflow: hidden; color: var(--text); background: #05070d; font-family: Inter, "Segoe UI", sans-serif; }
+                .export-render-root .offer-slide { width: ${width}px; height: ${height}px; min-height: 0; padding: 34px; gap: 18px; overflow: hidden; border-radius: 0; }
+                .export-render-root .offer-top { gap: 24px; }
+                .export-render-root .headline { font-size: 52px; line-height: 0.96; }
+                .export-render-root .offer-grid { gap: 14px; }
+                .export-render-root .offer-card { padding: 20px 18px 18px; gap: 10px; border-radius: 20px; }
+                .export-render-root .offer-icon { width: 44px; height: 44px; border-radius: 15px; }
+                .export-render-root .offer-name { font-size: 24px; }
+                .export-render-root .offer-desc { font-size: 16px; line-height: 1.44; }
+                .export-render-root .offer-benefits { gap: 9px; }
+                .export-render-root .offer-benefits li { font-size: 14px; line-height: 1.38; }
+                .export-render-root .chip { padding: 8px 11px; font-size: 10px; }
+                .export-render-root .offer-brand img { width: 300px; height: auto; object-fit: contain; background: transparent; }
+                .export-render-root .slide-note { margin-top: 0; }
+              </style>
+              ${offerMarkup}
+            </div>
+          </foreignObject>
+        </svg>`;
+
+        return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      };
+
       const buildStandaloneHtml = async () => {
         const imageTags = await Promise.all(slideImages.map(async (src, index) => {
           const base64 = await fetchAsBase64(src);
           return `<section class="export-slide"><img class="export-slide-image" src="data:image/png;base64,${base64}" alt="Slide ${index + 1}"></section>`;
         }));
-        const offerMarkup = await getOfferSlideMarkupWithInlineAssets();
+        const offerSlideImage = await getOfferSlideSvgDataUrl();
 
         return `<!DOCTYPE html>
 <html lang="pt-BR">
@@ -1062,22 +1095,12 @@
   <title>Institucional Ser Mais Digital - envio</title>
   <style>
     ${document.querySelector("style").textContent}
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     html, body { width: 100%; min-height: 100%; overflow: auto; }
     body { margin: 0; background: #05070d; }
     .export-deck { display: block; padding: 22px; }
     .export-slide { display: none; width: min(100%, 1280px); aspect-ratio: 16 / 9; margin: 0 auto; overflow: hidden; border-radius: 18px; background: #05070d; box-shadow: var(--shadow); break-after: page; page-break-after: always; }
     .export-slide-image { width: 100%; height: 100%; object-fit: contain; display: block; background: #02040a; }
-    .export-slide .offer-slide { width: 100%; height: 100%; min-height: 0; padding: clamp(18px, 1.8vw, 28px); gap: 14px; overflow: hidden; border-radius: 0; }
-    .export-slide .offer-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-    .export-slide .offer-card { gap: 10px; padding: 18px 16px 16px; border-radius: 20px; }
-    .export-slide .offer-brand img { width: clamp(180px, 14vw, 280px); height: auto; object-fit: contain; background: transparent; }
-    .export-slide .headline { font-size: clamp(24px, 2.55vw, 40px); }
-    .export-slide .offer-name { font-size: clamp(16px, 1.15vw, 22px); }
-    .export-slide .offer-desc { font-size: clamp(13px, 0.88vw, 15px); line-height: 1.46; }
-    .export-slide .offer-benefits { gap: 10px; }
-    .export-slide .offer-benefits li { font-size: clamp(11px, 0.82vw, 14px); line-height: 1.44; }
-    .export-slide .chip { padding: 7px 10px; font-size: 10px; }
-    .export-slide .offer-link { cursor: default; }
     .export-player-controls { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 20; display: flex; align-items: center; gap: 10px; padding: 9px 11px; border-radius: 999px; background: rgba(10, 14, 24, 0.72); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(16px); }
     .export-player-controls button { appearance: none; border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(20, 28, 43, 0.68); color: var(--text); border-radius: 999px; padding: 9px 12px; font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
     .export-player-controls button:disabled { opacity: 0.38; }
@@ -1088,7 +1111,6 @@
       .export-deck { padding: 0; gap: 0; }
       .export-slide { display: block !important; width: 100vw; height: 100vh; margin: 0; border-radius: 0; box-shadow: none; break-after: page; page-break-after: always; }
       .export-slide-image { width: 100%; height: 100%; object-fit: contain; }
-      .export-slide .offer-slide { height: 100vh; }
       .export-player-controls { display: none; }
     }
   </style>
@@ -1096,7 +1118,7 @@
 <body>
   <main class="export-deck" aria-label="Apresentacao institucional para envio">
     ${imageTags.join("\n    ")}
-    <section class="export-slide">${offerMarkup}</section>
+    <section class="export-slide"><img class="export-slide-image" src="${offerSlideImage}" alt="Slide 7"></section>
   </main>
   <nav class="export-player-controls" aria-label="Controles da apresentacao">
     <button type="button" id="exportPrev">Anterior</button>
