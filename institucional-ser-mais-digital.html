@@ -926,8 +926,8 @@
           </div>
 
           <div class="slide-note">
-            <span>Use as setas do teclado ou os botões de anterior e próximo para navegar na apresentação.</span>
-            <span>Ofertas atuais com acesso imediato ao detalhamento comercial.</span>
+            <span>Direitos 2026 Ser Mais Digital.</span>
+            <span>Todos os direitos reservados.</span>
           </div>
         </div>
       </article>
@@ -994,19 +994,7 @@
         exportBtn.setAttribute("aria-expanded", "false");
       };
 
-      const fetchAsBase64 = async (src) => {
-        const response = await fetch(src);
-        if (!response.ok) {
-          throw new Error(`Nao foi possivel carregar ${src}`);
-        }
-        const buffer = await response.arrayBuffer();
-        const bytes = new Uint8Array(buffer);
-        let binary = "";
-        bytes.forEach((byte) => {
-          binary += String.fromCharCode(byte);
-        });
-        return btoa(binary);
-      };
+      const assetUrl = (src) => new URL(src, window.location.href).href;
 
       const getOfferSlideMarkup = () => {
         const slide = document.querySelector(".offer-slide").cloneNode(true);
@@ -1019,24 +1007,22 @@
           }
           link.replaceWith(wrapper);
         });
-        const note = slide.querySelector(".slide-note span:last-child");
+        const note = slide.querySelector(".slide-note");
         if (note) {
-          note.textContent = "Copia institucional para envio, sem direcionamento automatico para ofertas.";
+          note.innerHTML = "<span>Direitos 2026 Ser Mais Digital.</span><span>Todos os direitos reservados.</span>";
         }
         return slide.outerHTML;
       };
 
-      const getOfferSlideMarkupWithInlineAssets = async () => {
-        const logoBase64 = await fetchAsBase64("logo_smd.png");
-        return getOfferSlideMarkup().replaceAll("logo_smd.png", `data:image/png;base64,${logoBase64}`);
+      const getOfferSlideMarkupWithAssets = () => {
+        return getOfferSlideMarkup().replaceAll("logo_smd.png", assetUrl("logo_smd.png"));
       };
 
-      const buildStandaloneHtml = async () => {
-        const imageTags = await Promise.all(slideImages.map(async (slide, index) => {
-          const base64 = await fetchAsBase64(slide.src);
-          return `<section class="export-slide export-slide-${slide.theme}"><img class="export-slide-image" src="data:image/png;base64,${base64}" alt="Slide ${index + 1}"></section>`;
-        }));
-        const offerMarkup = await getOfferSlideMarkupWithInlineAssets();
+      const buildStandaloneHtml = () => {
+        const imageTags = slideImages.map((slide, index) => {
+          return `<section class="export-slide export-slide-${slide.theme}"><img class="export-slide-image" src="${assetUrl(slide.src)}" alt="Slide ${index + 1}"></section>`;
+        });
+        const offerMarkup = getOfferSlideMarkupWithAssets();
 
         return `<!DOCTYPE html>
 <html lang="pt-BR">
@@ -1096,7 +1082,7 @@
 
       const openPrintPdf = async () => {
         try {
-          const html = await buildStandaloneHtml();
+          const html = buildStandaloneHtml();
           const printUrl = URL.createObjectURL(new Blob([html], { type: "text/html;charset=utf-8" }));
           const printWindow = window.open(printUrl, "_blank");
           if (!printWindow) {
