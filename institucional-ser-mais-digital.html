@@ -980,32 +980,6 @@
         "institucional-smd-slide-05.png",
         "institucional-smd-slide-06.png"
       ];
-      const offerItems = [
-        {
-          name: "Alocacao de profissionais",
-          desc: "Especialistas alocados com aderencia real ao momento do cliente, reduzindo tempo de contratacao e acelerando a operacao.",
-          chips: ["Shortlist em 7 dias", "Onboarding em 15 dias", "Sob medida"],
-          color: "C17D3C"
-        },
-        {
-          name: "Inteligencia Artificial",
-          desc: "Treinamentos, consultoria, implantacao pratica e agentes de IA para acelerar casos aplicados com metodo, governanca e foco em resultado operacional.",
-          chips: ["9 agentes prontos", "Piloto em 30 dias", "Metodo em 6 fases"],
-          color: "4A9EBF"
-        },
-        {
-          name: "Planejamento estrategico",
-          desc: "Projetos estruturados para transformar ambicao executiva em agenda de execucao com clareza de prioridades e visibilidade.",
-          chips: ["3 horizontes", "Mapa de prioridades", "Consultoria executiva"],
-          color: "7B6FAD"
-        },
-        {
-          name: "Gerente de mudancas",
-          desc: "Conducao sob demanda para estruturar comunicacao, engajamento e sustentacao da mudanca ate a adesao real da operacao.",
-          chips: ["TO on demand", "4-6 entregas", "Transformacao organizacional"],
-          color: "5BA887"
-        }
-      ];
       let activeIndex = 0;
 
       const update = () => {
@@ -1063,6 +1037,26 @@
         return btoa(binary);
       };
 
+      const blobToBase64 = async (blob) => {
+        const buffer = await blob.arrayBuffer();
+        const bytes = new Uint8Array(buffer);
+        let binary = "";
+        bytes.forEach((byte) => {
+          binary += String.fromCharCode(byte);
+        });
+        return btoa(binary);
+      };
+
+      const dataUrlToBytes = (dataUrl) => {
+        const base64 = dataUrl.split(",")[1];
+        const binary = atob(base64);
+        const bytes = new Uint8Array(binary.length);
+        for (let index = 0; index < binary.length; index += 1) {
+          bytes[index] = binary.charCodeAt(index);
+        }
+        return bytes;
+      };
+
       const getShareUrl = () => {
         const url = new URL(window.location.href);
         url.hash = "";
@@ -1087,14 +1081,71 @@
         return slide.outerHTML;
       };
 
+      const getOfferSlideMarkupWithInlineAssets = async () => {
+        const logoBase64 = await fetchAsBase64("logo_smd.png");
+        return getOfferSlideMarkup().replaceAll("logo_smd.png", `data:image/png;base64,${logoBase64}`);
+      };
+
+      const renderOfferSlideDataUrl = async () => {
+        if (document.fonts && document.fonts.ready) {
+          await document.fonts.ready;
+        }
+
+        const width = 1920;
+        const height = 1080;
+        const offerMarkup = await getOfferSlideMarkupWithInlineAssets();
+        const styleText = document.querySelector("style").textContent;
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+          <foreignObject width="${width}" height="${height}">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="export-render-root">
+              <style>
+                ${styleText}
+                .export-render-root { width: ${width}px; height: ${height}px; margin: 0; background: #05070d; overflow: hidden; color: var(--text); font-family: Inter, "Segoe UI", sans-serif; }
+                .export-render-root .offer-slide { width: ${width}px; height: ${height}px; min-height: 0; padding: 34px; gap: 18px; overflow: hidden; border-radius: 0; }
+                .export-render-root .offer-top { gap: 24px; }
+                .export-render-root .headline { font-size: 52px; line-height: 0.96; }
+                .export-render-root .offer-grid { gap: 14px; }
+                .export-render-root .offer-card { padding: 20px 18px 18px; gap: 10px; border-radius: 20px; }
+                .export-render-root .offer-icon { width: 44px; height: 44px; border-radius: 15px; }
+                .export-render-root .offer-name { font-size: 24px; }
+                .export-render-root .offer-desc { font-size: 16px; line-height: 1.44; }
+                .export-render-root .offer-benefits { gap: 9px; }
+                .export-render-root .offer-benefits li { font-size: 14px; line-height: 1.38; }
+                .export-render-root .chip { padding: 8px 11px; font-size: 10px; }
+                .export-render-root .offer-brand img { width: 300px; height: auto; object-fit: contain; background: transparent; }
+                .export-render-root .slide-note { margin-top: 0; }
+              </style>
+              ${offerMarkup}
+            </div>
+          </foreignObject>
+        </svg>`;
+
+        const svgBlob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
+        const url = URL.createObjectURL(svgBlob);
+        try {
+          const image = new Image();
+          await new Promise((resolve, reject) => {
+            image.onload = resolve;
+            image.onerror = reject;
+            image.src = url;
+          });
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const context = canvas.getContext("2d");
+          context.drawImage(image, 0, 0, width, height);
+          return canvas.toDataURL("image/png");
+        } finally {
+          URL.revokeObjectURL(url);
+        }
+      };
+
       const buildStandaloneHtml = async () => {
         const imageTags = await Promise.all(slideImages.map(async (src, index) => {
           const base64 = await fetchAsBase64(src);
-          return `<section class="export-slide"><img src="data:image/png;base64,${base64}" alt="Slide ${index + 1}"></section>`;
+          return `<section class="export-slide"><img class="export-slide-image" src="data:image/png;base64,${base64}" alt="Slide ${index + 1}"></section>`;
         }));
-
-        const logoBase64 = await fetchAsBase64("logo_smd.png");
-        const offerMarkup = getOfferSlideMarkup().replaceAll("logo_smd.png", `data:image/png;base64,${logoBase64}`);
+        const offerImage = await renderOfferSlideDataUrl();
 
         return `<!DOCTYPE html>
 <html lang="pt-BR">
@@ -1104,22 +1155,21 @@
   <title>Institucional Ser Mais Digital - envio</title>
   <style>
     ${document.querySelector("style").textContent}
-    html, body { overflow: auto; }
-    body { min-height: 100%; }
-    .export-deck { display: grid; gap: 18px; padding: 22px; }
-    .export-slide { width: min(100%, 1280px); aspect-ratio: 16 / 9; margin: 0 auto; overflow: hidden; border-radius: 18px; background: #05070d; box-shadow: var(--shadow); page-break-after: always; }
-    .export-slide img { width: 100%; height: 100%; object-fit: contain; display: block; background: #02040a; }
-    .export-slide .offer-slide { height: 100%; }
-    .export-slide .offer-link { cursor: default; }
+    html, body { width: 100%; min-height: 100%; overflow: auto; }
+    body { margin: 0; background: #05070d; }
+    .export-deck { display: block; padding: 22px; }
+    .export-slide { display: none; width: min(100%, 1280px); aspect-ratio: 16 / 9; margin: 0 auto; overflow: hidden; border-radius: 18px; background: #05070d; box-shadow: var(--shadow); break-after: page; page-break-after: always; }
+    .export-slide-image { width: 100%; height: 100%; object-fit: contain; display: block; background: #02040a; }
     .export-player-controls { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 20; display: flex; align-items: center; gap: 10px; padding: 9px 11px; border-radius: 999px; background: rgba(10, 14, 24, 0.72); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(16px); }
     .export-player-controls button { appearance: none; border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(20, 28, 43, 0.68); color: var(--text); border-radius: 999px; padding: 9px 12px; font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
     .export-player-controls button:disabled { opacity: 0.38; }
     .export-player-controls span { min-width: 48px; text-align: center; color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: 0.12em; }
     @media print {
       @page { size: landscape; margin: 0; }
-      body { background: #05070d; }
+      html, body { width: 100%; height: auto; overflow: visible; background: #05070d; }
       .export-deck { padding: 0; gap: 0; }
-      .export-slide { width: 100vw; height: 100vh; border-radius: 0; box-shadow: none; }
+      .export-slide { display: block !important; width: 100vw; height: 100vh; margin: 0; border-radius: 0; box-shadow: none; break-after: page; page-break-after: always; }
+      .export-slide-image { width: 100%; height: 100%; object-fit: contain; }
       .export-player-controls { display: none; }
     }
   </style>
@@ -1127,7 +1177,7 @@
 <body>
   <main class="export-deck" aria-label="Apresentacao institucional para envio">
     ${imageTags.join("\n    ")}
-    <section class="export-slide">${offerMarkup}</section>
+    <section class="export-slide"><img class="export-slide-image" src="${offerImage}" alt="Slide 7"></section>
   </main>
   <nav class="export-player-controls" aria-label="Controles da apresentacao">
     <button type="button" id="exportPrev">Anterior</button>
@@ -1245,43 +1295,10 @@
         return concatBytes([...localParts, central, end]);
       };
 
-      const xmlEscape = (text) => String(text)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;");
-
-      let pptShapeId = 10;
-      const nextPptShapeId = () => {
-        pptShapeId += 1;
-        return pptShapeId;
-      };
-
-      const textBox = (text, x, y, cx, cy, size, color = "F3F6FD", bold = false) => `
-        <p:sp><p:nvSpPr><p:cNvPr id="${nextPptShapeId()}" name="Text"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr><p:spPr><a:xfrm><a:off x="${x}" y="${y}"/><a:ext cx="${cx}" cy="${cy}"/></a:xfrm><a:noFill/><a:ln><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr wrap="square"/><a:lstStyle/><a:p><a:r><a:rPr lang="pt-BR" sz="${size}"${bold ? ' b="1"' : ""}><a:solidFill><a:srgbClr val="${color}"/></a:solidFill></a:rPr><a:t>${xmlEscape(text)}</a:t></a:r></a:p></p:txBody></p:sp>`;
-
-      const rect = (x, y, cx, cy, fill, line = "26344F") => `
-        <p:sp><p:nvSpPr><p:cNvPr id="${nextPptShapeId()}" name="Box"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr><p:spPr><a:xfrm><a:off x="${x}" y="${y}"/><a:ext cx="${cx}" cy="${cy}"/></a:xfrm><a:prstGeom prst="roundRect"><a:avLst/></a:prstGeom><a:solidFill><a:srgbClr val="${fill}"/></a:solidFill><a:ln w="11000"><a:solidFill><a:srgbClr val="${line}"/></a:solidFill></a:ln></p:spPr></p:sp>`;
-
       const imageSlideXml = (index) => `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <p:sld xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main"><p:cSld><p:spTree><p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="0" cy="0"/><a:chOff x="0" y="0"/><a:chExt cx="0" cy="0"/></a:xfrm></p:grpSpPr><p:pic><p:nvPicPr><p:cNvPr id="2" name="Slide ${index}"/><p:cNvPicPr><a:picLocks noChangeAspect="1"/></p:cNvPicPr><p:nvPr/></p:nvPicPr><p:blipFill><a:blip r:embed="rId1"/><a:stretch><a:fillRect/></a:stretch></p:blipFill><p:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="12192000" cy="6858000"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></p:spPr></p:pic></p:spTree></p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sld>`;
 
-      const offerSlideXml = () => {
-        const cards = offerItems.map((item, index) => {
-          const x = 650000 + index * 2850000;
-          return [
-            rect(x, 2450000, 2550000, 3100000, "161E31", item.color),
-            textBox(item.name, x + 180000, 2660000, 2200000, 420000, 1900, "FFFFFF", true),
-            textBox(item.desc, x + 180000, 3240000, 2200000, 950000, 1050, "C8D3EA"),
-            textBox(item.chips.join(" | "), x + 180000, 4770000, 2200000, 420000, 900, "F5DCC9")
-          ].join("");
-        }).join("");
-        return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<p:sld xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main"><p:cSld><p:bg><p:bgPr><a:solidFill><a:srgbClr val="0B101A"/></a:solidFill><a:effectLst/></p:bgPr></p:bg><p:spTree><p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="0" cy="0"/><a:chOff x="0" y="0"/><a:chExt cx="0" cy="0"/></a:xfrm></p:grpSpPr>${textBox("OFERTA ATUAL", 650000, 520000, 2600000, 360000, 1100, "E8650A", true)}${textBox("Onde ja estamos prontos para atuar", 650000, 920000, 6700000, 720000, 3200, "FFFFFF", true)}${textBox("Copia institucional para envio, sem links de direcionamento para ofertas.", 650000, 1710000, 6200000, 350000, 1150, "9CA8C6")}${cards}</p:spTree></p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sld>`;
-      };
-
       const imageSlideRels = (index) => `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/slide-${index}.png"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout" Target="../slideLayouts/slideLayout1.xml"/></Relationships>`;
-      const blankSlideRels = () => `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout" Target="../slideLayouts/slideLayout1.xml"/></Relationships>`;
 
       const buildPptx = async () => {
         const imageBuffers = await Promise.all(slideImages.map(async (src) => {
@@ -1291,6 +1308,7 @@
           }
           return new Uint8Array(await response.arrayBuffer());
         }));
+        const offerSlideImage = dataUrlToBytes(await renderOfferSlideDataUrl());
         const slideCount = 7;
         const slideIds = Array.from({ length: slideCount }, (_, index) => `<p:sldId id="${256 + index}" r:id="rId${index + 1}"/>`).join("");
         const files = [
@@ -1308,8 +1326,9 @@
           files.push({ name: `ppt/slides/slide${index + 1}.xml`, data: imageSlideXml(index + 1) });
           files.push({ name: `ppt/slides/_rels/slide${index + 1}.xml.rels`, data: imageSlideRels(index + 1) });
         });
-        files.push({ name: "ppt/slides/slide7.xml", data: offerSlideXml() });
-        files.push({ name: "ppt/slides/_rels/slide7.xml.rels", data: blankSlideRels() });
+        files.push({ name: "ppt/media/slide-7.png", data: offerSlideImage });
+        files.push({ name: "ppt/slides/slide7.xml", data: imageSlideXml(7) });
+        files.push({ name: "ppt/slides/_rels/slide7.xml.rels", data: imageSlideRels(7) });
         return new Blob([zipStore(files)], { type: "application/vnd.openxmlformats-officedocument.presentationml.presentation" });
       };
 
