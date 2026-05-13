@@ -1031,45 +1031,12 @@
         return getOfferSlideMarkup().replaceAll("logo_smd.png", `data:image/png;base64,${logoBase64}`);
       };
 
-      const getOfferSlideSvgDataUrl = async () => {
-        const offerMarkup = await getOfferSlideMarkupWithInlineAssets();
-        const styleText = document.querySelector("style").textContent;
-        const width = 1920;
-        const height = 1080;
-        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
-          <foreignObject width="${width}" height="${height}">
-            <div xmlns="http://www.w3.org/1999/xhtml" class="export-render-root">
-              <style>
-                ${styleText}
-                .export-render-root { width: ${width}px; height: ${height}px; margin: 0; overflow: hidden; color: var(--text); background: #05070d; font-family: Inter, "Segoe UI", sans-serif; }
-                .export-render-root .offer-slide { width: ${width}px; height: ${height}px; min-height: 0; padding: 34px; gap: 18px; overflow: hidden; border-radius: 0; }
-                .export-render-root .offer-top { gap: 24px; }
-                .export-render-root .headline { font-size: 52px; line-height: 0.96; }
-                .export-render-root .offer-grid { gap: 14px; }
-                .export-render-root .offer-card { padding: 20px 18px 18px; gap: 10px; border-radius: 20px; }
-                .export-render-root .offer-icon { width: 44px; height: 44px; border-radius: 15px; }
-                .export-render-root .offer-name { font-size: 24px; }
-                .export-render-root .offer-desc { font-size: 16px; line-height: 1.44; }
-                .export-render-root .offer-benefits { gap: 9px; }
-                .export-render-root .offer-benefits li { font-size: 14px; line-height: 1.38; }
-                .export-render-root .chip { padding: 8px 11px; font-size: 10px; }
-                .export-render-root .offer-brand img { width: 300px; height: auto; object-fit: contain; background: transparent; }
-                .export-render-root .slide-note { margin-top: 0; }
-              </style>
-              ${offerMarkup}
-            </div>
-          </foreignObject>
-        </svg>`;
-
-        return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
-      };
-
       const buildStandaloneHtml = async () => {
         const imageTags = await Promise.all(slideImages.map(async (slide, index) => {
           const base64 = await fetchAsBase64(slide.src);
           return `<section class="export-slide export-slide-${slide.theme}"><img class="export-slide-image" src="data:image/png;base64,${base64}" alt="Slide ${index + 1}"></section>`;
         }));
-        const offerSlideImage = await getOfferSlideSvgDataUrl();
+        const offerMarkup = await getOfferSlideMarkupWithInlineAssets();
 
         return `<!DOCTYPE html>
 <html lang="pt-BR">
@@ -1089,6 +1056,18 @@
     .export-slide-image { width: 100%; height: 100%; object-fit: contain; display: block; background: #02040a; }
     .export-slide-white .export-slide-image { background: #ffffff; }
     .export-slide-blue .export-slide-image { background: #05070d; }
+    .export-slide-offer { background: #05070d; }
+    .export-slide-offer .offer-slide { width: 100%; height: 100%; min-height: 0; padding: clamp(18px, 1.8vw, 28px); gap: 14px; overflow: hidden; border-radius: 0; }
+    .export-slide-offer .offer-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .export-slide-offer .offer-card { gap: 10px; padding: 18px 16px 16px; border-radius: 20px; }
+    .export-slide-offer .offer-brand img { width: clamp(180px, 14vw, 280px); height: auto; object-fit: contain; background: transparent; }
+    .export-slide-offer .headline { font-size: clamp(24px, 2.55vw, 40px); }
+    .export-slide-offer .offer-name { font-size: clamp(16px, 1.15vw, 22px); }
+    .export-slide-offer .offer-desc { font-size: clamp(13px, 0.88vw, 15px); line-height: 1.46; }
+    .export-slide-offer .offer-benefits { gap: 10px; }
+    .export-slide-offer .offer-benefits li { font-size: clamp(11px, 0.82vw, 14px); line-height: 1.44; }
+    .export-slide-offer .chip { padding: 7px 10px; font-size: 10px; }
+    .export-slide-offer .offer-link { cursor: default; }
     @media print {
       @page { size: landscape; margin: 0; }
       html, body { width: 100%; height: auto; overflow: visible; background: #05070d; }
@@ -1101,33 +1080,31 @@
 <body>
   <main class="export-deck" aria-label="Apresentacao institucional para envio">
     ${imageTags.join("\n    ")}
-    <section class="export-slide export-slide-blue"><img class="export-slide-image" src="${offerSlideImage}" alt="Slide 7"></section>
+    <section class="export-slide export-slide-offer">${offerMarkup}</section>
   </main>
+  <script>
+    window.addEventListener("load", () => {
+      window.setTimeout(() => {
+        window.focus();
+        window.print();
+      }, 700);
+    });
+  <\/script>
 </body>
 </html>`;
       };
 
       const openPrintPdf = async () => {
-        const printWindow = window.open("", "_blank");
-        if (!printWindow) {
-          throw new Error("O navegador bloqueou a janela de impressao.");
-        }
-        printWindow.document.open();
-        printWindow.document.write("<!DOCTYPE html><title>Preparando PDF</title><body style=\"font-family:sans-serif;background:#05070d;color:#f3f6fd;display:grid;place-items:center;min-height:100vh;margin:0\">Preparando apresentacao...</body>");
-        printWindow.document.close();
         try {
           const html = await buildStandaloneHtml();
-          printWindow.document.open();
-          printWindow.document.write(html);
-          printWindow.document.close();
-          window.setTimeout(() => {
-            printWindow.focus();
-            printWindow.print();
-          }, 700);
+          const printUrl = URL.createObjectURL(new Blob([html], { type: "text/html;charset=utf-8" }));
+          const printWindow = window.open(printUrl, "_blank");
+          if (!printWindow) {
+            URL.revokeObjectURL(printUrl);
+            throw new Error("O navegador bloqueou a janela de impressao.");
+          }
+          window.setTimeout(() => URL.revokeObjectURL(printUrl), 60000);
         } catch (error) {
-          printWindow.document.open();
-          printWindow.document.write("<!DOCTYPE html><title>Erro na exportacao</title><body style=\"font-family:sans-serif;background:#05070d;color:#f3f6fd;display:grid;place-items:center;min-height:100vh;margin:0\">Nao foi possivel preparar o PDF.</body>");
-          printWindow.document.close();
           throw error;
         }
       };
