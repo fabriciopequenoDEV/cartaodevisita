@@ -221,6 +221,39 @@
       max-width:720px;
       opacity:.75;
     }
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-bottom:30px;
+    }
+    .aira-link-highlight{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      min-height:48px;
+      padding:0 18px;
+      border-radius:14px;
+      border:1px solid rgba(232,101,10,.52);
+      background:linear-gradient(110deg, rgba(232,101,10,.28), rgba(232,101,10,.10));
+      color:#fff;
+      text-decoration:none;
+      font-weight:800;
+      box-shadow:0 12px 34px rgba(232,101,10,.16);
+      transition:.2s ease;
+    }
+    .aira-link-highlight:hover{
+      transform:translateY(-1px);
+      border-color:rgba(232,101,10,.86);
+      background:var(--primary);
+    }
+    .aira-link-highlight span{
+      color:#ffd9c3;
+      font-size:.72rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
     .hero-mark{
       position:relative;
       min-height:320px;
@@ -1325,7 +1358,7 @@
     <div class="topbar">
       <div class="ia-nav">
         <a class="ia-link" href="https://sermaisdigital.vercel.app">Home</a>
-        <a class="ia-link" href="/oferta-ia-smd">Oferta</a>
+        <a class="ia-link" href="https://sermaisdigital.vercel.app/oferta-ia-smd">Oferta</a>
         <a class="ia-link" href="/estudio-da-oferta-smd">Dinâmica</a>
         <a class="ia-link" href="/metodo_de_ia_smd">Método</a>
       </div>
@@ -1337,9 +1370,14 @@
     <section class="hero">
       <div class="hero-grid">
         <div>
-          <div class="hero-badge">Agentes prontos para operar</div>
-          <h1>A prateleira de <em>agentes de IA</em> da sua empresa.</h1>
-          <p class="hero-sub">Agentes pré-construídos para os departamentos que mais precisam de velocidade. Sem projeto longo. Operando em semanas.</p>
+          <div class="hero-badge">Agentes configuráveis na Aira</div>
+          <h1>Aira a plataforma de <em>agentes de IA</em> da sua empresa.</h1>
+          <p class="hero-sub">A Aira centraliza agentes corporativos com contexto da empresa, bases de conhecimento, canais de atendimento e governança. Os modelos sugeridos abaixo podem ser configurados na plataforma conforme a rotina de cada área.</p>
+          <div class="hero-actions">
+            <a class="aira-link-highlight" href="https://aira.sermaisdigital.com.br/landing" target="_blank" rel="noopener">
+              Conhecer a Aira <span>link oficial</span>
+            </a>
+          </div>
           <div class="hero-stats">
             <div class="stat-item">
               <div class="stat-num">30<span>dias*</span></div>
@@ -1467,11 +1505,11 @@
       </div>
     </section>
 
-    <section class="section" aria-label="Prateleira de agentes">
+    <section class="section" aria-label="Modelos de agentes configuráveis na Aira">
       <div class="section-head">
         <div>
-          <div class="section-kicker">Prateleira pronta</div>
-          <h2 class="section-title">9 agentes disponíveis</h2>
+          <div class="section-kicker">Modelos sugeridos</div>
+          <h2 class="section-title">Agentes configuráveis na Aira</h2>
         </div>
         <div class="filter-tags" id="filterTags" aria-label="Filtrar agentes por área">
           <button class="filter-tag active" type="button" data-filter="all">Todos</button>
@@ -1487,12 +1525,12 @@
 
     <section class="section bottom-cta">
       <div>
-        <h2>Não achou o agente que <em>você precisa?</em></h2>
-        <p>Além da prateleira, desenvolvemos agentes customizados dentro da nossa oferta de IA. O ponto de partida é um diagnóstico rápido para entender onde a automação gera mais resultado para o seu negócio.</p>
+        <h2>Quer configurar um agente na <em>Aira?</em></h2>
+        <p>Os agentes sugeridos nesta página são pontos de partida. Na Aira, podemos configurar bases, permissões, canais, fluxos e entregáveis conforme o contexto real da sua operação.</p>
       </div>
       <div class="cta-box">
-        <div class="cta-box-title">Quero falar com um especialista</div>
-        <div class="cta-box-sub">Diagnóstico rápido, sem compromisso. Em 30 minutos identificamos o agente certo para o seu contexto.</div>
+        <div class="cta-box-title">Configurar agentes na Aira</div>
+        <div class="cta-box-sub">Diagnóstico rápido, sem compromisso. Em 30 minutos identificamos quais agentes fazem sentido e como configurar na plataforma.</div>
         <button class="cta-primary" type="button" id="diagnosisBtn">Quero diagnóstico gratuito</button>
       </div>
     </section>
@@ -1530,7 +1568,7 @@
       <button class="modal-close" id="modalClose" type="button" aria-label="Fechar">✕</button>
       <div class="modal-badge">Investimento</div>
       <div class="modal-title" id="modalTitle">Agente de IA</div>
-      <div class="modal-agent-name" id="modalAgentName">Agente pronto para operar em até 30 dias*</div>
+      <div class="modal-agent-name" id="modalAgentName">Modelo sugerido para configurar na Aira</div>
 
       <div class="qualifier-step" id="qualifierStep">
         <div class="qualifier-label">Para garantir que o investimento faça sentido para o seu contexto, me conta:</div>
@@ -1543,9 +1581,9 @@
 
       <div class="price-step" id="priceStep">
         <div class="price-display">
-          <div class="price-label-small">Investimento por agente</div>
+          <div class="price-label-small">Investimento para configuração</div>
           <div class="price-value"><small>R$</small> 20.000</div>
-          <div class="price-context">Implementação completa · Operando em até 30 dias*</div>
+          <div class="price-context">Configuração na Aira · Operando em até 30 dias*</div>
           <div class="price-footnote">* Considerando condições pré-definidas de acessos e ferramentas 100% disponíveis desde a largada.</div>
         </div>
         <div class="price-includes">
@@ -1562,7 +1600,7 @@
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.031-.967-.273-.1-.472-.149-.67.15-.198.298-.767.967-.94 1.166-.173.198-.347.223-.645.074-1.643-.822-2.72-1.463-3.803-3.319-.287-.495.287-.46.822-1.53.09-.198.045-.373-.025-.521-.074-.149-.67-1.612-.917-2.208-.242-.58-.487-.5-.67-.51-.173-.009-.372-.01-.57-.01-.198 0-.52.074-.793.372-.273.298-1.04 1.016-1.04 2.48s1.065 2.875 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.71.307 1.263.489 1.694.625.711.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.29.173-1.413-.074-.124-.273-.198-.571-.347z"/>
             <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.418A9.956 9.956 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" stroke="currentColor" stroke-width="1.4" fill="none"/>
           </svg>
-          Quero comprar
+          Quero configurar na Aira
         </a>
       </div>
     </div>
@@ -1921,7 +1959,7 @@
                     ${agent.characteristics.map((c) => `<li>${c}</li>`).join('')}
                   </ul>
                 </div>
-                <button class="price-btn" type="button" data-open-modal="${agent.modalName}">Ver investimento</button>
+                <button class="price-btn" type="button" data-open-modal="${agent.modalName}">Configurar na Aira</button>
               </div>
             </div>
           </div>
@@ -1962,7 +2000,7 @@
     function openModal(agentName) {
       currentAgentName = agentName;
       modalTitle.textContent = agentName;
-      modalAgentName.textContent = 'Agente pronto para operar em até 30 dias*';
+      modalAgentName.textContent = 'Modelo sugerido para configurar na Aira';
       qualifierStep.classList.remove('hidden');
       priceStep.classList.remove('active');
       modalOverlay.classList.add('open');
@@ -1992,7 +2030,7 @@
 
     const contactPopup = document.getElementById('contactPopup');
     function openContactPopup() {
-      const msg = encodeURIComponent('Olá! Tenho interesse no diagnóstico de agentes de IA da Ser Mais Digital.');
+      const msg = encodeURIComponent('Olá! Tenho interesse em configurar agentes de IA na Aira com a Ser Mais Digital.');
       document.getElementById('diagWhatsapp').href = `https://wa.me/${WA_NUMBER}?text=${msg}`;
       contactPopup.classList.add('open');
     }
@@ -2063,7 +2101,7 @@
     // Buy button → WhatsApp
     document.getElementById('priceStep').addEventListener('click', (event) => {
       if (event.target.closest('#buyBtn')) {
-        const msg = encodeURIComponent(`Olá! Estou interessado em fechar a oferta do ${currentAgentName} da Ser Mais Digital.`);
+        const msg = encodeURIComponent(`Olá! Tenho interesse em configurar o modelo ${currentAgentName} na Aira com a Ser Mais Digital.`);
         buyBtn.href = `https://wa.me/${WA_NUMBER}?text=${msg}`;
       }
     });
