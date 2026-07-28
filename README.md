@@ -201,7 +201,17 @@ Cada bloco principal contém:
 
 O slide 7 da apresentação institucional funciona como prateleira comercial e deve refletir o estado real das ofertas publicadas.
 
-Se uma oferta já existir, o card precisa apontar para a página correspondente.
+Cada versão pode funcionar como uma prateleira informativa ou comercial. A `Q2/2026` preserva os links históricos já existentes; a `Q3/2026` foi definida sem links nos cards.
+
+O conteúdo comercial é versionado por trimestre diretamente em `institucional-ser-mais-digital.html`:
+
+- `Q3/2026` é a versão padrão atual
+- `Q2/2026` permanece preservada para consulta
+- o seletor ao lado de `Exportar` troca somente o slide 7
+- a exportação em PDF sempre usa a versão selecionada
+- a query string `?versao=q2-2026` ou `?versao=q3-2026` permite abrir uma versão específica
+
+Ao criar um novo trimestre, adicione uma nova entrada à estrutura `offerVersions` e uma opção ao seletor. Não sobrescreva o conteúdo das versões anteriores.
 
 ## Como rodar localmente
 

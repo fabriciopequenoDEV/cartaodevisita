@@ -90,6 +90,65 @@
       box-shadow: 0 10px 22px rgba(0, 0, 0, 0.16);
     }
 
+    .version-picker {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      opacity: 0.72;
+      transition: opacity var(--ease), transform var(--ease);
+    }
+
+    .version-picker::after {
+      content: "⌄";
+      position: absolute;
+      right: 11px;
+      top: 50%;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1;
+      pointer-events: none;
+      transform: translateY(-58%);
+    }
+
+    .version-picker:hover,
+    .version-picker:focus-within {
+      opacity: 1;
+      transform: translateY(-1px);
+    }
+
+    .version-select {
+      appearance: none;
+      min-width: 100px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      padding: 10px 28px 10px 13px;
+      background: rgba(10, 14, 24, 0.46);
+      color: var(--muted);
+      font: inherit;
+      font-size: 10px;
+      font-weight: 750;
+      letter-spacing: 0.1em;
+      line-height: normal;
+      text-transform: uppercase;
+      cursor: pointer;
+      outline: none;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.16);
+      transition: border-color var(--ease), background var(--ease), color var(--ease);
+    }
+
+    .version-select:hover,
+    .version-select:focus-visible {
+      border-color: rgba(232, 101, 10, 0.24);
+      background: rgba(20, 28, 43, 0.68);
+      color: var(--text);
+    }
+
+    .version-select option {
+      color: var(--text);
+      background: #0c1220;
+    }
+
     .home-btn:hover,
     .export-btn:hover,
     .export-option:hover,
@@ -380,6 +439,20 @@
 
     .offer-card.is-live::after {
       border-color: rgba(232, 101, 10, 0.42);
+    }
+
+    .offer-card.is-current::after {
+      border-color: var(--card-border, rgba(232, 101, 10, 0.42));
+    }
+
+    .offer-card.is-current .offer-icon {
+      color: var(--card-accent, #ff9b49);
+      border-color: var(--card-border, rgba(232, 101, 10, 0.28));
+      background: var(--card-surface, rgba(232, 101, 10, 0.1));
+    }
+
+    .offer-slide[data-offer-version="q3-2026"] .offer-card {
+      gap: 8px;
     }
 
     .offer-card.is-live:hover::after {
@@ -704,6 +777,22 @@
       }
 
     }
+
+    @media (max-width: 520px) {
+      .topbar {
+        grid-template-columns: minmax(0, 1fr) auto;
+      }
+
+      .topbar .brand-chip:not(.progress) {
+        display: none;
+      }
+
+      .version-select {
+        min-width: 92px;
+        padding-inline: 11px 25px;
+        letter-spacing: 0.06em;
+      }
+    }
   </style>
 </head>
 <body>
@@ -730,6 +819,13 @@
           <div class="export-status" id="exportStatus" aria-live="polite"></div>
         </div>
       </div>
+      <label class="version-picker" for="versionSelect">
+        <span class="sr-only">Versão da apresentação</span>
+        <select class="version-select" id="versionSelect" aria-label="Versão da apresentação">
+          <option value="q3-2026">Q3/2026</option>
+          <option value="q2-2026">Q2/2026</option>
+        </select>
+      </label>
     </div>
     <div class="brand-chip">
       <img src="logo_smd.png" alt="Ser Mais Digital">
@@ -973,6 +1069,178 @@
       const exportBtn = document.getElementById("exportBtn");
       const exportMenu = document.getElementById("exportMenu");
       const exportStatus = document.getElementById("exportStatus");
+      const versionSelect = document.getElementById("versionSelect");
+      const q2OfferSlideMarkup = document.querySelector(".offer-slide").outerHTML;
+      const q3Cards = [
+        {
+          key: "allocation",
+          accent: "#ff9b49",
+          border: "rgba(193, 125, 60, 0.5)",
+          surface: "rgba(193, 125, 60, 0.12)",
+          title: "Alocação de profissionais",
+          description: "Especialistas selecionados e alocados sob medida para reforçar capacidades críticas e acelerar projetos sem alongar a contratação.",
+          benefits: [
+            "Shortlist aderente ao contexto, à senioridade e à forma de trabalho do cliente.",
+            "Onboarding acompanhado para reduzir o tempo até a produtividade."
+          ],
+          chips: ["Shortlist em 7 dias", "Onboarding em 15 dias", "Sob medida"],
+          icon: `
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <path d="M20 21a8 8 0 0 0-16 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/>
+            </svg>`,
+          watermark: `
+            <svg viewBox="-70 -70 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="0" cy="0" r="58" stroke="#C17D3C" stroke-width="0.6" stroke-dasharray="3 4"/>
+              <circle cx="0" cy="0" r="44" stroke="#C17D3C" stroke-width="0.3" opacity="0.5"/>
+              <circle cx="0" cy="-14" r="9" stroke="#C17D3C" stroke-width="1.6"/>
+              <path d="M-14 14Q-14 2 0 2Q14 2 14 14" stroke="#C17D3C" stroke-width="1.6" stroke-linecap="round"/>
+              <circle cx="-32" cy="21" r="6" stroke="#C17D3C" stroke-width="1"/>
+              <circle cx="32" cy="21" r="6" stroke="#C17D3C" stroke-width="1"/>
+              <path d="M-41 37Q-41 29-32 29Q-23 29-23 37M23 37Q23 29 32 29Q41 29 41 37" stroke="#C17D3C" stroke-width="1" stroke-linecap="round"/>
+              <path d="M-25 17L-11 8M25 17L11 8" stroke="#C17D3C" stroke-width="0.7" opacity="0.65"/>
+            </svg>`
+        },
+        {
+          key: "aira",
+          accent: "#73d4f2",
+          border: "rgba(74, 158, 191, 0.54)",
+          surface: "rgba(74, 158, 191, 0.13)",
+          title: "Aira — Plataforma corporativa de IA",
+          description: "Conecta IA ao conhecimento autorizado da empresa para gerar respostas, análises e entregáveis confiáveis.",
+          benefits: [
+            "<span><strong>Gestão do conhecimento:</strong> bases vivas por área, conectadas a documentos, dados e rotinas.</span>",
+            "<span><strong>Governança e segurança:</strong> acessos por papel e escopo, LGPD, proteção da informação e auditoria.</span>"
+          ],
+          chips: ["Conhecimento", "Governança", "Segurança"],
+          icon: `
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <ellipse cx="10" cy="6" rx="5.5" ry="2.5" stroke="currentColor" stroke-width="1.7"/>
+              <path d="M4.5 6v5c0 1.4 2.5 2.5 5.5 2.5M4.5 11v5c0 1.4 2.5 2.5 5.5 2.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              <path d="M15.5 6v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              <path d="M16.5 11.5 20 13v3.2c0 2.1-1.4 3.8-3.5 4.8-2.1-1-3.5-2.7-3.5-4.8V13l3.5-1.5Z" stroke="currentColor" stroke-width="1.55" stroke-linejoin="round"/>
+              <path d="m15 16.2 1 1 2-2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>`,
+          watermark: `
+            <svg viewBox="-70 -70 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="0" cy="0" r="58" stroke="#4A9EBF" stroke-width="0.6" stroke-dasharray="3 4"/>
+              <ellipse cx="-9" cy="-20" rx="24" ry="9" stroke="#4A9EBF" stroke-width="1.4"/>
+              <path d="M-33-20V8C-33 13-22 17-9 17M15-20V-2M-33-6C-33-1-22 3-9 3C1 3 9 1 15-2" stroke="#4A9EBF" stroke-width="1.2" stroke-linecap="round"/>
+              <path d="M20-2 39 6V22C39 34 31 43 20 49C9 43 1 34 1 22V6L20-2Z" stroke="#4A9EBF" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M11 22L17 28L30 14" stroke="#4A9EBF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>`
+        },
+        {
+          key: "implementation",
+          accent: "#b5a8f4",
+          border: "rgba(123, 111, 173, 0.56)",
+          surface: "rgba(123, 111, 173, 0.14)",
+          title: "Implantação de IA",
+          description: "Jornada assistida para transformar iniciativas isoladas em processos prioritários apoiados por IA, com adoção e resultado mensuráveis.",
+          benefits: [
+            "Diagnóstico e priorização de casos de uso com ganho claro para a operação.",
+            "Pilotos, capacitação, ritos de adoção e acompanhamento de resultados."
+          ],
+          chips: ["Casos de uso", "Adoção assistida", "Resultado"],
+          icon: `
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <circle cx="6" cy="6" r="2" stroke="currentColor" stroke-width="1.7"/>
+              <circle cx="18" cy="6" r="2" stroke="currentColor" stroke-width="1.7"/>
+              <circle cx="6" cy="18" r="2" stroke="currentColor" stroke-width="1.7"/>
+              <path d="M8 6h5M6 8v5M14.5 16.5 17 19l4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M15 6h-2v6h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>`,
+          watermark: `
+            <svg viewBox="-70 -70 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="0" cy="0" r="58" stroke="#7B6FAD" stroke-width="0.6" stroke-dasharray="3 4"/>
+              <circle cx="-31" cy="-25" r="7" stroke="#7B6FAD" stroke-width="1.5"/>
+              <circle cx="4" cy="-25" r="7" stroke="#7B6FAD" stroke-width="1.5"/>
+              <circle cx="4" cy="10" r="7" stroke="#7B6FAD" stroke-width="1.5"/>
+              <path d="M-24-25H-3M4-18V3M11 10H30" stroke="#7B6FAD" stroke-width="1.4" stroke-linecap="round"/>
+              <path d="M25 5L31 10L25 15" stroke="#7B6FAD" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="31" cy="10" r="19" stroke="#7B6FAD" stroke-width="0.7" opacity="0.55"/>
+              <path d="M22 30L29 37L43 21" stroke="#7B6FAD" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>`
+        },
+        {
+          key: "training",
+          accent: "#79d8af",
+          border: "rgba(91, 168, 135, 0.56)",
+          surface: "rgba(91, 168, 135, 0.13)",
+          title: "Treinamentos aplicados",
+          description: "Trilhas práticas para executar projetos melhor e iniciar os times no uso responsável e produtivo da IA.",
+          benefits: [
+            "<span><strong>Gestão de projetos:</strong> objetivo, escopo, priorização, plano, riscos, ritos e indicadores — do alinhamento à entrega.</span>",
+            "<span><strong>Iniciação em IA:</strong> modelos, ferramentas, prompts eficazes, validação e segurança — com desafios reais.</span>"
+          ],
+          chips: ["Projetos", "Modelos + prompts", "Mão na massa"],
+          icon: `
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <path d="M4 5.5c3-.7 5.7-.2 8 1.5v12c-2.3-1.7-5-2.2-8-1.5v-12Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+              <path d="M20 5.5c-3-.7-5.7-.2-8 1.5v12c2.3-1.7 5-2.2 8-1.5v-12Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+              <path d="m17.8 2 .55 1.45L20 4l-1.65.55L17.8 6l-.55-1.45L15.6 4l1.65-.55L17.8 2Z" fill="currentColor"/>
+            </svg>`,
+          watermark: `
+            <svg viewBox="-70 -70 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="0" cy="0" r="58" stroke="#5BA887" stroke-width="0.6" stroke-dasharray="3 4"/>
+              <path d="M-43-24C-25-29-11-25 0-15V34C-11 24-25 20-43 25V-24Z" stroke="#5BA887" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M43-24C25-29 11-25 0-15V34C11 24 25 20 43 25V-24Z" stroke="#5BA887" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M27-45L31-35L41-31L31-27L27-17L23-27L13-31L23-35L27-45Z" stroke="#5BA887" stroke-width="1.2" stroke-linejoin="round"/>
+              <path d="M-31-10H-13M-31 0H-10M13-8H31M10 2H31" stroke="#5BA887" stroke-width="1" stroke-linecap="round" opacity="0.8"/>
+            </svg>`
+        }
+      ];
+
+      const buildQ3OfferSlideMarkup = () => {
+        const cards = q3Cards.map((card) => `
+          <article class="offer-card is-current" data-offer-card="${card.key}" style="--card-accent:${card.accent};--card-border:${card.border};--card-surface:${card.surface}">
+            <div class="offer-watermark" aria-hidden="true">${card.watermark}</div>
+            <div class="offer-icon" aria-hidden="true">${card.icon}</div>
+            <div class="offer-name-row">
+              <h2 class="offer-name">${card.title}</h2>
+            </div>
+            <p class="offer-desc">${card.description}</p>
+            <ul class="offer-benefits">
+              ${card.benefits.map((benefit) => `<li>${benefit}</li>`).join("")}
+            </ul>
+            <div class="offer-meta">
+              ${card.chips.map((chip) => `<span class="chip">${chip}</span>`).join("")}
+            </div>
+          </article>`).join("");
+
+        return `
+          <div class="offer-slide" data-offer-version="q3-2026">
+            <div class="offer-top">
+              <div class="offer-copy">
+                <div class="eyebrow">Portfólio · Q3/2026</div>
+                <h1 class="headline">
+                  <span class="headline-line">Capacidades para transformar</span>
+                  <span class="headline-line">estratégia em operação</span>
+                </h1>
+                <p class="offer-summary">Combinamos talentos, plataforma, implantação e aprendizagem aplicada para acelerar entregas, incorporar IA à rotina e desenvolver times preparados para a nova forma de trabalhar.</p>
+              </div>
+              <div class="offer-brand">
+                <img src="logo_smd.png" alt="Ser Mais Digital">
+              </div>
+            </div>
+            <div class="offer-grid">${cards}</div>
+            <div class="slide-note">
+              <span>Direitos 2026 Ser Mais Digital.</span>
+              <span>Todos os direitos reservados.</span>
+            </div>
+          </div>`;
+      };
+
+      const offerVersions = {
+        "q3-2026": {
+          label: "Q3/2026",
+          markup: buildQ3OfferSlideMarkup()
+        },
+        "q2-2026": {
+          label: "Q2/2026",
+          markup: q2OfferSlideMarkup
+        }
+      };
       const slideImages = [
         { src: "institucional-smd-slide-01.png", theme: "blue" },
         { src: "institucional-smd-slide-02.png", theme: "white" },
@@ -981,6 +1249,8 @@
         { src: "institucional-smd-slide-05.png", theme: "white" },
         { src: "institucional-smd-slide-06.png", theme: "white" }
       ];
+      const requestedVersion = new URLSearchParams(window.location.search).get("versao")?.toLowerCase();
+      let activeOfferVersion = offerVersions[requestedVersion] ? requestedVersion : "q3-2026";
       let activeIndex = 0;
 
       const update = () => {
@@ -1006,6 +1276,34 @@
       const setExportStatus = (message) => {
         exportStatus.textContent = message;
       };
+
+      const getActiveVersion = () => offerVersions[activeOfferVersion];
+
+      const renderOfferVersion = (version, syncUrl = false) => {
+        if (!offerVersions[version]) {
+          return;
+        }
+
+        const template = document.createElement("template");
+        template.innerHTML = offerVersions[version].markup.trim();
+        const nextOfferSlide = template.content.firstElementChild;
+        const currentOfferSlide = document.querySelector(".offer-slide");
+        nextOfferSlide.dataset.offerVersion = version;
+        currentOfferSlide.replaceWith(nextOfferSlide);
+
+        activeOfferVersion = version;
+        versionSelect.value = version;
+        document.documentElement.dataset.presentationVersion = version;
+        setExportStatus("");
+
+        if (syncUrl) {
+          const url = new URL(window.location.href);
+          url.searchParams.set("versao", version);
+          window.history.replaceState({}, "", url);
+        }
+      };
+
+      renderOfferVersion(activeOfferVersion);
 
       const closeExportMenu = () => {
         exportMenu.classList.remove("is-open");
@@ -1037,6 +1335,7 @@
       };
 
       const buildStandaloneHtml = () => {
+        const versionLabel = getActiveVersion().label;
         const imageTags = slideImages.map((slide, index) => {
           return `<section class="export-slide export-slide-${slide.theme}"><img class="export-slide-image" src="${assetUrl(slide.src)}" alt="Slide ${index + 1}"></section>`;
         });
@@ -1047,7 +1346,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Institucional Ser Mais Digital - envio</title>
+  <title>Institucional Ser Mais Digital - ${versionLabel}</title>
   <style>
     ${document.querySelector("style").textContent}
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -1115,24 +1414,28 @@
 
       const exportPresentation = async (type) => {
         try {
-          setExportStatus("Preparando arquivo...");
+          const versionLabel = getActiveVersion().label;
+          setExportStatus(`Preparando ${versionLabel}...`);
           if (type === "pdf") {
             await openPrintPdf();
-            setExportStatus("Escolha Salvar como PDF na janela de impressao.");
+            setExportStatus(`${versionLabel}: escolha Salvar como PDF na impressão.`);
           }
         } catch (error) {
           console.error(error);
-          setExportStatus(error.message || "Nao foi possivel exportar agora.");
+          setExportStatus(error.message || "Não foi possível exportar agora.");
         }
       };
 
       prevBtn.addEventListener("click", goPrev);
       nextBtn.addEventListener("click", goNext);
+      versionSelect.addEventListener("change", () => {
+        renderOfferVersion(versionSelect.value, true);
+      });
       exportBtn.addEventListener("click", () => {
         const isOpen = exportMenu.classList.toggle("is-open");
         exportBtn.setAttribute("aria-expanded", String(isOpen));
         if (isOpen) {
-          setExportStatus("Copia para envio sem links no slide 7.");
+          setExportStatus(`${getActiveVersion().label} · cópia sem links no slide 7.`);
         }
       });
 
@@ -1153,6 +1456,9 @@
       window.addEventListener("keydown", (event) => {
         if (event.key === "Escape") {
           closeExportMenu();
+        }
+        if (event.target === versionSelect) {
+          return;
         }
         if (event.key === "ArrowLeft") {
           event.preventDefault();
